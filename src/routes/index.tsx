@@ -1,25 +1,33 @@
 import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import RaffleForm from "~/components/forms/raffleForm";
+import { Card } from "~/components/ui";
+
+export { useFormRaffleLoader } from "~/shared/forms/loaders";
+export { useFormRaffleAction } from "~/shared/forms/actions";
 
 export default component$(() => {
   return (
-    <>
-      <h1>Hi 👋</h1>
-      <div>
-        Can't wait to see what you build with qwik!
-        <br />
-        Happy coding.
-      </div>
-    </>
+    <div class="flex justify-center items-center min-h-screen bg-gray-50">
+      <Card.Root class="w-[400px]">
+        <Card.Header>
+          <Card.Title>Crear Nuevo Sorteo</Card.Title>
+          <Card.Description>Introduce la información para tu sorteo</Card.Description>
+        </Card.Header>
+        <Card.Content>
+          <RaffleForm />
+        </Card.Content>
+      </Card.Root>
+    </div>
   );
 });
 
 export const head: DocumentHead = {
-  title: "Welcome to Qwik",
+  title: "Geounity - Crear Sorteo",
   meta: [
     {
       name: "description",
-      content: "Qwik site description",
+      content: "Crea un nuevo sorteo en la plataforma Geounity",
     },
   ],
 };

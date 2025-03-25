@@ -25,19 +25,30 @@
   "devDependencies": {
     "@builder.io/qwik": "^1.12.1",
     "@builder.io/qwik-city": "^1.12.1",
+    "@modular-forms/qwik": "^0.29.1",
+    "@qwik-ui/headless": "^0.6.5",
+    "@qwik-ui/styled": "^0.3.0",
+    "@qwik-ui/utils": "^0.3.1",
+    "@qwikest/icons": "^0.0.13",
     "@tailwindcss/vite": "^4.0.0",
     "@types/eslint": "8.56.10",
     "@types/node": "20.14.11",
     "@typescript-eslint/eslint-plugin": "7.16.1",
     "@typescript-eslint/parser": "7.16.1",
+    "class-variance-authority": "^0.7.1",
     "eslint": "8.57.0",
     "eslint-plugin-qwik": "^1.12.1",
+    "nx": "^20.6.2",
     "prettier": "3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
+    "qwik-ui": "^0.2.0",
     "tailwindcss": "^4.0.0",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "5.4.5",
     "undici": "*",
+    "valibot": "^1.0.0",
     "vite": "5.3.5",
     "vite-tsconfig-paths": "^4.2.1"
-  }
+  },
+  "nx": {}
 }
