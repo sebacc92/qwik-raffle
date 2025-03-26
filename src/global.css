@@ -1,103 +1,524 @@
-@import "tailwindcss";
+/**
+ * Tailwind CSS imports
+ * View the full documentation at https://tailwindcss.com
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-    /* Base colors (light mode by default) */
-    --color-primary: hsl(265 79.7% 65.3%);
-    --color-primary-foreground: hsl(0 0% 100%);
-    --color-secondary: hsl(222.2 47.4% 11.2%);
-    --color-secondary-foreground: hsl(0 0% 100%);
-    --color-alert: hsl(0 84.2% 60.2%);
-    --color-alert-foreground: hsl(210 40% 98%);
-    --color-background: hsl(0 0% 100%);
-    --color-foreground: hsl(222.2 47.4% 11.2%);
-    --color-muted: hsl(210 40% 96.1%);
-    --color-muted-foreground: hsl(215.4 16.3% 46.9%);
-    --color-accent: hsl(210 40% 96.1%);
-    --color-accent-foreground: hsl(222.2 47.4% 11.2%);
-    --color-popover: hsl(0 0% 100%);
-    --color-popover-foreground: hsl(222.2 47.4% 11.2%);
-    --color-card: hsl(0 0% 100%);
-    --color-card-foreground: hsl(222.2 47.4% 11.2%);
-    --color-border: hsl(214.3 31.8% 91.4%);
-    --color-input: hsl(214.3 31.8% 91.4%);
-    --color-ring: hsl(222.2 47.4% 11.2%);
+@layer base {
+    :root {
+        /* Colores base */
+        --primary: #0891b2;
+        /* Cyan-600 */
+        --primary-hover: #0e7490;
+        /* Cyan-700 */
 
-    /* Shadows */
-    --shadow-2xs: 0 1px rgb(0 0 0 / 0.05);
-    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-    --shadow-base: 0 1px 2px 0 rgba(0, 0, 0, 0.01);
-    --inset-shadow-xs: inset 0 2px 4px 0 rgba(0, 0, 0, 0.01);
+        /* Modo claro */
+        --bg-primary: #f9fafb;
+        /* gray-50 - contenido principal más claro */
+        --bg-secondary: #f3f4f6;
+        /* gray-100 - sidebar un poco más oscuro */
+        --bg-tertiary: #f1f5f9;
 
-    /* Other values */
-    --radius-base: 0;
-    --spacing: 0.25rem;
-    --transform-press: scale(0.95);
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --text-tertiary: #94a3b8;
 
-    /* Animations */
-    --animate-accordion-up: accordion-up 0.2s ease-out;
-    --animate-accordion-down: accordion-down 0.2s ease-out;
+        --border-color: #e2e8f0;
+        --card-bg: #ffffff;
+        --card-hover: #f8fafc;
 
-    /* Add new theme variables */
-    --border-radius: 0;
-    --border-width: 1px;
-    --stroke-width: 1px;
+        --poll-option-bg: #f1f5f9;
+        --poll-option-hover: #e2e8f0;
+        --poll-progress-bg: #e2e8f0;
 
-    /* Update shadows to match configuration */
-    --shadow: var(--shadow-md);
-    --shadow-inner: var(--inset-shadow-xs);
+        /* Estados */
+        --like-color: #3b82f6;
+        --dislike-color: #ef4444;
+        --comment-color: #8b5cf6;
+        --share-color: #10b981;
 
-    @keyframes accordion-down {
-        from {
-            height: 0;
-        }
+        --background: 0 0% 100%;
+        --foreground: 222.2 47.4% 11.2%;
+        --muted: 210 40% 96.1%;
+        --muted-foreground: 215.4 16.3% 46.9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 222.2 47.4% 11.2%;
+        --card: 0 0% 100%;
+        --card-foreground: 222.2 47.4% 11.2%;
+        --border: 214.3 31.8% 91.4%;
+        --input: 214.3 31.8% 91.4%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 222.2 47.4% 11.2%;
+        --secondary-foreground: 0 0% 100%;
+        --accent: 210 40% 96.1%;
+        --accent-foreground: 222.2 47.4% 11.2%;
+        --alert: 0 84.2% 60.2%;
+        --alert-foreground: 210 40% 98%;
+        --ring: 222.2 47.4% 11.2%;
+        --border-width: 0px;
+        --border-radius: 0;
+        --shadow-base: 0 1px 2px 0 rgba(0, 0, 0, 0.01);
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+            0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+            0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 1);
+        --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.01);
+        --transform-press: scale(0.95);
 
-        to {
-            height: var(--qwikui-collapsible-content-height);
-        }
+        /* Sidebar y Header */
+        --sidebar-bg: #f8fafc;
+        --sidebar-hover: #f1f5f9;
+        --sidebar-active: #e2e8f0;
+        --sidebar-text: #64748b;
+        --sidebar-text-active: #0f172a;
+        --sidebar-border: #e2e8f0;
+
+        --header-bg: linear-gradient(to right, var(--qwik-dark-purple), var(--qwik-purple));
+        --header-border: #e2e8f0;
+        --header-text: #ffffff;
+        --header-input-bg: #f8fafc;
+        --header-input-text: #0f172a;
+        --header-input-placeholder: #94a3b8;
+
+        /* Colores Qwik */
+        --qwik-light-purple: #ac7ff4;
+        --qwik-purple: #9b60ed;
+        --qwik-dark-purple: #713fc2;
+        --qwik-darker-purple: #4e2d99;
     }
 
-    @keyframes accordion-up {
-        from {
-            height: var(--qwikui-collapsible-content-height);
-        }
+    .dark {
+        /* Modo oscuro */
+        --bg-primary: #111827;
+        /* gray-900 - contenido principal */
+        --bg-secondary: #1f2937;
+        /* gray-800 - sidebar un poco más oscuro */
+        --bg-tertiary: #334155;
 
-        to {
-            height: 0;
-        }
+        --text-primary: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --text-tertiary: #94a3b8;
+
+        --border-color: #334155;
+        --card-bg: #1e293b;
+        --card-hover: #334155;
+
+        --poll-option-bg: #334155;
+        --poll-option-hover: #475569;
+        --poll-progress-bg: #475569;
+
+        /* Estados en modo oscuro */
+        --like-color: #60a5fa;
+        --dislike-color: #f87171;
+        --comment-color: #a78bfa;
+        --share-color: #34d399;
+
+        --background: 222.2 84% 4.9%;
+        --foreground: 210 40% 98%;
+        --muted: 217.2 32.6% 17.5%;
+        --muted-foreground: 215 20.2% 65.1%;
+        --popover: 222.2 84% 4.9%;
+        --popover-foreground: 210 40% 98%;
+        --card: 222.2 84% 4.9%;
+        --card-foreground: 210 40% 98%;
+        --border: 217.2 32.6% 17.5%;
+        --input: 217.2 32.6% 17.5%;
+        --primary: #06b6d4;
+        /* Cyan-500 para modo oscuro */
+        --primary-foreground: 0 0% 100%;
+        --secondary: 210 40% 96.1%;
+        --secondary-foreground: 0 0% 0%;
+        --accent: 217.2 32.6% 17.5%;
+        --accent-foreground: 210 40% 98%;
+        --alert: 0 84.2% 60.2%;
+        --alert-foreground: 210 40% 98%;
+        --ring: 212.7 26.8% 83.9;
+        --border-width: 0px;
+        --border-radius: 0;
+        --shadow-base: 0 1px 2px 0 rgba(0, 0, 0, 0.01);
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 0px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+            0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+            0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 1);
+        --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.01);
+        --transform-press: scale(0.95);
+
+        /* Sidebar y Header en modo oscuro */
+        --sidebar-bg: #1e293b;
+        --sidebar-hover: #334155;
+        --sidebar-active: #475569;
+        --sidebar-text: #94a3b8;
+        --sidebar-text-active: #f8fafc;
+        --sidebar-border: #334155;
+
+        --header-bg: linear-gradient(to right, var(--qwik-darker-purple), var(--qwik-dark-purple));
+        --header-border: #1e293b;
+        --header-text: #ffffff;
+        --header-input-bg: #1e293b;
+        --header-input-text: #f8fafc;
+        --header-input-placeholder: #64748b;
     }
 }
 
-/* Define custom dark variant */
-@custom-variant dark (&:where(.dark, .dark *));
+/**
+  * Tailwind CSS imports
+  * View the full documentation at https://tailwindcss.com
+  */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Apply dark styles when the .dark class is present */
-.dark {
-    --color-primary: hsl(265 79.7% 65.3%);
-    --color-primary-foreground: hsl(0 0% 100%);
-    --color-secondary: hsl(210 40% 96.1%);
-    --color-secondary-foreground: hsl(0 0% 0%);
-    --color-alert: hsl(0 84.2% 60.2%);
-    --color-alert-foreground: hsl(210 40% 98%);
-    --color-background: hsl(222.2 84% 4.9%);
-    --color-foreground: hsl(210 40% 98%);
-    --color-muted: hsl(217.2 32.6% 17.5%);
-    --color-muted-foreground: hsl(215 20.2% 65.1%);
-    --color-accent: hsl(217.2 32.6% 17.5%);
-    --color-accent-foreground: hsl(210 40% 98%);
-    --color-popover: hsl(222.2 84% 4.9%);
-    --color-popover-foreground: hsl(210 40% 98%);
-    --color-card: hsl(222.2 84% 4.9%);
-    --color-card-foreground: hsl(210 40% 98%);
-    --color-border: hsl(217.2 32.6% 17.5%);
-    --color-input: hsl(217.2 32.6% 17.5%);
-    --color-ring: hsl(212.7 26.8% 83.9%);
+@keyframes spin-fast {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-button {
-    cursor: pointer;
+.animate-spin-fast {
+    animation: spin-fast 7s linear infinite;
+}
+
+/* Estilos generales */
+body {
+    @apply bg-gray-50 dark:bg-gray-900;
+    /* Color del contenido principal */
+    color: var(--text-primary);
+}
+
+/* Estilos para las tarjetas de encuestas */
+.poll-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+    transition: all 0.2s ease-in-out;
+}
+
+.poll-card:hover {
+    background-color: var(--card-hover);
+    box-shadow: var(--shadow-md);
+}
+
+.poll-option {
+    background-color: var(--poll-option-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 0.75rem 0;
+    transition: all 0.2s ease;
+}
+
+.poll-option:hover {
+    background-color: var(--poll-option-hover);
+    transform: translateY(-1px);
+}
+
+.poll-progress {
+    background-color: var(--poll-progress-bg);
+    border-radius: 9999px;
+    height: 0.5rem;
+    overflow: hidden;
+}
+
+.poll-progress-bar {
+    background-color: var(--primary);
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+/* Estilos para los botones de interacción */
+.btn-interaction {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+}
+
+.btn-like:hover {
+    color: var(--like-color);
+}
+
+.btn-dislike:hover {
+    color: var(--dislike-color);
+}
+
+.btn-comment:hover {
+    color: var(--comment-color);
+}
+
+.btn-share:hover {
+    color: var(--share-color);
+}
+
+/* Estilos para el Sidebar */
+.sidebar {
+    @apply bg-gray-100 dark:bg-gray-800;
+    /* Color del sidebar */
+    border-right: 1px solid var(--border-color);
+}
+
+.sidebar-item {
+    color: var(--sidebar-text);
+    transition: all 0.2s ease;
+}
+
+.sidebar-item:hover {
+    background-color: var(--sidebar-hover);
+}
+
+.sidebar-item.active {
+    background-color: var(--sidebar-active);
+    color: var(--sidebar-text-active);
+}
+
+/* Estilos para el Header */
+.header {
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--header-border);
+}
+
+.header-search {
+    background-color: var(--header-input-bg);
+    color: var(--header-input-text);
+}
+
+.header-search::placeholder {
+    color: var(--header-input-placeholder);
+}
+
+/* Estilos para el redimensionamiento del sidebar */
+.cursor-col-resize {
+    cursor: col-resize;
+}
+
+/* Prevenir selección de texto durante el redimensionamiento */
+.user-select-none {
+    user-select: none;
+}
+
+/* Mejorar visualización de la jerarquía */
+.community-item-container {
+    position: relative;
+}
+
+.level-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: var(--border-color);
+    opacity: 0.5;
+}
+
+/* Estilos para headers sticky */
+.sticky-header {
+    position: sticky;
+    background-color: var(--bg-secondary);
+    z-index: 10;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.sticky-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to bottom,
+            transparent,
+            var(--border-color));
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.sticky-header.is-sticky::after {
+    opacity: 1;
+}
+
+/* Ajustar z-index para niveles anidados */
+.sticky-header-level-0 {
+    z-index: 30;
+}
+
+.sticky-header-level-1 {
+    z-index: 29;
+}
+
+.sticky-header-level-2 {
+    z-index: 28;
+}
+
+.sticky-header-level-3 {
+    z-index: 27;
+}
+
+.sticky-header-level-4 {
+    z-index: 26;
+}
+
+/* Actualizar los estilos para el sticky header */
+.sticky-community-header {
+    position: sticky;
+    background-color: var(--bg-secondary);
+    transition: box-shadow 0.2s ease-in-out;
+    margin-bottom: 1px;
+}
+
+.sticky-community-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to bottom,
+            var(--border-color) 0%,
+            transparent 100%);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.sticky-community-header.is-open::after {
+    opacity: 1;
+}
+
+/* Estilos para la indentación y líneas guía */
+.community-content {
+    position: relative;
+    transition: padding-top 0.2s ease-in-out;
+}
+
+.community-content::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: var(--border-color);
+    opacity: 0.5;
+}
+
+/* Estilos para la jerarquía del sidebar */
+.community-item {
+    position: relative;
+    transition: all 0.2s ease-in-out;
+}
+
+.community-item:hover .community-icon {
+    transform: scale(1.1);
+}
+
+.community-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 2px;
+    height: 0;
+    background-color: var(--primary);
+    transition: height 0.2s ease-in-out, transform 0.2s ease-in-out;
+    transform: translateY(-50%);
+    opacity: 0;
+}
+
+.community-item:hover::before {
+    height: 70%;
+    opacity: 1;
+}
+
+.community-item.active::before {
+    height: 100%;
+    opacity: 1;
+}
+
+/* Efecto de hover para los íconos */
+.community-icon {
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Línea divisoria con gradiente */
+.community-divider {
+    height: 1px;
+    background: linear-gradient(to right,
+            transparent,
+            var(--border-color),
+            transparent);
+    margin: 0.25rem 0;
+    opacity: 0.5;
+}
+
+/* Animación de loading */
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Ajustar el espaciado del contenido colapsable */
+.collapsible-content {
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+}
+
+.collapsible-content[data-state="open"] {
+    animation: slideDown 0.2s ease-out;
+}
+
+.collapsible-content[data-state="closed"] {
+    animation: slideUp 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+
+    to {
+        height: var(--radix-collapsible-content-height);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        height: var(--radix-collapsible-content-height);
+        opacity: 1;
+    }
+
+    to {
+        height: 0;
+        opacity: 0;
+    }
 }

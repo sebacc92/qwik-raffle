@@ -2,24 +2,47 @@ import { formAction$, valiForm$, type FormActionResult } from "@modular-forms/qw
 import { type RaffleForm, type RaffleResponseData, RaffleSchema } from "~/schemas/raffleSchema";
 import Drizzler from "../../../drizzle";
 import { schema } from "../../../drizzle/schema";
+import { v4 } from "uuid";
 
 export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
     async (values) => {
         console.log('useFormRaffleAction')
         console.log('values', values)
+        const payload = {
+            ...values,
+            uuid: v4()
+        }
         const db = Drizzler();
         try {
-            const raffle = await db.insert(schema.raffles).values(values);
-            console.log('raffle', raffle)
+            // Create the raffle
+            const raffles = await db.insert(schema.raffles).values(payload).returning({ 
+                raffleId: schema.raffles.id,
+                uuid: schema.raffles.uuid,
+                numberCount: schema.raffles.numberCount
+            });            
+            const { raffleId, uuid, numberCount } = raffles[0];
+            
+            // Initialize all raffle numbers
+            const raffleNumbersData = Array.from({ length: numberCount }, (_, i) => ({
+                raffleId,
+                number: i + 1,
+                status: "unsold",
+                paymentStatus: false
+            }));
+            
+            await db.insert(schema.raffleNumbers).values(raffleNumbersData);
+            
+            const fullShareLink = `/raffle/${uuid}`;
+            
             return {
                 status: 'success',
-                message: "Rifa creada exitosamente",
+                message: "Raffle created successfully",
                 data: {
                     success: true,
-                    message: "Rifa creada exitosamente",
+                    message: "Raffle created successfully",
                     data: {
-                        raffle_id: "temp-id", // TODO: Obtener el ID real de la rifa creada
-                        share_link: "temp-link" // TODO: Generar link real
+                        raffle_id: raffleId,
+                        share_link: fullShareLink
                     }
                 }
             } as FormActionResult<RaffleForm, RaffleResponseData>;

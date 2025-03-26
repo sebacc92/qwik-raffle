@@ -1,4 +1,5 @@
 import { $, component$ } from '@builder.io/qwik'
+import { useNavigate } from '@builder.io/qwik-city'
 import { useForm, valiForm$ } from '@modular-forms/qwik'
 import { Button, Input, Label } from '~/components/ui'
 import { type RaffleForm, type RaffleResponseData, RaffleSchema } from '~/schemas/raffleSchema'
@@ -6,12 +7,21 @@ import { useFormRaffleAction } from '~/shared/forms/actions'
 import { useFormRaffleLoader } from '~/shared/forms/loaders'
 
 export default component$(() => {
+    const nav = useNavigate();
     const [raffleForm, { Form, Field }] = useForm<RaffleForm, RaffleResponseData>({
         loader: useFormRaffleLoader(),
         action: useFormRaffleAction(),
         validate: valiForm$(RaffleSchema)
     })
 
+    if (raffleForm.response.status === 'success') {
+        console.log('raffleForm.response.data', raffleForm.response.data)
+        const url = raffleForm.response.data?.data?.share_link
+        if (url) {
+            nav(url)
+        }
+    }
+    
     const handleSubmit = $((values: RaffleForm) => {
         console.log('values', values)
     })
@@ -28,7 +38,7 @@ export default component$(() => {
                             maxLength={100}
                             value={field.value}
                         />
-                        {field.error && <div>{field.error}</div>}
+                        {field.error && <div class="text-red-500">{field.error}</div>}
                     </>
                 )}
             </Field>
@@ -43,7 +53,7 @@ export default component$(() => {
                             max={1000}
                             value={field.value}
                         />
-                        {field.error && <div>{field.error}</div>}
+                        {field.error && <div class="text-red-500">{field.error}</div>}
                     </>
                 )}
             </Field>
@@ -59,7 +69,7 @@ export default component$(() => {
                             step="0.01"
                             value={field.value}
                         />
-                        {field.error && <div>{field.error}</div>}
+                        {field.error && <div class="text-red-500">{field.error}</div>}
                     </>
                 )}
             </Field>

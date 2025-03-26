@@ -29,7 +29,7 @@ export interface RaffleResponseData {
     success: boolean;
     message: string;
     data?: {
-        raffle_id: string;
+        raffle_id: number;
         share_link: string;
     };
 }
