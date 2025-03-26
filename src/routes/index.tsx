@@ -23,11 +23,11 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Geounity - Crear Sorteo",
+  title: "Qwik Raffle - Crear Sorteo",
   meta: [
     {
       name: "description",
-      content: "Crea un nuevo sorteo en la plataforma Geounity",
+      content: "Crea un nuevo sorteo rapidamente con Qwik Raffle",
     },
   ],
 };

@@ -4,6 +4,8 @@ import type { RaffleForm } from "~/schemas/raffleSchema";
 
 export const useFormRaffleLoader = routeLoader$<InitialValues<RaffleForm>>(() => {
     return {
-        name: ''
+        name: '',
+        numberCount: 2,
+        pricePerNumber: 1.00
     }
 })
