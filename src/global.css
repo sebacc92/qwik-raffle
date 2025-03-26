@@ -91,6 +91,14 @@
         --qwik-purple: #9b60ed;
         --qwik-dark-purple: #713fc2;
         --qwik-darker-purple: #4e2d99;
+        
+        /* Variables para modales */
+        --modal-border: #e9d5ff;
+        --modal-shadow: 0 10px 25px -5px rgba(107, 33, 168, 0.2), 0 8px 10px -6px rgba(107, 33, 168, 0.1);
+        --modal-bg: #ffffff;
+        --modal-radius: 1rem;
+        --modal-header-color: #6b21a8;
+        --modal-text-color: #7e22ce;
     }
 
     .dark {
@@ -168,6 +176,14 @@
         --header-input-bg: #1e293b;
         --header-input-text: #f8fafc;
         --header-input-placeholder: #64748b;
+        
+        /* Variables para modales en modo oscuro */
+        --modal-border: #4a044e;
+        --modal-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+        --modal-bg: #1e1b4b;
+        --modal-radius: 1rem;
+        --modal-header-color: #d8b4fe;
+        --modal-text-color: #c084fc;
     }
 }
 

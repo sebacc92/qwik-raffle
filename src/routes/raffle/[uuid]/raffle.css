@@ -65,3 +65,103 @@
 .ticket:hover .buyer-name {
     opacity: 1;
 }
+
+/* Nuevos estilos para el modal */
+[data-headlessui-state="open"] ~ .backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.2s ease-out;
+}
+
+/* Personalización del panel del modal */
+.modal-edit-ticket {
+    border-radius: 1rem !important;
+    box-shadow: 0 10px 25px -5px rgba(107, 33, 168, 0.2), 
+                0 8px 10px -6px rgba(107, 33, 168, 0.1) !important;
+    border: 1px solid #e9d5ff !important;
+}
+
+/* Estilos para los radio buttons */
+.ticket-status-radio {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+}
+
+.ticket-status-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.ticket-status-option:hover {
+    background-color: rgba(107, 33, 168, 0.05);
+}
+
+.ticket-status-option.unsold {
+    border: 1px solid #e9d5ff;
+}
+
+.ticket-status-option.unpaid {
+    border: 1px solid #fef9c3;
+}
+
+.ticket-status-option.paid {
+    border: 1px solid #dcfce7;
+}
+
+.ticket-status-option.selected.unsold {
+    background-color: #f3e8ff;
+    border-color: #d8b4fe;
+}
+
+.ticket-status-option.selected.unpaid {
+    background-color: #fef9c3;
+    border-color: #eab308;
+}
+
+.ticket-status-option.selected.paid {
+    background-color: #dcfce7;
+    border-color: #22c55e;
+}
+
+/* Personalización para inputs y etiquetas */
+.modal-label {
+    font-weight: 600;
+    color: #6b21a8;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.modal-input {
+    border-color: #e9d5ff !important;
+    transition: all 0.2s;
+}
+
+.modal-input:focus {
+    border-color: #a855f7 !important;
+    box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2) !important;
+}
+
+/* Estilos para los botones del modal */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f3e8ff;
+    margin-top: 1rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

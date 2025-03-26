@@ -318,74 +318,86 @@ export default component$(() => {
             </div>
             {/* Modal para editar ticket */}
             <Modal.Root bind:show={showModal}>
-                <Modal.Panel>
-                    <Modal.Close onClick$={() => showModal.value = false}>
+                <Modal.Panel class="modal-edit-ticket">
+                    <Modal.Close onClick$={() => showModal.value = false} class="absolute right-4 top-4 text-purple-700 hover:text-purple-900 transition-colors">
                         <LuX class="h-5 w-5" />
                     </Modal.Close>
-                    <Modal.Title>
-                        Editar Número {selectedTicket.value?.number}
-                    </Modal.Title>
-                    <Modal.Description>
-                        Actualizar información del número seleccionado
-                    </Modal.Description>
+                    <div class="pb-2">
+                        <Modal.Title class="text-xl font-bold text-purple-800">
+                            Editar Número {selectedTicket.value?.number}
+                        </Modal.Title>
+                        <Modal.Description class="text-purple-600">
+                            Actualizar información del número seleccionado
+                        </Modal.Description>
+                    </div>
 
-                    <div class="space-y-4 py-4">
+                    <div class="space-y-5 py-4">
                         <div>
-                            <Label for="buyerName">Nombre del comprador</Label>
+                            <Label for="buyerName" class="modal-label">Nombre del comprador</Label>
                             <Input
                                 id="buyerName"
                                 type="text"
                                 bind:value={tempBuyerName}
                                 placeholder="Nombre del comprador"
-                                class="w-full"
+                                class="w-full modal-input"
                                 disabled={tempPaymentStatus.value === "unsold"}
                             />
                         </div>
 
                         <div class="space-y-2">
-                            <Label>Estado del número</Label>
+                            <Label class="modal-label">Estado del número</Label>
 
-                            <div class="flex flex-col gap-2">
-                                <div class="flex items-center gap-2">
+                            <div class="ticket-status-radio">
+                                <div 
+                                    class={`ticket-status-option unsold ${tempPaymentStatus.value === "unsold" ? "selected" : ""}`}
+                                    onClick$={() => tempPaymentStatus.value = "unsold"}
+                                >
                                     <input
                                         type="radio"
                                         id="status-unsold"
                                         name="ticketStatus"
                                         checked={tempPaymentStatus.value === "unsold"}
-                                        onClick$={() => tempPaymentStatus.value = "unsold"}
+                                        class="h-4 w-4 accent-purple-600"
                                     />
-                                    <label for="status-unsold">No vendido</label>
+                                    <label for="status-unsold" class="flex-1 cursor-pointer">No vendido</label>
                                 </div>
 
-                                <div class="flex items-center gap-2">
+                                <div 
+                                    class={`ticket-status-option unpaid ${tempPaymentStatus.value === "sold-unpaid" ? "selected" : ""}`}
+                                    onClick$={() => tempPaymentStatus.value = "sold-unpaid"}
+                                >
                                     <input
                                         type="radio"
                                         id="status-unpaid"
                                         name="ticketStatus"
                                         checked={tempPaymentStatus.value === "sold-unpaid"}
-                                        onClick$={() => tempPaymentStatus.value = "sold-unpaid"}
+                                        class="h-4 w-4 accent-purple-600"
                                     />
-                                    <label for="status-unpaid">Vendido - Pendiente de pago</label>
+                                    <label for="status-unpaid" class="flex-1 cursor-pointer">Vendido - Pendiente de pago</label>
                                 </div>
 
-                                <div class="flex items-center gap-2">
+                                <div 
+                                    class={`ticket-status-option paid ${tempPaymentStatus.value === "sold-paid" ? "selected" : ""}`}
+                                    onClick$={() => tempPaymentStatus.value = "sold-paid"}
+                                >
                                     <input
                                         type="radio"
                                         id="status-paid"
                                         name="ticketStatus"
                                         checked={tempPaymentStatus.value === "sold-paid"}
-                                        onClick$={() => tempPaymentStatus.value = "sold-paid"}
+                                        class="h-4 w-4 accent-purple-600"
                                     />
-                                    <label for="status-paid">Vendido - Pagado</label>
+                                    <label for="status-paid" class="flex-1 cursor-pointer">Vendido - Pagado</label>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <footer class="flex justify-end gap-2 pt-4">
+                    <footer class="modal-footer">
                         <Button
                             look="secondary"
                             onClick$={() => showModal.value = false}
+                            class="px-4 py-2 text-purple-800 bg-white border-purple-200 hover:bg-purple-50"
                         >
                             Cancelar
                         </Button>
@@ -393,11 +405,11 @@ export default component$(() => {
                             look="primary"
                             onClick$={saveTicketChanges}
                             disabled={tempPaymentStatus.value !== "unsold" && !tempBuyerName.value}
+                            class="px-4 py-2 bg-purple-700 hover:bg-purple-800 text-white"
                         >
                             Guardar Cambios
                         </Button>
                     </footer>
-
                 </Modal.Panel>
             </Modal.Root>
         </>
