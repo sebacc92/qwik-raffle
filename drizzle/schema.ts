@@ -23,6 +23,7 @@ export const raffles = sqliteTable("raffles", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
   numberCount: integer("numberCount").notNull(),
+  pricePerNumber: integer("pricePerNumber").notNull(),
 });
 
 export const schema = {

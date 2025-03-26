@@ -9,7 +9,8 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
         console.log('values', values)
         const db = Drizzler();
         try {
-            await db.insert(schema.raffles).values(values);
+            const raffle = await db.insert(schema.raffles).values(values);
+            console.log('raffle', raffle)
             return {
                 status: 'success',
                 message: "Rifa creada exitosamente",
