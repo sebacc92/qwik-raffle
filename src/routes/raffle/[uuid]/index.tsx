@@ -62,7 +62,7 @@ export default component$(() => {
     const generateClientLink = $(() => {
         if (!raffleWithTickets.value) return;
 
-        const link = `${window.location.origin}/raffle/${raffleWithTickets.value.uuid}`;
+        const link = `${window.location.origin}/raffle/${raffleWithTickets.value.uuid}/client`;
         navigator.clipboard.writeText(link);
         alert("Enlace copiado al portapapeles");
     });
