@@ -1,9 +1,11 @@
 import { component$, useSignal, useVisibleTask$, $, useStylesScoped$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import { useGetRaffle } from "~/shared/loaders";
-import { Button, Modal, Input, Label } from '~/components/ui';
 import { LuX } from '@qwikest/icons/lucide';
+import { toast } from 'qwik-sonner';
+import { useGetRaffle } from "~/shared/loaders";
+import { Modal } from '~/components/ui';
 import styles from './raffle.css?inline'; // Importamos los estilos
+import TicketForm from "~/components/forms/ticketForm";
 
 export { useGetRaffle } from "~/shared/loaders";
 
@@ -28,6 +30,7 @@ export default component$(() => {
     useStylesScoped$(styles);
 
     const raffle = useGetRaffle();
+    console.log('raffle', raffle.value)
     const raffleWithTickets = useSignal<RaffleWithTickets | null>(null);
     const search = useSignal("");
     const showOnlyPending = useSignal(false);
@@ -61,10 +64,9 @@ export default component$(() => {
     // Funciones para interacción
     const generateClientLink = $(() => {
         if (!raffleWithTickets.value) return;
-
         const link = `${window.location.origin}/raffle/${raffleWithTickets.value.uuid}/client`;
         navigator.clipboard.writeText(link);
-        alert("Enlace copiado al portapapeles");
+        toast.info("Enlace copiado");
     });
 
     const downloadRaffleInfo = $(() => {
@@ -119,29 +121,7 @@ export default component$(() => {
         tempPaymentStatus.value = ticket.status;
 
         // Mostrar el modal
-        console.log('HEY!')
         showModal.value = true;
-    });
-
-    const saveTicketChanges = $(() => {
-        if (!selectedTicket.value) return;
-
-        // Si el estado es "unsold", limpiar el nombre del comprador
-        if (tempPaymentStatus.value === "unsold") {
-            selectedTicket.value.buyerName = undefined;
-        } else {
-            // Si se asigna a alguien, actualizar el nombre
-            selectedTicket.value.buyerName = tempBuyerName.value;
-        }
-
-        // Actualizar el estado del ticket
-        selectedTicket.value.status = tempPaymentStatus.value;
-
-        // Forzar actualización
-        raffleWithTickets.value = { ...raffleWithTickets.value! };
-
-        // Cerrar el modal
-        showModal.value = false;
     });
 
     if (!raffleWithTickets.value) {
@@ -151,6 +131,16 @@ export default component$(() => {
     const soldCount = raffleWithTickets.value.tickets.filter(t => t.status !== "unsold").length;
     const paidCount = raffleWithTickets.value.tickets.filter(t => t.status === "sold-paid").length;
     const totalCollected = paidCount * raffleWithTickets.value.pricePerNumber;
+
+    const handleSuccess = $(() => {
+        showModal.value = false;
+        // Opcional: Refrescar los datos aquí si es necesario
+    });
+
+    const handleCancel = $(() => {
+        showModal.value = false;
+        // Opcional: Refrescar los datos aquí si es necesario
+    });
 
     return (
         <>
@@ -330,86 +320,17 @@ export default component$(() => {
                             Actualizar información del número seleccionado
                         </Modal.Description>
                     </div>
-
-                    <div class="space-y-5 py-4">
-                        <div>
-                            <Label for="buyerName" class="modal-label">Nombre del comprador</Label>
-                            <Input
-                                id="buyerName"
-                                type="text"
-                                bind:value={tempBuyerName}
-                                placeholder="Nombre del comprador"
-                                class="w-full modal-input"
-                                disabled={tempPaymentStatus.value === "unsold"}
-                            />
-                        </div>
-
-                        <div class="space-y-2">
-                            <Label class="modal-label">Estado del número</Label>
-
-                            <div class="ticket-status-radio">
-                                <div 
-                                    class={`ticket-status-option unsold ${tempPaymentStatus.value === "unsold" ? "selected" : ""}`}
-                                    onClick$={() => tempPaymentStatus.value = "unsold"}
-                                >
-                                    <input
-                                        type="radio"
-                                        id="status-unsold"
-                                        name="ticketStatus"
-                                        checked={tempPaymentStatus.value === "unsold"}
-                                        class="h-4 w-4 accent-purple-600"
-                                    />
-                                    <label for="status-unsold" class="flex-1 cursor-pointer">No vendido</label>
-                                </div>
-
-                                <div 
-                                    class={`ticket-status-option unpaid ${tempPaymentStatus.value === "sold-unpaid" ? "selected" : ""}`}
-                                    onClick$={() => tempPaymentStatus.value = "sold-unpaid"}
-                                >
-                                    <input
-                                        type="radio"
-                                        id="status-unpaid"
-                                        name="ticketStatus"
-                                        checked={tempPaymentStatus.value === "sold-unpaid"}
-                                        class="h-4 w-4 accent-purple-600"
-                                    />
-                                    <label for="status-unpaid" class="flex-1 cursor-pointer">Vendido - Pendiente de pago</label>
-                                </div>
-
-                                <div 
-                                    class={`ticket-status-option paid ${tempPaymentStatus.value === "sold-paid" ? "selected" : ""}`}
-                                    onClick$={() => tempPaymentStatus.value = "sold-paid"}
-                                >
-                                    <input
-                                        type="radio"
-                                        id="status-paid"
-                                        name="ticketStatus"
-                                        checked={tempPaymentStatus.value === "sold-paid"}
-                                        class="h-4 w-4 accent-purple-600"
-                                    />
-                                    <label for="status-paid" class="flex-1 cursor-pointer">Vendido - Pagado</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <footer class="modal-footer">
-                        <Button
-                            look="secondary"
-                            onClick$={() => showModal.value = false}
-                            class="px-4 py-2 text-purple-800 bg-white border-purple-200 hover:bg-purple-50"
-                        >
-                            Cancelar
-                        </Button>
-                        <Button
-                            look="primary"
-                            onClick$={saveTicketChanges}
-                            disabled={tempPaymentStatus.value !== "unsold" && !tempBuyerName.value}
-                            class="px-4 py-2 bg-purple-700 hover:bg-purple-800 text-white"
-                        >
-                            Guardar Cambios
-                        </Button>
-                    </footer>
+                    
+                    {selectedTicket.value && (
+                        <TicketForm 
+                            raffleId={raffleWithTickets.value?.id || 0}
+                            ticketNumber={selectedTicket.value.number}
+                            initialBuyerName={selectedTicket.value.buyerName}
+                            initialStatus={selectedTicket.value.status}
+                            onSuccess$={handleSuccess}
+                            onCancel$={handleCancel}
+                        />
+                    )}
                 </Modal.Panel>
             </Modal.Root>
         </>

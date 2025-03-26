@@ -3,6 +3,8 @@ import { type RaffleForm, type RaffleResponseData, RaffleSchema } from "~/schema
 import Drizzler from "../../../drizzle";
 import { schema } from "../../../drizzle/schema";
 import { v4 } from "uuid";
+import { and, eq } from "drizzle-orm";
+import { TicketForm, TicketResponseData, TicketSchema } from "~/schemas/ticketSchema";
 
 export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
     async (values) => {
@@ -56,3 +58,48 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
     },
     valiForm$(RaffleSchema)
 )
+
+export const useFormTicketAction = formAction$<TicketForm, TicketResponseData>(
+    async (values) => {
+        console.log('useFormTicketAction');
+        console.log('values', values);
+        
+        const db = Drizzler();
+        try {
+            // Actualizar el número del sorteo
+            await db
+                .update(schema.raffleNumbers)
+                .set({
+                    buyerName: values.buyerName,
+                    status: values.status,
+                    paymentStatus: values.status === "sold-paid",
+                    updatedAt: new Date()
+                })
+                .where(
+                    and(
+                        eq(schema.raffleNumbers.raffleId, values.raffleId),
+                        eq(schema.raffleNumbers.number, values.number)
+                    )
+                );
+            
+            return {
+                status: 'success',
+                message: "Ticket actualizado correctamente",
+                data: {
+                    success: true,
+                    message: "Ticket actualizado correctamente",
+                    data: {
+                        ticket_id: values.number
+                    }
+                }
+            } as FormActionResult<TicketForm, TicketResponseData>;
+        } catch (error: any) {
+            console.error("Error actualizando ticket: ", error);
+            return {
+                status: 'error',
+                message: error.message
+            } as FormActionResult<TicketForm, TicketResponseData>;
+        }
+    },
+    valiForm$(TicketSchema)
+); 

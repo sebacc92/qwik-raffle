@@ -92,6 +92,9 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: 0.5.4
         version: 0.5.4(prettier@3.5.3)
+      qwik-sonner:
+        specifier: ^1.0.3
+        version: 1.0.3
       qwik-ui:
         specifier: ^0.2.0
         version: 0.2.0(nx@20.6.4)
@@ -2907,6 +2910,10 @@ packages:
 
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
+
+  qwik-sonner@1.0.3:
+    resolution: {integrity: sha512-n3StJm/5ZLgnzPeVJWQvJz2+gKxuov37VcbeeaXwWJA+bUgX4t0miAkOZDjgTGmyzTLST3PsN2fnSWeelVGTuA==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
 
   qwik-themes@0.2.0:
     resolution: {integrity: sha512-lwqDGD6Z+IpX/vOJh2SuzWBmafYM4+6cbASGJNkdfR6jfaCJm6iKvHRGrom0xDvdTO3G9w+rnaSkN0hrkSL69w==}
@@ -6371,6 +6378,8 @@ snapshots:
   punycode@2.3.1: {}
 
   queue-microtask@1.2.3: {}
+
+  qwik-sonner@1.0.3: {}
 
   qwik-themes@0.2.0: {}
 
