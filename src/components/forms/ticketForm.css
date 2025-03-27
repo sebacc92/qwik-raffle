@@ -68,11 +68,11 @@
 }
 
 .cancel-btn {
-  @apply px-5 py-2.5 rounded-lg text-purple-700 bg-white border border-purple-200 hover:bg-purple-50 transition-colors font-medium;
+  @apply px-5 py-2.5 rounded-lg text-red-600 bg-transparent border border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300 transition-colors font-medium;
 }
 
 .submit-btn {
-  @apply px-5 py-2.5 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition-colors font-medium flex items-center justify-center min-w-[120px];
+  @apply px-5 py-2.5 rounded-lg bg-green-600 text-white hover:bg-green-700 transition-colors font-medium flex items-center justify-center min-w-[120px];
 }
 
 .submit-btn:disabled {
@@ -108,16 +108,18 @@
 /* Estilos para dispositivos móviles */
 @media (max-width: 640px) {
   .form-footer {
-    @apply flex-col space-y-3 space-x-0;
+    @apply flex-col-reverse space-y-3 space-y-reverse space-x-0;
   }
 
-  .cancel-btn, .submit-btn {
+  .cancel-btn,
+  .submit-btn {
     @apply w-full;
   }
 }
 
 /* Asegurarse de que los botones sean visibles */
-button.cancel-btn, button.submit-btn {
+button.cancel-btn,
+button.submit-btn {
   @apply block;
 }
 
@@ -126,4 +128,4 @@ button.cancel-btn, button.submit-btn {
 .status-icon.h-5.w-5.text-amber-600,
 .status-icon.h-5.w-5.text-green-600 {
   @apply inline-block;
-} 
+}

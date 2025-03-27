@@ -26,7 +26,7 @@ export default component$<TicketFormProps>(
                     raffleId,
                     number: ticketNumber,
                     buyerName: initialBuyerName || "",
-                    status: initialStatus,
+                    status: initialStatus === "unsold" ? "sold-paid" : initialStatus,
                 },
             },
             action: useFormTicketAction(),
@@ -78,7 +78,7 @@ export default component$<TicketFormProps>(
                                             value={field.value}
                                             placeholder="Enter buyer's name"
                                             class="input-field"
-                                            disabled={ticketForm.submitting || field.value === "unsold"}
+                                            disabled={ticketForm.submitting}
                                         />
                                     </div>
                                     {field.error && (
@@ -105,21 +105,21 @@ export default component$<TicketFormProps>(
                                     </Label>
                                     <div class="status-options">
                                         <div
-                                            class={`status-option unsold ${field.value === "unsold" ? "selected" : ""}`}
-                                            onClick$={() => (field.value = "unsold")}
+                                            class={`status-option paid ${field.value === "sold-paid" ? "selected" : ""}`}
+                                            onClick$={() => (field.value = "sold-paid")}
                                         >
                                             <input
                                                 {...props}
                                                 type="radio"
-                                                id="status-unsold"
-                                                value="unsold"
-                                                checked={field.value === "unsold"}
-                                                class="status-radio accent-purple-600"
+                                                id="status-paid"
+                                                value="sold-paid"
+                                                checked={field.value === "sold-paid"}
+                                                class="status-radio accent-green-600"
                                             />
-                                            <label for="status-unsold" class="status-label">
-                                                Unsold
+                                            <label for="status-paid" class="status-label">
+                                                Sold - Paid
                                             </label>
-                                            <LuTicket class="status-icon h-5 w-5 text-purple-600" />
+                                            <LuCheckCircle class="status-icon h-5 w-5 text-green-600" />
                                         </div>
 
                                         <div
@@ -139,24 +139,6 @@ export default component$<TicketFormProps>(
                                             </label>
                                             <LuClock class="status-icon h-5 w-5 text-amber-600" />
                                         </div>
-
-                                        <div
-                                            class={`status-option paid ${field.value === "sold-paid" ? "selected" : ""}`}
-                                            onClick$={() => (field.value = "sold-paid")}
-                                        >
-                                            <input
-                                                {...props}
-                                                type="radio"
-                                                id="status-paid"
-                                                value="sold-paid"
-                                                checked={field.value === "sold-paid"}
-                                                class="status-radio accent-green-600"
-                                            />
-                                            <label for="status-paid" class="status-label">
-                                                Sold - Paid
-                                            </label>
-                                            <LuCheckCircle class="status-icon h-5 w-5 text-green-600" />
-                                        </div>
                                     </div>
                                     {field.error && (
                                         <div class="error-message">
@@ -171,21 +153,21 @@ export default component$<TicketFormProps>(
 
                     {/* Form Footer */}
                     <div class="form-footer">
-                        <Button 
+                        <button 
                             type="button" 
                             onClick$={onCancel$} 
                             class="cancel-btn" 
                             disabled={ticketForm.submitting}
                         >
                             Cancel
-                        </Button>
-                        <Button 
+                        </button>
+                        <button 
                             type="submit" 
                             disabled={ticketForm.submitting} 
                             class="submit-btn"
                         >
                             {ticketForm.submitting ? "Saving..." : "Save Changes"}
-                        </Button>
+                        </button>
                     </div>
                 </Form>
             </div>
