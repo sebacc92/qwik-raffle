@@ -1,170 +1,195 @@
-import { type QRL, $, component$, useSignal, useStylesScoped$ } from '@builder.io/qwik';
-import { useForm, valiForm$ } from '@modular-forms/qwik';
-import { Button, Input, Label } from '~/components/ui';
-import { type TicketForm, type TicketResponseData, TicketSchema } from '~/schemas/ticketSchema';
-import { useFormTicketAction } from '~/shared/forms/actions';
-import styles from '~/routes/raffle/[uuid]/raffle.css?inline'
+import { type QRL, $, component$, useSignal, useStylesScoped$ } from "@builder.io/qwik"
+import { useForm, valiForm$ } from "@modular-forms/qwik"
+import { Button, Input, Label } from "~/components/ui"
+import { type TicketForm, type TicketResponseData, TicketSchema } from "~/schemas/ticketSchema"
+import { useFormTicketAction } from "~/shared/forms/actions"
+import { LuUser, LuTicket, LuAlertCircle, LuCheckCircle, LuClock } from "@qwikest/icons/lucide";
+import styles from './ticketForm.css?inline';
+import { toast } from "qwik-sonner"
 
 export interface TicketFormProps {
-    raffleId: number;
-    ticketNumber: number;
-    initialBuyerName: string | null;
-    initialStatus: "unsold" | "sold-unpaid" | "sold-paid";
-    onSuccess$?: QRL<() => void>;
-    onCancel$?: QRL<() => void>;
+    raffleId: number
+    ticketNumber: number
+    initialBuyerName: string | null
+    initialStatus: "unsold" | "sold-unpaid" | "sold-paid"
+    onSuccess$?: QRL<() => void>
+    onCancel$?: QRL<() => void>
 }
 
-export default component$<TicketFormProps>(({
-    raffleId,
-    ticketNumber,
-    initialBuyerName,
-    initialStatus,
-    onSuccess$,
-    onCancel$
-}) => {
-    useStylesScoped$(styles);
-    const [ticketForm, { Form, Field }] = useForm<TicketForm, TicketResponseData>({
-        loader: {
-            value: {
-                raffleId,
-                number: ticketNumber,
-                buyerName: initialBuyerName || '',
-                status: initialStatus
+export default component$<TicketFormProps>(
+    ({ raffleId, ticketNumber, initialBuyerName, initialStatus, onSuccess$, onCancel$ }) => {
+        useStylesScoped$(styles);
+
+        const [ticketForm, { Form, Field }] = useForm<TicketForm, TicketResponseData>({
+            loader: {
+                value: {
+                    raffleId,
+                    number: ticketNumber,
+                    buyerName: initialBuyerName || "",
+                    status: initialStatus,
+                },
+            },
+            action: useFormTicketAction(),
+            validate: valiForm$(TicketSchema),
+        })
+
+        const isUpdating = useSignal(false)
+
+        // Handle successful response
+        if (ticketForm.response.status === "success" && !isUpdating.value) {
+            toast.success("Ticket updated successfully!");
+            isUpdating.value = true
+            if (onSuccess$) {
+                onSuccess$()
             }
-        },
-        action: useFormTicketAction(),
-        validate: valiForm$(TicketSchema),
-    });
-
-    const isUpdating = useSignal(false);
-
-    // Handle successful response
-    if (ticketForm.response.status === 'success' && !isUpdating.value) {
-        isUpdating.value = true;
-        if (onSuccess$) {
-            onSuccess$();
         }
-    }
 
-    const handleSubmit = $((values: TicketForm) => {
-        console.log('Submitting ticket values:', values);
-        // El formulario se enviará automáticamente al action
-    });
+        const handleSubmit = $((values: TicketForm) => {
+            console.log("Submitting ticket values:", values)
+            // Form will be automatically submitted to the action
+        })
 
-    return (
-        <Form onSubmit$={handleSubmit} class="space-y-5">
-            {/* Hidden field for raffle ID */}
-            <Field name="raffleId" type="number">
-                {(field, props) => (
-                    <input
-                        {...props}
-                        type="hidden"
-                        value={field.value}
-                    />
-                )}
-            </Field>
+        return (
+            <div class="form-container">
+                <Form onSubmit$={handleSubmit} class="space-y-5">
+                    {/* Hidden fields */}
+                    <Field name="raffleId" type="number">
+                        {(field, props) => <input {...props} type="hidden" value={field.value} />}
+                    </Field>
 
-            {/* Hidden field for number */}
-            <Field name="number" type="number">
-                {(field, props) => (
-                    <input
-                        {...props}
-                        type="hidden"
-                        value={field.value}
-                    />
-                )}
-            </Field>
+                    <Field name="number" type="number">
+                        {(field, props) => <input {...props} type="hidden" value={field.value} />}
+                    </Field>
 
-            <Field name="buyerName">
-                {(field, props) => (
-                    <>
-                        <Label for="buyerName" class="modal-label">Buyer Name</Label>
-                        <Input
-                            {...props}
-                            id="buyerName"
-                            type="text"
-                            value={field.value}
-                            placeholder="Buyer Name"
-                            class="w-full modal-input"
-                            disabled={ticketForm.submitting || field.value === "unsold"}
-                        />
-                        {field.error && <div class="text-red-500 text-sm mt-1">{field.error}</div>}
-                    </>
-                )}
-            </Field>
+                    {/* Buyer Name Field */}
+                    <div class="form-field">
+                        <Field name="buyerName">
+                            {(field, props) => (
+                                <>
+                                    <Label for="buyerName" class="field-label">
+                                        Buyer Name
+                                    </Label>
+                                    <div class="input-with-icon">
+                                        <LuUser class="input-icon h-5 w-5" />
+                                        <Input
+                                            {...props}
+                                            id="buyerName"
+                                            type="text"
+                                            value={field.value}
+                                            placeholder="Enter buyer's name"
+                                            class="input-field"
+                                            disabled={ticketForm.submitting || field.value === "unsold"}
+                                        />
+                                    </div>
+                                    {field.error && (
+                                        <div class="error-message">
+                                            <LuAlertCircle class="h-4 w-4 mr-1" />
+                                            {field.error}
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </Field>
+                    </div>
 
-            <Field name="status">
-                {(field, props) => (
-                    <>
-                        <Label class="modal-label">Ticket Status</Label>
-                        <div class="ticket-status-radio">
-                            <div
-                                class={`ticket-status-option unsold ${field.value === "unsold" ? "selected" : ""}`}
-                                onClick$={() => field.value = "unsold"}
-                            >
-                                <input
-                                    {...props}
-                                    type="radio"
-                                    id="status-unsold"
-                                    value="unsold"
-                                    checked={field.value === "unsold"}
-                                    class="h-4 w-4 accent-purple-600"
-                                />
-                                <label for="status-unsold" class="flex-1 cursor-pointer">Unsold</label>
-                            </div>
+                    {/* Ticket Status Field */}
+                    <div class="form-field">
+                        <Field name="status">
+                            {(field, props) => (
+                                <>
+                                    <Label class="field-label">
+                                        <div class="flex items-center">
+                                            <LuTicket class="h-5 w-5 mr-2" />
+                                            Ticket Status
+                                        </div>
+                                    </Label>
+                                    <div class="status-options">
+                                        <div
+                                            class={`status-option unsold ${field.value === "unsold" ? "selected" : ""}`}
+                                            onClick$={() => (field.value = "unsold")}
+                                        >
+                                            <input
+                                                {...props}
+                                                type="radio"
+                                                id="status-unsold"
+                                                value="unsold"
+                                                checked={field.value === "unsold"}
+                                                class="status-radio accent-purple-600"
+                                            />
+                                            <label for="status-unsold" class="status-label">
+                                                Unsold
+                                            </label>
+                                            <LuTicket class="status-icon h-5 w-5 text-purple-600" />
+                                        </div>
 
-                            <div
-                                class={`ticket-status-option unpaid ${field.value === "sold-unpaid" ? "selected" : ""}`}
-                                onClick$={() => field.value = "sold-unpaid"}
-                            >
-                                <input
-                                    {...props}
-                                    type="radio"
-                                    id="status-unpaid"
-                                    value="sold-unpaid"
-                                    checked={field.value === "sold-unpaid"}
-                                    class="h-4 w-4 accent-purple-600"
-                                />
-                                <label for="status-unpaid" class="flex-1 cursor-pointer">Sold - Unpaid</label>
-                            </div>
+                                        <div
+                                            class={`status-option unpaid ${field.value === "sold-unpaid" ? "selected" : ""}`}
+                                            onClick$={() => (field.value = "sold-unpaid")}
+                                        >
+                                            <input
+                                                {...props}
+                                                type="radio"
+                                                id="status-unpaid"
+                                                value="sold-unpaid"
+                                                checked={field.value === "sold-unpaid"}
+                                                class="status-radio accent-amber-600"
+                                            />
+                                            <label for="status-unpaid" class="status-label">
+                                                Sold - Unpaid
+                                            </label>
+                                            <LuClock class="status-icon h-5 w-5 text-amber-600" />
+                                        </div>
 
-                            <div
-                                class={`ticket-status-option paid ${field.value === "sold-paid" ? "selected" : ""}`}
-                                onClick$={() => field.value = "sold-paid"}
-                            >
-                                <input
-                                    {...props}
-                                    type="radio"
-                                    id="status-paid"
-                                    value="sold-paid"
-                                    checked={field.value === "sold-paid"}
-                                    class="h-4 w-4 accent-purple-600"
-                                />
-                                <label for="status-paid" class="flex-1 cursor-pointer">Sold - Paid</label>
-                            </div>
-                        </div>
-                    </>
-                )}
-            </Field>
+                                        <div
+                                            class={`status-option paid ${field.value === "sold-paid" ? "selected" : ""}`}
+                                            onClick$={() => (field.value = "sold-paid")}
+                                        >
+                                            <input
+                                                {...props}
+                                                type="radio"
+                                                id="status-paid"
+                                                value="sold-paid"
+                                                checked={field.value === "sold-paid"}
+                                                class="status-radio accent-green-600"
+                                            />
+                                            <label for="status-paid" class="status-label">
+                                                Sold - Paid
+                                            </label>
+                                            <LuCheckCircle class="status-icon h-5 w-5 text-green-600" />
+                                        </div>
+                                    </div>
+                                    {field.error && (
+                                        <div class="error-message">
+                                            <LuAlertCircle class="h-4 w-4 mr-1" />
+                                            {field.error}
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </Field>
+                    </div>
 
-            <footer class="modal-footer">
-                <Button
-                    look="secondary"
-                    type="button"
-                    onClick$={onCancel$}
-                    class="px-4 py-2 text-purple-800 bg-white border-purple-200 hover:bg-purple-50"
-                >
-                    Cancel
-                </Button>
-                <Button
-                    look="primary"
-                    type="submit"
-                    disabled={ticketForm.submitting}
-                    class="px-4 py-2 bg-purple-700 hover:bg-purple-800 text-white"
-                >
-                    {ticketForm.submitting ? 'Saving...' : 'Save Changes'}
-                </Button>
-            </footer>
-        </Form>
-    );
-});
+                    {/* Form Footer */}
+                    <div class="form-footer">
+                        <Button 
+                            type="button" 
+                            onClick$={onCancel$} 
+                            class="cancel-btn" 
+                            disabled={ticketForm.submitting}
+                        >
+                            Cancel
+                        </Button>
+                        <Button 
+                            type="submit" 
+                            disabled={ticketForm.submitting} 
+                            class="submit-btn"
+                        >
+                            {ticketForm.submitting ? "Saving..." : "Save Changes"}
+                        </Button>
+                    </div>
+                </Form>
+            </div>
+        )
+    },
+)
+

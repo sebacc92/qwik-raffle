@@ -9,10 +9,10 @@ export { useFormRaffleAction } from "~/shared/forms/actions";
 export default component$(() => {
   return (
     <div class="flex justify-center items-center min-h-screen bg-gray-50">
-      <Card.Root class="w-[400px]">
+      <Card.Root class="w-full max-w-[550px] mx-4 animate-fadeIn">
         <Card.Header>
-          <Card.Title>Crear Nuevo Sorteo</Card.Title>
-          <Card.Description>Introduce la información para tu sorteo</Card.Description>
+          <Card.Title>Create New Raffle</Card.Title>
+          <Card.Description>Enter the information for your raffle</Card.Description>
         </Card.Header>
         <Card.Content>
           <RaffleForm />
@@ -23,11 +23,11 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Qwik Raffle - Crear Sorteo",
+  title: "Qwik Raffle - Create Raffle",
   meta: [
     {
       name: "description",
-      content: "Crea un nuevo sorteo rapidamente con Qwik Raffle",
+      content: "Create a new raffle quickly with Qwik Raffle",
     },
   ],
 };

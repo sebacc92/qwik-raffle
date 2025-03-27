@@ -1,0 +1,129 @@
+/* Estilos personalizados para el formulario de tickets */
+.form-container {
+  @apply w-full max-w-md mx-auto;
+}
+
+.form-field {
+  @apply mb-6;
+}
+
+.field-label {
+  @apply block text-sm font-medium text-purple-800 mb-2;
+}
+
+.input-field {
+  @apply w-full px-4 py-3 rounded-lg border border-purple-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-200 outline-none;
+}
+
+.error-message {
+  @apply text-red-500 text-sm mt-1 flex items-center;
+}
+
+.status-options {
+  @apply space-y-3 mt-2;
+}
+
+.status-option {
+  @apply flex items-center p-3 rounded-lg border border-gray-200 transition-all duration-200 cursor-pointer;
+}
+
+.status-option.unsold {
+  @apply hover:bg-purple-50;
+}
+
+.status-option.unsold.selected {
+  @apply bg-purple-100 border-purple-300;
+}
+
+.status-option.unpaid {
+  @apply hover:bg-amber-50;
+}
+
+.status-option.unpaid.selected {
+  @apply bg-amber-100 border-amber-300;
+}
+
+.status-option.paid {
+  @apply hover:bg-green-50;
+}
+
+.status-option.paid.selected {
+  @apply bg-green-100 border-green-300;
+}
+
+.status-radio {
+  @apply h-5 w-5 mr-3 accent-purple-600;
+}
+
+.status-label {
+  @apply flex-1 font-medium;
+}
+
+.status-icon {
+  @apply ml-2;
+}
+
+.form-footer {
+  @apply flex justify-end space-x-3 mt-8;
+}
+
+.cancel-btn {
+  @apply px-5 py-2.5 rounded-lg text-purple-700 bg-white border border-purple-200 hover:bg-purple-50 transition-colors font-medium;
+}
+
+.submit-btn {
+  @apply px-5 py-2.5 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition-colors font-medium flex items-center justify-center min-w-[120px];
+}
+
+.submit-btn:disabled {
+  @apply bg-purple-400 cursor-not-allowed;
+}
+
+.input-with-icon {
+  @apply relative;
+}
+
+.input-icon {
+  @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400;
+}
+
+.input-with-icon .input-field {
+  @apply pl-10;
+}
+
+/* Agregar estilos para el modal */
+.modal-edit-ticket {
+  @apply max-w-md w-full bg-white p-6 rounded-lg shadow-lg relative;
+}
+
+/* Agregar estilos para el título y descripción del modal */
+.modal-title {
+  @apply text-xl font-bold text-purple-800;
+}
+
+.modal-description {
+  @apply text-purple-600;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 640px) {
+  .form-footer {
+    @apply flex-col space-y-3 space-x-0;
+  }
+
+  .cancel-btn, .submit-btn {
+    @apply w-full;
+  }
+}
+
+/* Asegurarse de que los botones sean visibles */
+button.cancel-btn, button.submit-btn {
+  @apply block;
+}
+
+/* Asegurarse de que los iconos de estado se muestren correctamente */
+.status-icon.h-5.w-5.text-purple-600,
+.status-icon.h-5.w-5.text-amber-600,
+.status-icon.h-5.w-5.text-green-600 {
+  @apply inline-block;
+} 

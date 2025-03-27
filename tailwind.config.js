@@ -8,22 +8,19 @@ export default {
     theme: {
         extend: {
             colors: {
-                border: "hsl(var(--border))",
+                border: "hsl(var(--border-color))",
                 input: "hsl(var(--input))",
                 ring: "hsl(var(--ring))",
-                background: "hsl(var(--background))",
-                foreground: "hsl(var(--foreground))",
+                background: "hsl(var(--bg-primary))",
+                foreground: "hsl(var(--text-primary))",
                 primary: {
                     DEFAULT: "hsl(var(--primary))",
                     foreground: "hsl(var(--primary-foreground))",
+                    hover: "hsl(var(--primary-hover))"
                 },
                 secondary: {
                     DEFAULT: "hsl(var(--secondary))",
                     foreground: "hsl(var(--secondary-foreground))",
-                },
-                alert: {
-                    DEFAULT: "hsl(var(--alert))",
-                    foreground: "hsl(var(--alert-foreground))",
                 },
                 muted: {
                     DEFAULT: "hsl(var(--muted))",
@@ -34,12 +31,16 @@ export default {
                     foreground: "hsl(var(--accent-foreground))",
                 },
                 card: {
-                    DEFAULT: "hsl(var(--card))",
+                    DEFAULT: "hsl(var(--card-bg))",
                     foreground: "hsl(var(--card-foreground))",
                 },
                 popover: {
                     DEFAULT: "hsl(var(--popover))",
                     foreground: "hsl(var(--popover-foreground))",
+                },
+                alert: {
+                    DEFAULT: "hsl(var(--alert))",
+                    foreground: "hsl(var(--alert-foreground))",
                 },
                 'poll-option-hover': 'rgba(var(--color-primary-rgb), 0.05)',
             },

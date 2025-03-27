@@ -15,7 +15,7 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
 
 export default component$(() => {
   return <>
-    <Toaster position="top-center" />
+    <Toaster position="top-center" richColors />
     <Slot />
   </>;
 });

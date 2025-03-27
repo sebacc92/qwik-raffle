@@ -2,36 +2,27 @@
  * Tailwind CSS imports
  * View the full documentation at https://tailwindcss.com
  */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @layer base {
     :root {
-        /* Colores base */
-        --primary: #0891b2;
-        /* Cyan-600 */
-        --primary-hover: #0e7490;
-        /* Cyan-700 */
+        --primary: 192 91.4% 36.5%;
+        --primary-hover: 193 82.3% 31%;
 
-        /* Modo claro */
-        --bg-primary: #f9fafb;
-        /* gray-50 - contenido principal más claro */
-        --bg-secondary: #f3f4f6;
-        /* gray-100 - sidebar un poco más oscuro */
-        --bg-tertiary: #f1f5f9;
+        --bg-primary: 210 20% 98%;
+        --bg-secondary: 220 14.3% 95.9%;
+        --bg-tertiary: 210 40% 96.1%;
 
-        --text-primary: #1e293b;
-        --text-secondary: #64748b;
-        --text-tertiary: #94a3b8;
+        --text-primary: 217 32.6% 17.5%;
+        --text-secondary: 215 16.3% 46.9%;
+        --text-tertiary: 215 20.2% 65.1%;
 
-        --border-color: #e2e8f0;
-        --card-bg: #ffffff;
+        --border-color: 214 31.8% 91.4%;
+        --card-bg: 0 0% 100%;
         --card-hover: #f8fafc;
 
-        --poll-option-bg: #f1f5f9;
-        --poll-option-hover: #e2e8f0;
-        --poll-progress-bg: #e2e8f0;
+        --poll-option-bg: 210 40% 96.1%;
+        --poll-option-hover: 214 31.8% 91.4%;
+        --poll-progress-bg: 214 31.8% 91.4%;
 
         /* Estados */
         --like-color: #3b82f6;
@@ -39,30 +30,30 @@
         --comment-color: #8b5cf6;
         --share-color: #10b981;
 
-        --background: 0 0% 100%;
-        --foreground: 222.2 47.4% 11.2%;
-        --muted: 210 40% 96.1%;
-        --muted-foreground: 215.4 16.3% 46.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 222.2 47.4% 11.2%;
-        --card: 0 0% 100%;
-        --card-foreground: 222.2 47.4% 11.2%;
-        --border: 214.3 31.8% 91.4%;
-        --input: 214.3 31.8% 91.4%;
-        --primary-foreground: 0 0% 100%;
-        --secondary: 222.2 47.4% 11.2%;
-        --secondary-foreground: 0 0% 100%;
-        --accent: 210 40% 96.1%;
-        --accent-foreground: 222.2 47.4% 11.2%;
-        --alert: 0 84.2% 60.2%;
-        --alert-foreground: 210 40% 98%;
-        --ring: 222.2 47.4% 11.2%;
+        --background: 0 0% 100%; 
+        --foreground: 218 44% 19.6%;
+        --muted: 210 57.1% 97.3%;
+        --muted-foreground: 210 14.3% 53.3%;
+        --popover: 0 0% 100%; 
+        --popover-foreground: 218 44% 19.6%;
+        --card: 0 0% 100%; 
+        --card-foreground: 218 44% 19.6%;
+        --border: #e9eff8;
+        --input: #e9eff8;
+        --primary-foreground: 0 0% 100%; 
+        --secondary: 218 44% 19.6%;
+        --secondary-foreground: 0 0% 100%; 
+        --accent: 210 57.1% 97.3%;
+        --accent-foreground: 218 44% 19.6%;
+        --alert: 25 100% 50%;
+        --alert-foreground: 240 20% 99%;
+        --ring: 218 44% 19.6%;
         --border-width: 0px;
         --border-radius: 0;
         --shadow-base: 0 1px 2px 0 rgba(0, 0, 0, 0.01);
-        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-        --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
         --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
             0 4px 6px -4px rgba(0, 0, 0, 0.1);
         --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
@@ -73,51 +64,47 @@
 
         /* Sidebar y Header */
         --sidebar-bg: #f8fafc;
-        --sidebar-hover: #f1f5f9;
-        --sidebar-active: #e2e8f0;
+        --sidebar-hover: 210 40% 96.1%;
+        --sidebar-active: 214 31.8% 91.4%;
         --sidebar-text: #64748b;
         --sidebar-text-active: #0f172a;
-        --sidebar-border: #e2e8f0;
+        --sidebar-border: 214 31.8% 91.4%;
 
         --header-bg: linear-gradient(to right, var(--qwik-dark-purple), var(--qwik-purple));
-        --header-border: #e2e8f0;
-        --header-text: #ffffff;
+        --header-border: 214 31.8% 91.4%;
+        --header-text: 0 0% 100%;
         --header-input-bg: #f8fafc;
         --header-input-text: #0f172a;
-        --header-input-placeholder: #94a3b8;
+        --header-input-placeholder: 215 20.2% 65.1%;
 
-        /* Colores Qwik */
         --qwik-light-purple: #ac7ff4;
         --qwik-purple: #9b60ed;
         --qwik-dark-purple: #713fc2;
         --qwik-darker-purple: #4e2d99;
-        
-        /* Variables para modales */
+
+        /* Variables para odales */
         --modal-border: #e9d5ff;
         --modal-shadow: 0 10px 25px -5px rgba(107, 33, 168, 0.2), 0 8px 10px -6px rgba(107, 33, 168, 0.1);
-        --modal-bg: #ffffff;
+        --modal-bg: 0 0% 100%;
         --modal-radius: 1rem;
         --modal-header-color: #6b21a8;
         --modal-text-color: #7e22ce;
     }
 
     .dark {
-        /* Modo oscuro */
-        --bg-primary: #111827;
-        /* gray-900 - contenido principal */
-        --bg-secondary: #1f2937;
-        /* gray-800 - sidebar un poco más oscuro */
-        --bg-tertiary: #334155;
+        --bg-primary: 221 39.3% 11%;
+        --bg-secondary: 215 27.9% 16.9%;
+        --bg-tertiary: 215 25% 26.7%;
 
-        --text-primary: #f1f5f9;
-        --text-secondary: #cbd5e1;
-        --text-tertiary: #94a3b8;
+        --text-primary: 210 40% 96.1%;
+        --text-secondary: 213 26.8% 83.9%;
+        --text-tertiary: 215 20.2% 65.1%;
 
-        --border-color: #334155;
-        --card-bg: #1e293b;
-        --card-hover: #334155;
+        --border-color: 215 25% 26.7%;
+        --card-bg: 217 32.6% 17.5%;
+        --card-hover: 215 25% 26.7%;
 
-        --poll-option-bg: #334155;
+        --poll-option-bg: 215 25% 26.7%;
         --poll-option-hover: #475569;
         --poll-progress-bg: #475569;
 
@@ -127,26 +114,25 @@
         --comment-color: #a78bfa;
         --share-color: #34d399;
 
-        --background: 222.2 84% 4.9%;
-        --foreground: 210 40% 98%;
-        --muted: 217.2 32.6% 17.5%;
-        --muted-foreground: 215 20.2% 65.1%;
-        --popover: 222.2 84% 4.9%;
-        --popover-foreground: 210 40% 98%;
-        --card: 222.2 84% 4.9%;
-        --card-foreground: 210 40% 98%;
-        --border: 217.2 32.6% 17.5%;
-        --input: 217.2 32.6% 17.5%;
+        --background: #0a0f1a;
+        --foreground: 240 20% 99%;
+        --muted: 214 26.2% 23.9%;
+        --muted-foreground: #a6b1c0;
+        --popover: #0a0f1a;
+        --popover-foreground: 240 20% 99%;
+        --card: #0a0f1a;
+        --card-foreground: 240 20% 99%;
+        --border: 214 26.2% 23.9%;
+        --input: 214 26.2% 23.9%;
         --primary: #06b6d4;
-        /* Cyan-500 para modo oscuro */
         --primary-foreground: 0 0% 100%;
-        --secondary: 210 40% 96.1%;
-        --secondary-foreground: 0 0% 0%;
-        --accent: 217.2 32.6% 17.5%;
-        --accent-foreground: 210 40% 98%;
-        --alert: 0 84.2% 60.2%;
-        --alert-foreground: 210 40% 98%;
-        --ring: 212.7 26.8% 83.9;
+        --secondary: 210 57.1% 97.3%;
+        --secondary-foreground: #000000;
+        --accent: 214 26.2% 23.9%;
+        --accent-foreground: 240 20% 99%;
+        --alert: 25 100% 50%;
+        --alert-foreground: 240 20% 99%;
+        --ring: 216 59.3% 89.4%;
         --border-width: 0px;
         --border-radius: 0;
         --shadow-base: 0 1px 2px 0 rgba(0, 0, 0, 0.01);
@@ -163,21 +149,20 @@
         --transform-press: scale(0.95);
 
         /* Sidebar y Header en modo oscuro */
-        --sidebar-bg: #1e293b;
-        --sidebar-hover: #334155;
+        --sidebar-bg: 217 32.6% 17.5%;
+        --sidebar-hover: 215 25% 26.7%;
         --sidebar-active: #475569;
-        --sidebar-text: #94a3b8;
+        --sidebar-text: 215 20.2% 65.1%;
         --sidebar-text-active: #f8fafc;
-        --sidebar-border: #334155;
+        --sidebar-border: 215 25% 26.7%;
 
         --header-bg: linear-gradient(to right, var(--qwik-darker-purple), var(--qwik-dark-purple));
-        --header-border: #1e293b;
-        --header-text: #ffffff;
-        --header-input-bg: #1e293b;
+        --header-border: 217 32.6% 17.5%;
+        --header-text: 0 0% 100%;
+        --header-input-bg: 217 32.6% 17.5%;
         --header-input-text: #f8fafc;
         --header-input-placeholder: #64748b;
-        
-        /* Variables para modales en modo oscuro */
+
         --modal-border: #4a044e;
         --modal-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
         --modal-bg: #1e1b4b;
@@ -212,11 +197,9 @@
 /* Estilos generales */
 body {
     @apply bg-gray-50 dark:bg-gray-900;
-    /* Color del contenido principal */
     color: var(--text-primary);
 }
 
-/* Estilos para las tarjetas de encuestas */
 .poll-card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -259,7 +242,6 @@ body {
     transition: width 0.3s ease;
 }
 
-/* Estilos para los botones de interacción */
 .btn-interaction {
     display: flex;
     align-items: center;
@@ -284,7 +266,6 @@ body {
     color: var(--share-color);
 }
 
-/* Estilos para el Sidebar */
 .sidebar {
     @apply bg-gray-100 dark:bg-gray-800;
     /* Color del sidebar */
@@ -320,17 +301,14 @@ body {
     color: var(--header-input-placeholder);
 }
 
-/* Estilos para el redimensionamiento del sidebar */
 .cursor-col-resize {
     cursor: col-resize;
 }
 
-/* Prevenir selección de texto durante el redimensionamiento */
 .user-select-none {
     user-select: none;
 }
 
-/* Mejorar visualización de la jerarquía */
 .community-item-container {
     position: relative;
 }
@@ -345,7 +323,6 @@ body {
     opacity: 0.5;
 }
 
-/* Estilos para headers sticky */
 .sticky-header {
     position: sticky;
     background-color: var(--bg-secondary);
@@ -371,7 +348,6 @@ body {
     opacity: 1;
 }
 
-/* Ajustar z-index para niveles anidados */
 .sticky-header-level-0 {
     z-index: 30;
 }
@@ -392,7 +368,6 @@ body {
     z-index: 26;
 }
 
-/* Actualizar los estilos para el sticky header */
 .sticky-community-header {
     position: sticky;
     background-color: var(--bg-secondary);
@@ -418,7 +393,6 @@ body {
     opacity: 1;
 }
 
-/* Estilos para la indentación y líneas guía */
 .community-content {
     position: relative;
     transition: padding-top 0.2s ease-in-out;
@@ -435,7 +409,6 @@ body {
     opacity: 0.5;
 }
 
-/* Estilos para la jerarquía del sidebar */
 .community-item {
     position: relative;
     transition: all 0.2s ease-in-out;
@@ -468,12 +441,10 @@ body {
     opacity: 1;
 }
 
-/* Efecto de hover para los íconos */
 .community-icon {
     transition: transform 0.2s ease-in-out;
 }
 
-/* Línea divisoria con gradiente */
 .community-divider {
     height: 1px;
     background: linear-gradient(to right,
@@ -484,7 +455,6 @@ body {
     opacity: 0.5;
 }
 
-/* Animación de loading */
 @keyframes pulse {
 
     0%,
@@ -501,7 +471,6 @@ body {
     animation: pulse 1.5s ease-in-out infinite;
 }
 
-/* Ajustar el espaciado del contenido colapsable */
 .collapsible-content {
     overflow: hidden;
     transition: all 0.2s ease-in-out;
@@ -536,5 +505,53 @@ body {
     to {
         height: 0;
         opacity: 0;
+    }
+}
+
+
+.error-message {
+    @apply text-red-500 text-sm mt-1 flex items-center;
+}
+
+.status-options {
+    @apply space-y-3 mt-2;
+}
+
+.status-radio {
+    @apply h-5 w-5 mr-3;
+}
+
+.status-label {
+    @apply flex-1 font-medium;
+}
+
+.status-icon {
+    @apply ml-2;
+}
+
+.form-footer {
+    @apply flex justify-end space-x-3 mt-8;
+}
+
+.input-with-icon {
+    @apply relative;
+}
+
+.input-icon {
+    @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400;
+}
+
+.input-with-icon .input-field {
+    @apply pl-10;
+}
+
+@media (max-width: 640px) {
+    .form-footer {
+        @apply flex-col space-y-3 space-x-0;
+    }
+
+    .cancel-btn,
+    .submit-btn {
+        @apply w-full;
     }
 }
