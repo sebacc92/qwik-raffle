@@ -4,12 +4,10 @@ import Drizzler from "../../../drizzle";
 import { schema } from "../../../drizzle/schema";
 import { v4 } from "uuid";
 import { and, eq } from "drizzle-orm";
-import { TicketForm, TicketResponseData, TicketSchema } from "~/schemas/ticketSchema";
+import { type TicketForm, type TicketResponseData, TicketSchema } from "~/schemas/ticketSchema";
 
 export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
     async (values) => {
-        console.log('useFormRaffleAction')
-        console.log('values', values)
         const payload = {
             ...values,
             uuid: v4()
@@ -61,12 +59,9 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
 
 export const useFormTicketAction = formAction$<TicketForm, TicketResponseData>(
     async (values) => {
-        console.log('useFormTicketAction');
-        console.log('values', values);
         
         const db = Drizzler();
         try {
-            // Actualizar el número del sorteo
             await db
                 .update(schema.raffleNumbers)
                 .set({

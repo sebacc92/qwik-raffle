@@ -15,7 +15,6 @@ export default component$(() => {
     })
 
     if (raffleForm.response.status === 'success') {
-        console.log('raffleForm.response.data', raffleForm.response.data)
         const url = raffleForm.response.data?.data?.share_link
         if (url) {
             nav(url)

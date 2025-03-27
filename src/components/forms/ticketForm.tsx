@@ -8,7 +8,7 @@ import styles from '~/routes/raffle/[uuid]/raffle.css?inline'
 export interface TicketFormProps {
     raffleId: number;
     ticketNumber: number;
-    initialBuyerName?: string;
+    initialBuyerName: string | null;
     initialStatus: "unsold" | "sold-unpaid" | "sold-paid";
     onSuccess$?: QRL<() => void>;
     onCancel$?: QRL<() => void>;
@@ -17,6 +17,8 @@ export interface TicketFormProps {
 export default component$<TicketFormProps>(({
     raffleId,
     ticketNumber,
+    initialBuyerName,
+    initialStatus,
     onSuccess$,
     onCancel$
 }) => {
@@ -26,8 +28,8 @@ export default component$<TicketFormProps>(({
             value: {
                 raffleId,
                 number: ticketNumber,
-                buyerName: "",
-                status: "unsold"
+                buyerName: initialBuyerName || '',
+                status: initialStatus
             }
         },
         action: useFormTicketAction(),
@@ -36,7 +38,7 @@ export default component$<TicketFormProps>(({
 
     const isUpdating = useSignal(false);
 
-    // Manejar respuesta exitosa
+    // Handle successful response
     if (ticketForm.response.status === 'success' && !isUpdating.value) {
         isUpdating.value = true;
         if (onSuccess$) {
@@ -51,7 +53,7 @@ export default component$<TicketFormProps>(({
 
     return (
         <Form onSubmit$={handleSubmit} class="space-y-5">
-            {/* Campo oculto para el ID del sorteo */}
+            {/* Hidden field for raffle ID */}
             <Field name="raffleId" type="number">
                 {(field, props) => (
                     <input
@@ -62,7 +64,7 @@ export default component$<TicketFormProps>(({
                 )}
             </Field>
 
-            {/* Campo oculto para el número */}
+            {/* Hidden field for number */}
             <Field name="number" type="number">
                 {(field, props) => (
                     <input
@@ -76,13 +78,13 @@ export default component$<TicketFormProps>(({
             <Field name="buyerName">
                 {(field, props) => (
                     <>
-                        <Label for="buyerName" class="modal-label">Nombre del comprador</Label>
+                        <Label for="buyerName" class="modal-label">Buyer Name</Label>
                         <Input
                             {...props}
                             id="buyerName"
                             type="text"
                             value={field.value}
-                            placeholder="Nombre del comprador"
+                            placeholder="Buyer Name"
                             class="w-full modal-input"
                             disabled={ticketForm.submitting || field.value === "unsold"}
                         />
@@ -94,7 +96,7 @@ export default component$<TicketFormProps>(({
             <Field name="status">
                 {(field, props) => (
                     <>
-                        <Label class="modal-label">Estado del número</Label>
+                        <Label class="modal-label">Ticket Status</Label>
                         <div class="ticket-status-radio">
                             <div
                                 class={`ticket-status-option unsold ${field.value === "unsold" ? "selected" : ""}`}
@@ -108,7 +110,7 @@ export default component$<TicketFormProps>(({
                                     checked={field.value === "unsold"}
                                     class="h-4 w-4 accent-purple-600"
                                 />
-                                <label for="status-unsold" class="flex-1 cursor-pointer">No vendido</label>
+                                <label for="status-unsold" class="flex-1 cursor-pointer">Unsold</label>
                             </div>
 
                             <div
@@ -123,7 +125,7 @@ export default component$<TicketFormProps>(({
                                     checked={field.value === "sold-unpaid"}
                                     class="h-4 w-4 accent-purple-600"
                                 />
-                                <label for="status-unpaid" class="flex-1 cursor-pointer">Vendido - Pendiente de pago</label>
+                                <label for="status-unpaid" class="flex-1 cursor-pointer">Sold - Unpaid</label>
                             </div>
 
                             <div
@@ -138,7 +140,7 @@ export default component$<TicketFormProps>(({
                                     checked={field.value === "sold-paid"}
                                     class="h-4 w-4 accent-purple-600"
                                 />
-                                <label for="status-paid" class="flex-1 cursor-pointer">Vendido - Pagado</label>
+                                <label for="status-paid" class="flex-1 cursor-pointer">Sold - Paid</label>
                             </div>
                         </div>
                     </>
@@ -152,7 +154,7 @@ export default component$<TicketFormProps>(({
                     onClick$={onCancel$}
                     class="px-4 py-2 text-purple-800 bg-white border-purple-200 hover:bg-purple-50"
                 >
-                    Cancelar
+                    Cancel
                 </Button>
                 <Button
                     look="primary"
@@ -160,9 +162,9 @@ export default component$<TicketFormProps>(({
                     disabled={ticketForm.submitting}
                     class="px-4 py-2 bg-purple-700 hover:bg-purple-800 text-white"
                 >
-                    {ticketForm.submitting ? 'Guardando...' : 'Guardar Cambios'}
+                    {ticketForm.submitting ? 'Saving...' : 'Save Changes'}
                 </Button>
             </footer>
         </Form>
     );
-}); 
+});

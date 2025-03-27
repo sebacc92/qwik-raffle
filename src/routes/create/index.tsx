@@ -5,7 +5,6 @@ import { schema } from "../../../drizzle/schema";
 
 export const useCreateUser = routeAction$(
   async (data) => {
-    console.log('data', data)
     const db = Drizzler();
     try {
       await db.insert(schema.users).values(data);
