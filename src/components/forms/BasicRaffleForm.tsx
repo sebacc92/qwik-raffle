@@ -1,17 +1,19 @@
 import { $, component$, useTask$ } from '@builder.io/qwik'
 import { useNavigate } from '@builder.io/qwik-city'
-import { useForm, valiForm$ } from '@modular-forms/qwik'
+import { useForm, valiForm$, insert, remove } from '@modular-forms/qwik'
 import { toast } from 'qwik-sonner';
-import { Button, Input, Label } from '~/components/ui'
+import { Button, Input, Label, Textarea } from '~/components/ui'
 import { type RaffleForm, type RaffleResponseData, RaffleSchema } from '~/schemas/raffleSchema'
 import { useFormRaffleAction } from '~/shared/forms/actions'
 import { useFormRaffleLoader } from '~/shared/forms/loaders'
+import { LuTrash, LuPlus } from '@qwikest/icons/lucide'
 
 export default component$(() => {
     const nav = useNavigate();
-    const [raffleForm, { Form, Field }] = useForm<RaffleForm, RaffleResponseData>({
+    const [raffleForm, { Form, Field, FieldArray }] = useForm<RaffleForm, RaffleResponseData>({
         loader: useFormRaffleLoader(),
         action: useFormRaffleAction(),
+        fieldArrays: ['prizes'],
         validate: valiForm$(RaffleSchema)
     })
     
@@ -54,6 +56,32 @@ export default component$(() => {
                             </svg>
                             {field.error}
                         </div>}
+                        <div class="text-sm text-gray-500">{(field.value?.length || 0)}/100 characters</div>
+                    </div>
+                )}
+            </Field>
+
+            <Field name="description">
+                {(field, props) => (
+                    <div class="space-y-1.5">
+                        <Label for="raffle-description" class="flex items-center">
+                            Description (optional)
+                        </Label>
+                        <Textarea
+                            {...props}
+                            id="raffle-description"
+                            maxLength={500}
+                            value={field.value}
+                            placeholder="Add a description or note for your raffle"
+                            class="w-full px-3 py-2 border rounded-md transition-all duration-200 focus:border-primary hover:border-gray-400 dark:hover:border-gray-600 dark:bg-gray-800"
+                        />
+                        {field.error && <div class="text-alert text-sm flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                            {field.error}
+                        </div>}
+                        <div class="text-sm text-gray-500">{(field.value?.length || 0)}/500 characters</div>
                     </div>
                 )}
             </Field>
@@ -112,6 +140,78 @@ export default component$(() => {
                         </div>
                     )}
                 </Field>
+            </div>
+
+            {/* Prizes section */}
+            <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <Label class="flex items-center">
+                        <span class="inline-block mr-2 text-primary font-bold">🎁</span>
+                        Prizes
+                    </Label>
+                </div>
+
+                <FieldArray name="prizes">
+                    {(fieldArray) => (
+                        <div class="space-y-4">
+                            {fieldArray.items.map((prize, index) => (
+                                <div key={index} class="flex items-start gap-4">
+                                    <div class="flex-1">
+                                        <Field name={`prizes.${index}.name`}>
+                                            {(field, props) => (
+                                                <div class="space-y-1.5">
+                                                    <Label for={`prize-${index}`}>Prize {index + 1}</Label>
+                                                    <Input
+                                                        {...props}
+                                                        id={`prize-${index}`}
+                                                        type="text"
+                                                        value={field.value}
+                                                        placeholder={`Enter prize ${index + 1} name`}
+                                                        class="transition-all duration-200 focus:border-primary hover:border-gray-400 dark:hover:border-gray-600"
+                                                    />
+                                                    {field.error && <div class="text-alert text-sm flex items-center">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                                        </svg>
+                                                        {field.error}
+                                                    </div>}
+                                                </div>
+                                            )}
+                                        </Field>
+                                    </div>
+                                    <Field name={`prizes.${index}.position`} type="number">
+                                        {(field, props) => (
+                                            <input type="hidden" {...props} value={index + 1} />
+                                        )}
+                                    </Field>
+                                    {fieldArray.items.length > 1 && (
+                                        <button
+                                            type="button"
+                                            class="mt-8 p-2 text-gray-500 hover:text-red-500 transition-colors"
+                                            onClick$={() => remove(raffleForm, 'prizes', { at: index })}
+                                            aria-label="Remove prize"
+                                        >
+                                            <LuTrash class="w-5 h-5" />
+                                        </button>
+                                    )}
+                                </div>
+                            ))}
+                            
+                            {fieldArray.items.length < 10 && (
+                                <button
+                                    type="button"
+                                    onClick$={() => insert(raffleForm, 'prizes', {
+                                        value: { name: '', position: fieldArray.items.length + 1 }
+                                    })}
+                                    class="inline-flex items-center text-sm text-primary hover:text-primary/80"
+                                >
+                                    <LuPlus class="w-4 h-4 mr-1" />
+                                    Add Prize
+                                </button>
+                            )}
+                        </div>
+                    )}
+                </FieldArray>
             </div>
             
             <div class="pt-2">

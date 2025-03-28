@@ -7,3 +7,4 @@ export * from "./skeleton/skeleton";
 export * from "./avatar/avatar";
 export * from "./dropdown/dropdown";
 export * from "./separator/separator";
+export * from "./textarea/textarea";

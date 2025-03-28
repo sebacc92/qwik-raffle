@@ -36,7 +36,7 @@ export default component$<TicketProps>(({ ticket, raffleId }) => {
             <div
                 key={ticket.number}
                 onClick$={handleTicketClick}
-                class={`ticket ${ticket.status === 'unsold'
+                class={`p-4 ticket ${ticket.status === 'unsold'
                     ? 'ticket-unsold'
                     : ticket.status === 'sold-unpaid'
                         ? 'ticket-unpaid'
@@ -49,35 +49,33 @@ export default component$<TicketProps>(({ ticket, raffleId }) => {
                         {ticket.buyerName}
                     </span>
                 )}
+                <Modal.Root bind:show={showModal}>
+                    <Modal.Panel class="modal-edit-ticket">
+                        <Modal.Close
+                            class="absolute right-4 top-4 text-purple-700 hover:text-purple-900 transition-colors"
+                            onClick$={handleClose}
+                        >
+                            <LuX class="h-5 w-5" />
+                        </Modal.Close>
+                        <div class="pb-2">
+                            <Modal.Title class="text-xl font-bold text-purple-800">
+                                Edit Ticket Number {ticket.number}
+                            </Modal.Title>
+                            <Modal.Description class="text-purple-600">
+                                Update information of the selected ticket
+                            </Modal.Description>
+                        </div>
+                        <TicketForm 
+                            raffleId={raffleId}
+                            ticketNumber={ticket.number}
+                            initialBuyerName={ticket.buyerName}
+                            initialStatus={ticket.status}
+                            onSuccess$={handleSuccess}
+                            onCancel$={handleCancel}
+                        />
+                    </Modal.Panel>
+                </Modal.Root>
             </div>
-
-            {/* Modal to edit ticket */}
-            <Modal.Root bind:show={showModal}>
-                <Modal.Panel class="modal-edit-ticket">
-                    <Modal.Close
-                        class="absolute right-4 top-4 text-purple-700 hover:text-purple-900 transition-colors"
-                        onClick$={handleClose}
-                    >
-                        <LuX class="h-5 w-5" />
-                    </Modal.Close>
-                    <div class="pb-2">
-                        <Modal.Title class="text-xl font-bold text-purple-800">
-                            Edit Ticket Number {ticket.number}
-                        </Modal.Title>
-                        <Modal.Description class="text-purple-600">
-                            Update information of the selected ticket
-                        </Modal.Description>
-                    </div>
-                    <TicketForm 
-                        raffleId={raffleId}
-                        ticketNumber={ticket.number}
-                        initialBuyerName={ticket.buyerName}
-                        initialStatus={ticket.status}
-                        onSuccess$={handleSuccess}
-                        onCancel$={handleCancel}
-                    />
-                </Modal.Panel>
-            </Modal.Root>
         </>
     );
 }); 

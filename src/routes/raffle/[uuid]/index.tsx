@@ -226,6 +226,32 @@ export default component$(() => {
                 </div>
             </div>
 
+            {/* Lista de premios */}
+            {raffle.value.prizes && raffle.value.prizes.length > 0 && (
+                <div class="border rounded-lg p-4">
+                    <div class="flex items-center gap-2 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600">
+                            <circle cx="12" cy="8" r="7"></circle>
+                            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                        </svg>
+                        <h3 class="font-semibold text-purple-800">Prizes</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        {raffle.value.prizes.sort((a, b) => a.position - b.position).map((prize) => (
+                            <div 
+                                key={prize.id}
+                                class="flex items-center gap-2 bg-purple-50 rounded-md p-3"
+                            >
+                                <span class="flex items-center justify-center w-6 h-6 bg-purple-600 text-white rounded-full text-sm font-medium">
+                                    {prize.position}
+                                </span>
+                                <span class="text-purple-900">{prize.name}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
             <div class="flex justify-center">
                 <button
                     onClick$={() => {

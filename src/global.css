@@ -200,6 +200,10 @@ body {
     color: var(--text-primary);
 }
 
+textarea {
+    field-sizing: content;
+}
+
 .poll-card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);

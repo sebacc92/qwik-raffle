@@ -8,8 +8,9 @@ import { type TicketForm, type TicketResponseData, TicketSchema } from "~/schema
 
 export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
     async (values) => {
+        const { prizes, ...raffleData } = values;
         const payload = {
-            ...values,
+            ...raffleData,
             uuid: v4()
         }
         const db = Drizzler();
@@ -31,6 +32,19 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
             }));
             
             await db.insert(schema.raffleNumbers).values(raffleNumbersData);
+
+            // Insert prizes if they exist
+            if (prizes && prizes.length > 0) {
+                const prizesData = prizes.map((prize, index) => ({
+                    raffleId,
+                    name: prize.name,
+                    position: index + 1,
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                }));
+                
+                await db.insert(schema.prizes).values(prizesData);
+            }
             
             const fullShareLink = `/raffle/${uuid}`;
             
@@ -97,4 +111,4 @@ export const useFormTicketAction = formAction$<TicketForm, TicketResponseData>(
         }
     },
     valiForm$(TicketSchema)
-); 
+);

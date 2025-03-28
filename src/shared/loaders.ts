@@ -28,21 +28,41 @@ export interface RaffleData {
     updatedAt: Date;
     expiresAt: Date;
     isTemporary: boolean;
+    prizes: {
+        id: number;
+        name: string;
+        description: string | null;
+        position: number;
+        imageUrl: string | null;
+    }[];
 }
 
 export const useGetRaffle = routeLoader$(async (requestEvent) => {
     const raffleUuid = requestEvent.params["uuid"];
     const db = Drizzler();
+    
+    // Primero obtenemos el sorteo
     const raffle = await db.query.raffles.findFirst({
         where: (raffles, { eq }) => eq(raffles.uuid, raffleUuid),
     });
+
     if (!raffle) {
         // Return a failed value to indicate that product was not found
         return requestEvent.fail(404, {
             errorMessage: `Raffle with UUID ${raffleUuid} not found`,
         });
     }
-    return raffle as RaffleData;
+
+    // Luego obtenemos los premios
+    const prizes = await db.query.prizes.findMany({
+        where: (prizes, { eq }) => eq(prizes.raffleId, raffle.id),
+    });
+
+    // Combinamos los resultados
+    return {
+        ...raffle,
+        prizes: prizes
+    } as RaffleData;
 });
 
 export const useGetRaffleNumbers = routeLoader$(async (requestEvent) => {
