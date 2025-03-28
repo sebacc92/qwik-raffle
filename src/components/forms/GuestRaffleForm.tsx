@@ -113,7 +113,7 @@ const saveRaffle = async (raffleData: RaffleFormData) => {
 
 export const InfoAlert = component$(() => {
     return (
-        <div class="w-full max-w-[550px] mx-auto mb-4 p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg">
+        <div class="w-full mb-4 lg:mb-0 p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg">
             <div class="flex items-start">
                 <div class="flex-shrink-0 mt-0.5">
                     <LuInfo class="w-5 h-5 text-blue-500 dark:text-blue-400" />

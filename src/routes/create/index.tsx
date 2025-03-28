@@ -14,23 +14,29 @@ export default component$(() => {
   const session = useSession();
   return (
     <div class="flex flex-col justify-center items-center min-h-screen bg-gray-50 py-6">
-      {!session.value && <InfoAlert />}
-      
-      <Card.Root class="w-full max-w-[550px] mx-4 animate-fadeIn">
-        <Card.Header>
-          <Card.Title>Create New Raffle</Card.Title>
-          <Card.Description>Enter the information for your raffle</Card.Description>
-        </Card.Header>
-        <Card.Content>
-          {!session.value ? (
-            <GuestRaffleForm />
-          ) : session.value.user?.name === "isPremium" ? (
-            <PremiumRaffleForm />
-          ) : (
-            <BasicRaffleForm />
-          )}
-        </Card.Content>
-      </Card.Root>
+      <div class="w-full max-w-[1200px] mx-auto px-4 flex flex-col lg:flex-row lg:items-start lg:gap-6">
+        {!session.value && (
+          <div class="w-full lg:w-[400px] lg:sticky lg:top-6">
+            <InfoAlert />
+          </div>
+        )}
+        
+        <Card.Root class="w-full max-w-[550px] mx-auto lg:mx-0 animate-fadeIn">
+          <Card.Header>
+            <Card.Title>Create New Raffle</Card.Title>
+            <Card.Description>Enter the information for your raffle</Card.Description>
+          </Card.Header>
+          <Card.Content>
+            {!session.value ? (
+              <GuestRaffleForm />
+            ) : session.value.user?.name === "isPremium" ? (
+              <PremiumRaffleForm />
+            ) : (
+              <BasicRaffleForm />
+            )}
+          </Card.Content>
+        </Card.Root>
+      </div>
     </div>
   );
 });

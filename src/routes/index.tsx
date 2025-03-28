@@ -6,22 +6,6 @@ import { Image } from "@unpic/qwik";
 export default component$(() => {
   return (
     <div class="min-h-screen flex flex-col bg-background text-foreground">
-      {/* Header Section */}
-      <header class="w-full py-4 px-4 md:px-6 flex items-center justify-between border-b border-border shadow-sm sticky top-0 z-30 bg-background/95 backdrop-blur-sm">
-        <div class="flex items-center">
-          <LuGift class="h-8 w-8 text-primary animate-pulse" />
-          <span class="ml-2 text-xl font-bold bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent">QwikRaffle</span>
-        </div>
-        <nav class="hidden md:flex space-x-6">
-          <Link href="#features" class="text-sm font-medium hover:text-primary transition-colors">Features</Link>
-          <Link href="#pricing" class="text-sm font-medium hover:text-primary transition-colors">Pricing</Link>
-          <Link href="#testimonials" class="text-sm font-medium hover:text-primary transition-colors">Testimonials</Link>
-        </nav>
-        <Link href="/app" class="inline-flex h-9 items-center justify-center rounded-base bg-primary px-4 py-2 text-sm font-medium text-white shadow transition-colors hover:bg-primary-hover press">
-          Sign In
-        </Link>
-      </header>
-
       <main class="flex-grow">
         {/* Hero Section */}
         <section class="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted relative overflow-hidden">
@@ -517,15 +501,6 @@ export default component$(() => {
                 <Link href="/contact" class="text-sm text-muted-foreground hover:text-primary transition-colors">Contact Support</Link>
               </nav>
             </div>
-          </div>
-          
-          <div class="mt-8 border-t pt-8 text-center space-y-2">
-            <p class="text-sm font-medium">
-              Made with <span class="text-red-500">❤️</span> by <a href="https://sebastiancardoso.com" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline transition-colors">Sebastian Cardoso</a>
-            </p>
-            <p class="text-xs text-muted-foreground">
-              © {new Date().getFullYear()} QwikRaffle. All rights reserved.
-            </p>
           </div>
         </div>
       </footer>
