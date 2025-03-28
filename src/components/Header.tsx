@@ -1,6 +1,7 @@
 import { component$ } from '@builder.io/qwik';
 import { Link } from '@builder.io/qwik-city';
 import { LuGift } from '@qwikest/icons/lucide';
+import ThemeToggle from '~/components/ThemeToggle';
 
 export default component$(() => {
   return (
@@ -11,12 +12,15 @@ export default component$(() => {
           <span class="ml-2 text-xl font-bold bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent">QwikRaffle</span>
         </Link>
       </div>
-      <Link 
-        href="/app" 
-        class="inline-flex h-9 items-center justify-center rounded-base bg-primary px-4 py-2 text-sm font-medium text-white shadow transition-colors hover:bg-primary-hover press"
-      >
-        Sign In
-      </Link>
+      <div class="flex items-center space-x-4">
+        <ThemeToggle />
+        <Link 
+            href="/app" 
+            class="inline-flex h-9 items-center justify-center rounded-base bg-primary px-4 py-2 text-sm font-medium text-white shadow transition-colors hover:bg-primary-hover press"
+        >
+            Sign In
+        </Link>
+      </div>
     </header>
   );
 });
