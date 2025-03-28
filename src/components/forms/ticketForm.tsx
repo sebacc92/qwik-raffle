@@ -1,6 +1,6 @@
 import { type QRL, $, component$, useSignal, useStylesScoped$ } from "@builder.io/qwik"
 import { useForm, valiForm$ } from "@modular-forms/qwik"
-import { Button, Input, Label } from "~/components/ui"
+import { Input, Label } from "~/components/ui"
 import { type TicketForm, type TicketResponseData, TicketSchema } from "~/schemas/ticketSchema"
 import { useFormTicketAction } from "~/shared/forms/actions"
 import { LuUser, LuTicket, LuAlertCircle, LuCheckCircle, LuClock } from "@qwikest/icons/lucide";

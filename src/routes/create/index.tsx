@@ -1,67 +1,46 @@
 import { component$ } from "@builder.io/qwik";
-import { routeAction$, zod$, z, Form } from "@builder.io/qwik-city";
-import Drizzler from "../../../drizzle";
-import { schema } from "../../../drizzle/schema";
+import type { DocumentHead } from "@builder.io/qwik-city";
+import { Card } from "~/components/ui";
+import { useSession } from "~/routes/plugin@auth";
 
-export const useCreateUser = routeAction$(
-  async (data) => {
-    const db = Drizzler();
-    try {
-      await db.insert(schema.users).values(data);
-      return {
-        success: true,
-        data: {
-          name: data.name,
-          email: data.email
-        }
-      };
-    } catch (error: any) {
-      console.error("Error creating user: ", error);
-      return {
-        success: false,
-        error: error.message,
-      };
-    }
-  },
-  zod$({
-    name: z.string(),
-    email: z.string().email(),
-  }),
-);
+import GuestRaffleForm, { InfoAlert } from "~/components/forms/GuestRaffleForm";
+import BasicRaffleForm from "~/components/forms/BasicRaffleForm";
+import PremiumRaffleForm from "~/components/forms/PremiumRaffleForm";
+
+export { useFormRaffleLoader } from "~/shared/forms/loaders";
+export { useFormRaffleAction } from "~/shared/forms/actions";
 
 export default component$(() => {
-  const createUserAction = useCreateUser();
+  const session = useSession();
   return (
-    <section>
-      <h1>Create User</h1>
-      <Form action={createUserAction}>
-        <label>
-          Name
-          <input name="name" value={createUserAction.formData?.get("name")} />
-        </label>
-        <label>
-          Email
-          <input name="email" value={createUserAction.formData?.get("email")} />
-        </label>
-        <button type="submit">Create</button>
-      </Form>
-      {createUserAction.value?.success && (
-        <div>
-          <h2>¡Usuario creado exitosamente!</h2>
-          {createUserAction.value.data && (
-            <>
-              <p>Nombre: {createUserAction.value.data.name}</p>
-              <p>Email: {createUserAction.value.data.email}</p>
-            </>
+    <div class="flex flex-col justify-center items-center min-h-screen bg-gray-50 py-6">
+      {!session.value && <InfoAlert />}
+      
+      <Card.Root class="w-full max-w-[550px] mx-4 animate-fadeIn">
+        <Card.Header>
+          <Card.Title>Create New Raffle</Card.Title>
+          <Card.Description>Enter the information for your raffle</Card.Description>
+        </Card.Header>
+        <Card.Content>
+          {!session.value ? (
+            <GuestRaffleForm />
+          ) : session.value.user?.name === "isPremium" ? (
+            <PremiumRaffleForm />
+          ) : (
+            <BasicRaffleForm />
           )}
-        </div>
-      )}
-      {createUserAction.value?.success === false && (
-        <div>
-          <h2>Error al crear usuario</h2>
-          <p>{createUserAction.value.error}</p>
-        </div>
-      )}
-    </section>
+        </Card.Content>
+      </Card.Root>
+    </div>
   );
 });
+
+export const head: DocumentHead = {
+  title: "Qwik Raffle - Create Raffle",
+  meta: [
+    {
+      name: "description",
+      content: "Create a new raffle quickly with Qwik Raffle",
+    },
+  ],
+};
