@@ -35,8 +35,19 @@ const getRaffleById = async (id: number): Promise<LocalRaffle | null> => {
                 
                 prizeRequest.onsuccess = () => {
                     prizes = prizeRequest.result;
+                    if (!raffle || !raffle.name || !raffle.numberCount || !raffle.pricePerNumber) {
+                        resolve(null);
+                        return;
+                    }
                     resolve({
-                        ...raffle,
+                        id: raffle.id,
+                        name: raffle.name,
+                        description: raffle.description || '',
+                        numberCount: raffle.numberCount,
+                        pricePerNumber: raffle.pricePerNumber,
+                        createdAt: raffle.createdAt,
+                        updatedAt: raffle.updatedAt,
+                        uuid: raffle.uuid,
                         prizes
                     });
                 };
@@ -71,7 +82,7 @@ const getTicketsForRaffle = async (raffleId: number): Promise<Ticket[]> => {
             const request = index.getAll(raffleId);
 
             request.onsuccess = () => {
-                resolve(request.result || []);
+                resolve(request.result);
             };
 
             request.onerror = () => {
@@ -147,7 +158,7 @@ const initializeTicketsForRaffle = async (raffleId: number, ticketCount: number)
 };
 
 // Función para actualizar un ticket
-const updateTicket = async (raffleId: number, number: number, data: Partial<Ticket>) => {
+export const updateTicket = async (raffleId: number, number: number, data: Partial<Ticket>) => {
     try {
         const db = await openDB();
         const transaction = db.transaction(['tickets'], 'readwrite');
@@ -275,7 +286,7 @@ export default component$(() => {
             name: encodeURIComponent(raffle.value.name),
             price: raffle.value.pricePerNumber.toString(),
             count: raffle.value.numberCount.toString(),
-            prizes: encodeURIComponent(raffle.value.prizes.map(p => p.name).join('|'))
+            prizes: encodeURIComponent((raffle.value.prizes ?? []).map(p => p.name).join('|') || '')
         });
 
         const link = `${window.location.href}client?${params.toString()}`;
@@ -381,6 +392,73 @@ export default component$(() => {
         } catch (error) {
             console.error('Error resetting raffle:', error);
             toast.error("Error resetting raffle");
+        }
+    });
+
+    // Función para eliminar el sorteo completamente
+    const deleteRaffle = $(async () => {
+        if (!raffle.value || !raffleId.value) return;
+
+        if (!confirm("Are you sure you want to delete this raffle? This action cannot be undone.")) {
+            return;
+        }
+
+        try {
+            const db = await openDB();
+            
+            // Eliminar todos los tickets asociados
+            const ticketTransaction = db.transaction(['tickets'], 'readwrite');
+            const ticketStore = ticketTransaction.objectStore('tickets');
+            const ticketIndex = ticketStore.index('raffleId');
+            const ticketRequest = ticketIndex.openCursor(raffleId.value);
+
+            await new Promise<void>((resolve, reject) => {
+                ticketRequest.onsuccess = (event) => {
+                    const cursor = (event.target as IDBRequest).result;
+                    if (cursor) {
+                        cursor.delete();
+                        cursor.continue();
+                    }
+                };
+                ticketTransaction.oncomplete = () => resolve();
+                ticketTransaction.onerror = () => reject();
+            });
+
+            // Eliminar todos los premios asociados
+            const prizeTransaction = db.transaction(['prizes'], 'readwrite');
+            const prizeStore = prizeTransaction.objectStore('prizes');
+            const prizeIndex = prizeStore.index('raffleId');
+            const prizeRequest = prizeIndex.openCursor(raffleId.value);
+
+            await new Promise<void>((resolve, reject) => {
+                prizeRequest.onsuccess = (event) => {
+                    const cursor = (event.target as IDBRequest).result;
+                    if (cursor) {
+                        cursor.delete();
+                        cursor.continue();
+                    }
+                };
+                prizeTransaction.oncomplete = () => resolve();
+                prizeTransaction.onerror = () => reject();
+            });
+
+            // Eliminar el sorteo
+            const raffleTransaction = db.transaction(['raffles'], 'readwrite');
+            const raffleStore = raffleTransaction.objectStore('raffles');
+            await new Promise<void>((resolve, reject) => {
+                const request = raffleStore.delete(raffleId.value!);
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject();
+            });
+
+            db.close();
+            toast.success("Raffle deleted successfully");
+            // Redirigir al inicio
+            navigate("/");
+            
+        } catch (error) {
+            console.error('Error deleting raffle:', error);
+            toast.error("Error deleting raffle");
         }
     });
 
@@ -581,13 +659,20 @@ export default component$(() => {
                 </div>
             )}
 
-            <div class="flex justify-center">
+            <div class="flex justify-center gap-4">
                 <button
                     onClick$={resetRaffle}
-                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2"
+                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2"
                 >
                     <LuTrash2 class="w-4 h-4" />
                     Reset Raffle
+                </button>
+                <button
+                    onClick$={deleteRaffle}
+                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2"
+                >
+                    <LuTrash2 class="w-4 h-4" />
+                    Delete Raffle
                 </button>
             </div>
         </div>
