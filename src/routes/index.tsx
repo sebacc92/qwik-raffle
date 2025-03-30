@@ -1,10 +1,11 @@
 import { component$, useSignal } from '@builder.io/qwik';
 import { type DocumentHead, Link } from '@builder.io/qwik-city';
 import { Modal } from '@qwik-ui/headless';
-import { LuFacebook, LuTwitter, LuInstagram, LuCheck, LuPlay, LuGift, LuShare, LuClock, LuSettings, LuStar, LuTrophy, LuUserPlus, LuShield, LuX } from '@qwikest/icons/lucide';
+import { LuFacebook, LuTwitter, LuInstagram, LuCheck, LuPlay, LuGift, LuShare, LuClock, LuSettings, LuStar, LuTrophy, LuUserPlus, LuShield, LuX, LuHelpCircle } from '@qwikest/icons/lucide';
 import { Image } from "@unpic/qwik";
 import SocialLoginButtons from '~/components/SocialLoginButtons';
-import { Button } from '~/components/ui';
+import { Accordion } from '~/components/ui';
+import { _ } from 'compiled-i18n';
 
 export default component$(() => {
   const showLoginModal = useSignal(false);
@@ -20,26 +21,26 @@ export default component$(() => {
                 <div class="space-y-6">
                   <div class="inline-flex items-center rounded-full border-2 border-primary/30 bg-primary/10 px-4 py-2 text-sm font-medium text-primary shadow-sm animate-fadeIn">
                     <LuStar class="mr-2 h-4 w-4 text-primary text-yellow-500 fill-current" />
-                    <span>The easiest way to organize online raffles</span>
+                    <span>{_`The easiest way to organize online raffles`}</span>
                   </div>
                   <h1 class="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent animate-fadeIn">
-                    Create Online Raffles in Minutes
+                    {_`Create Online Raffles in Seconds`}
                   </h1>
                   <p class="max-w-[600px] text-muted-foreground md:text-xl leading-relaxed">
-                    Easy, fast, and customizable. Ideal for events, promotions, and much more.
+                    {_`Easy, fast, and customizable. Ideal for events, promotions, and much more.`}
                   </p>
                   <div class="flex flex-col sm:flex-row gap-4">
                     <Link
                       href="/create"
                       class="inline-flex h-12 items-center justify-center rounded-base bg-primary px-8 text-base font-medium text-white shadow-md transition-all hover:bg-primary-hover hover:shadow-lg press"
                     >
-                      Create a Raffle Now
+                      {_`Create a Raffle Now`}
                     </Link>
                     <Link
                       href="#features"
                       class="inline-flex h-12 items-center justify-center rounded-base border border-primary px-8 text-base font-medium text-primary shadow-sm transition-all hover:bg-primary/10 press"
                     >
-                      Discover Features
+                      {_`Discover Features`}
                     </Link>
                   </div>
                 </div>
@@ -54,7 +55,7 @@ export default component$(() => {
                       </div>
                     </div>
                     <div class="p-6 text-center bg-card">
-                      <p class="text-sm font-medium text-primary">See how it works</p>
+                      <p class="text-sm font-medium text-primary">{_`See how it works`}</p>
                     </div>
                   </div>
                 </div>
@@ -64,19 +65,19 @@ export default component$(() => {
               <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
                 <div class="rounded-xl border bg-card p-4 shadow-sm">
                   <div class="text-3xl font-bold text-primary">+10K</div>
-                  <p class="text-sm text-muted-foreground">Raffles created</p>
+                  <p class="text-sm text-muted-foreground">{_`Raffles created`}</p>
                 </div>
                 <div class="rounded-xl border bg-card p-4 shadow-sm">
                   <div class="text-3xl font-bold text-primary">+50K</div>
-                  <p class="text-sm text-muted-foreground">Happy participants</p>
+                  <p class="text-sm text-muted-foreground">{_`Happy participants`}</p>
                 </div>
                 <div class="rounded-xl border bg-card p-4 shadow-sm">
                   <div class="text-3xl font-bold text-primary">99%</div>
-                  <p class="text-sm text-muted-foreground">Satisfaction</p>
+                  <p class="text-sm text-muted-foreground">{_`Satisfaction`}</p>
                 </div>
                 <div class="rounded-xl border bg-card p-4 shadow-sm">
                   <div class="text-3xl font-bold text-primary">24/7</div>
-                  <p class="text-sm text-muted-foreground">Support available</p>
+                  <p class="text-sm text-muted-foreground">{_`Support available`}</p>
                 </div>
               </div>
             </div>
@@ -88,14 +89,14 @@ export default component$(() => {
               <div class="flex flex-col items-center justify-center space-y-4 text-center">
                 <div class="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm text-primary">
                   <LuStar class="mr-2 h-4 w-4 text-primary text-yellow-500 fill-current" />
-                  <span>Loaded with features</span>
+                  <span>{_`Loaded with features`}</span>
                 </div>
                 <div class="space-y-3 max-w-3xl">
                   <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent">
-                    Featured Features
+                    {_`Featured Features`}
                   </h2>
                   <p class="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Everything you need to create and manage your online raffles
+                    {_`Everything you need to create and manage your online raffles`}
                   </p>
                 </div>
               </div>
@@ -105,9 +106,9 @@ export default component$(() => {
                   <div class="rounded-full bg-primary/10 p-4">
                     <LuClock class="h-10 w-10 text-primary" />
                   </div>
-                  <h3 class="text-xl font-bold">Create raffles in seconds</h3>
+                  <h3 class="text-xl font-bold">{_`Create raffles in seconds`}</h3>
                   <p class="text-sm text-muted-foreground text-center">
-                    Set up your raffle quickly with our intuitive interface
+                    {_`Set up your raffle quickly with our intuitive interface`}
                   </p>
                 </div>
 
@@ -116,9 +117,9 @@ export default component$(() => {
                   <div class="rounded-full bg-primary/10 p-4">
                     <LuShare class="h-10 w-10 text-primary" />
                   </div>
-                  <h3 class="text-xl font-bold">Share with a unique link</h3>
+                  <h3 class="text-xl font-bold">{_`Share with a unique link`}</h3>
                   <p class="text-sm text-muted-foreground text-center">
-                    Easily distribute your raffle on social networks or by email
+                    {_`Easily distribute your raffle on social networks or by email`}
                   </p>
                 </div>
 
@@ -127,9 +128,9 @@ export default component$(() => {
                   <div class="rounded-full bg-primary/10 p-4">
                     <LuTrophy class="h-10 w-10 text-primary" />
                   </div>
-                  <h3 class="text-xl font-bold">Automatic results</h3>
+                  <h3 class="text-xl font-bold">{_`Automatic results`}</h3>
                   <p class="text-sm text-muted-foreground text-center">
-                    Get random winners with total transparency and confidence
+                    {_`Get random winners with total transparency and confidence`}
                   </p>
                 </div>
 
@@ -138,9 +139,9 @@ export default component$(() => {
                   <div class="rounded-full bg-primary/10 p-4">
                     <LuSettings class="h-10 w-10 text-primary" />
                   </div>
-                  <h3 class="text-xl font-bold">Customize your rules</h3>
+                  <h3 class="text-xl font-bold">{_`Customize your rules`}</h3>
                   <p class="text-sm text-muted-foreground text-center">
-                    Adapt each raffle to your specific needs
+                    {_`Adapt each raffle to your specific needs`}
                   </p>
                 </div>
               </div>
@@ -151,24 +152,24 @@ export default component$(() => {
                   <div class="p-8 md:p-12 flex flex-col justify-center space-y-4">
                     <div class="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm text-primary w-fit">
                       <LuUserPlus class="mr-1 h-3.5 w-3.5" />
-                      <span>Easy participation</span>
+                      <span>{_`Easy participation`}</span>
                     </div>
-                    <h3 class="text-2xl md:text-3xl font-bold">Simple experience for participants</h3>
+                    <h3 class="text-2xl md:text-3xl font-bold">{_`Simple experience for participants`}</h3>
                     <p class="text-muted-foreground">
-                      We allow your participants to join raffles in seconds, without complex registrations or long processes.
+                      {_`We allow your participants to join raffles in seconds, without complex registrations or long processes.`}
                     </p>
                     <ul class="space-y-2">
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>Intuitive and friendly interface</span>
+                        <span>{_`Intuitive and friendly interface`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>Support for multiple devices</span>
+                        <span>{_`Support for multiple devices`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>Real-time notifications</span>
+                        <span>{_`Real-time notifications`}</span>
                       </li>
                     </ul>
                   </div>
@@ -190,14 +191,14 @@ export default component$(() => {
               <div class="flex flex-col items-center justify-center space-y-4 text-center">
                 <div class="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm text-primary">
                   <LuShield class="mr-1 h-3.5 w-3.5" />
-                  <span>Flexible plans</span>
+                  <span>{_`Flexible plans`}</span>
                 </div>
                 <div class="space-y-3 max-w-3xl">
                   <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent">
-                    Plans for every need
+                    {_`Plans for every need`}
                   </h2>
                   <p class="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Choose the plan that best suits your needs
+                    {_`Choose the plan that best suits your needs`}
                   </p>
                 </div>
               </div>
@@ -207,27 +208,27 @@ export default component$(() => {
                 <div class="flex flex-col rounded-xl border bg-card shadow-sm hover:shadow-md transition-all">
                   <div class="p-6">
                     <div class="flex justify-between items-center mb-4">
-                      <h3 class="text-2xl font-bold">No Session</h3>
+                      <h3 class="text-2xl font-bold">{_`No Session`}</h3>
                       <span class="inline-flex items-center rounded-full border border-muted-foreground/30 bg-muted-foreground/10 px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
-                        Basic
+                        {_`Basic`}
                       </span>
                     </div>
                     <div class="mt-4 text-center">
-                      <div class="text-4xl font-bold">Free</div>
-                      <p class="text-sm text-muted-foreground mt-1">No commitments</p>
+                      <div class="text-4xl font-bold">{_`Free`}</div>
+                      <p class="text-sm text-muted-foreground mt-1">{_`No commitments`}</p>
                     </div>
                     <ul class="mt-6 space-y-3">
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>Temporary raffles</span>
+                        <span>{_`Temporary raffles`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>Limit of 100 participants</span>
+                        <span>{_`Limit of 100 participants`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>Immediate results</span>
+                        <span>{_`Immediate results`}</span>
                       </li>
                     </ul>
                   </div>
@@ -236,7 +237,7 @@ export default component$(() => {
                       href="/create"
                       class="inline-flex h-10 w-full items-center justify-center rounded-base border border-primary bg-card px-8 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary/10 hover:text-primary press"
                     >
-                      Get Started
+                      {_`Get Started`}
                     </Link>
                   </div>
                 </div>
@@ -245,76 +246,76 @@ export default component$(() => {
                 <div class="flex flex-col rounded-xl border bg-card shadow-sm hover:shadow-md transition-all">
                   <div class="p-6">
                     <div class="flex justify-between items-center mb-4">
-                      <h3 class="text-2xl font-bold">Registered</h3>
+                      <h3 class="text-2xl font-bold">{_`Registered`}</h3>
                       <span class="inline-flex items-center rounded-full border border-muted-foreground/30 bg-muted-foreground/10 px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
-                        Popular
+                        {_`Popular`}
                       </span>
                     </div>
                     <div class="mt-4 text-center">
-                      <div class="text-4xl font-bold">Free</div>
-                      <p class="text-sm text-muted-foreground mt-1">With user account</p>
+                      <div class="text-4xl font-bold">{_`Free`}</div>
+                      <p class="text-sm text-muted-foreground mt-1">{_`With user account`}</p>
                     </div>
                     <ul class="mt-6 space-y-3">
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>1 saved raffle</span>
+                        <span>{_`1 saved raffle`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>Limit of 1000 participants</span>
+                        <span>{_`Limit of 1000 participants`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>Basic customization</span>
+                        <span>{_`Basic customization`}</span>
                       </li>
                     </ul>
                   </div>
                   <div17 class="mt-auto p-6 pt-0">
-                    <Button
+                    <Link
                       class="inline-flex h-10 w-full items-center justify-center rounded-base border border-primary bg-card px-8 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary/10 press"
-                      onClick$={() => showLoginModal.value = true}
+                      href="/signup"
                     >
-                      Register for Free
-                    </Button>
+                      {_`Register for Free`}
+                    </Link>
                   </div17>
                 </div>
 
                 {/* Premium */}
                 <div class="flex flex-col rounded-xl border-2 border-primary bg-card shadow-lg hover:shadow-xl scale-[1.02] transition-all">
                   <div class="bg-primary/10 py-2 px-6 rounded-t-xl">
-                    <div class="text-center text-primary font-semibold">Recommended</div>
+                    <div class="text-center text-primary font-semibold">{_`Recommended`}</div>
                   </div>
                   <div class="p-6">
                     <div class="flex justify-between items-center mb-4">
-                      <h3 class="text-2xl font-bold">Premium</h3>
+                      <h3 class="text-2xl font-bold">{_`Premium`}</h3>
                       <span class="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
-                        Complete
+                        {_`Complete`}
                       </span>
                     </div>
                     <div class="mt-4 text-center">
-                      <div class="text-4xl font-bold">$ 4900<span class="text-base font-normal">/month</span></div>
-                      <p class="text-sm text-muted-foreground mt-1">Monthly billing</p>
+                      <div class="text-4xl font-bold">$ 4900<span class="text-base font-normal">/{_`month`}</span></div>
+                      <p class="text-sm text-muted-foreground mt-1">{_`Monthly billing`}</p>
                     </div>
                     <ul class="mt-6 space-y-3">
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>Unlimited raffles</span>
+                        <span>{_`Unlimited raffles`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>Limit of 10,000 participants per raffle</span>
+                        <span>{_`Limit of 10,000 participants per raffle`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>Payment integration</span>
+                        <span>{_`Payment integration`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>Detailed statistics</span>
+                        <span>{_`Detailed statistics`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>Priority support</span>
+                        <span>{_`Priority support`}</span>
                       </li>
                     </ul>
                   </div>
@@ -323,7 +324,7 @@ export default component$(() => {
                       href="/app/premium"
                       class="inline-flex h-10 w-full items-center justify-center rounded-base bg-primary px-8 text-sm font-medium text-white shadow transition-colors hover:bg-primary-hover press"
                     >
-                      Get Premium
+                      {_`Get Premium`}
                     </Link>
                   </div>
                 </div>
@@ -337,14 +338,14 @@ export default component$(() => {
               <div class="flex flex-col items-center justify-center space-y-4 text-center">
                 <div class="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm text-primary">
                   <LuStar class="mr-2 h-5 w-5 text-primary text-yellow-500 fill-current" />
-                  <span>Real opinions</span>
+                  <span>{_`Real opinions`}</span>
                 </div>
                 <div class="space-y-3 max-w-3xl">
                   <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent">
-                    What our users say
+                    {_`What our users say`}
                   </h2>
                   <p class="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Discover why our users trust us for their raffles
+                    {_`Discover why our users trust us for their raffles`}
                   </p>
                 </div>
               </div>
@@ -358,7 +359,7 @@ export default component$(() => {
                       ))}
                     </div>
                     <p class="text-foreground italic">
-                      "Incredibly easy to use! I organized a raffle for my online store in minutes."
+                      "{_`Incredibly easy to use! I organized a raffle for my online store in minutes.`}"
                     </p>
                   </div>
                   <div class="mt-6 pt-6 border-t border-border">
@@ -366,7 +367,7 @@ export default component$(() => {
                       <div class="h-10 w-10 rounded-full bg-gradient-to-br from-primary/60 to-primary-hover/60 flex items-center justify-center text-white font-semibold">JP</div>
                       <div class="ml-3">
                         <p class="font-medium">Daiana Lentz.</p>
-                        <p class="text-sm text-muted-foreground">Consultora</p>
+                        <p class="text-sm text-muted-foreground">{_`Consultora`}</p>
                       </div>
                     </div>
                   </div>
@@ -381,7 +382,7 @@ export default component$(() => {
                       ))}
                     </div>
                     <p class="text-foreground italic">
-                      "Perfect for my events. The ability to customize the rules has saved me a lot of time."
+                      "{_`Perfect for my events. The ability to customize the rules has saved me a lot of time.`}"
                     </p>
                   </div>
                   <div class="mt-6 pt-6 border-t border-border">
@@ -389,7 +390,7 @@ export default component$(() => {
                       <div class="h-10 w-10 rounded-full bg-gradient-to-br from-primary/60 to-primary-hover/60 flex items-center justify-center text-white font-semibold">MG</div>
                       <div class="ml-3">
                         <p class="font-medium">María G.</p>
-                        <p class="text-sm text-muted-foreground">Event Organizer</p>
+                        <p class="text-sm text-muted-foreground">{_`Event Organizer`}</p>
                       </div>
                     </div>
                   </div>
@@ -404,7 +405,7 @@ export default component$(() => {
                       ))}
                     </div>
                     <p class="text-foreground italic">
-                      "The statistics of the Premium plan have helped me better understand my audience. Totally recommended."
+                      "{_`The statistics of the Premium plan have helped me better understand my audience. Totally recommended.`}"
                     </p>
                   </div>
                   <div class="mt-6 pt-6 border-t border-border">
@@ -412,11 +413,77 @@ export default component$(() => {
                       <div class="h-10 w-10 rounded-full bg-gradient-to-br from-primary/60 to-primary-hover/60 flex items-center justify-center text-white font-semibold">CM</div>
                       <div class="ml-3">
                         <p class="font-medium">Carlos M.</p>
-                        <p class="text-sm text-muted-foreground">Influencer</p>
+                        <p class="text-sm text-muted-foreground">{_`Influencer`}</p>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ Section */}
+          <section id="faq" class="w-full py-16 md:py-24 lg:py-32 bg-muted">
+            <div class="container mx-auto px-4 md:px-6">
+              <div class="flex flex-col items-center justify-center space-y-4 text-center">
+                <div class="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm text-primary">
+                  <LuHelpCircle class="mr-2 h-5 w-5 text-primary" />
+                  <span>{_`Frequently Asked Questions`}</span>
+                </div>
+                <div class="space-y-3 max-w-3xl">
+                  <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent">
+                    {_`Common Questions`}
+                  </h2>
+                  <p class="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                    {_`Find answers to the most frequently asked questions about our raffle platform`}
+                  </p>
+                </div>
+              </div>
+              
+              <div class="mx-auto max-w-3xl mt-12">
+                <Accordion.Root class="w-full">
+                  <Accordion.Item>
+                    <Accordion.Trigger header="h3">{_`How do I create a raffle without an account?`}</Accordion.Trigger>
+                    <Accordion.Content>
+                      {_`You can easily create a raffle without registering. Simply go to the "Create a Raffle" page, set up your raffle parameters, and the system will generate a unique link. Your raffle data will be stored locally in your browser, and you can have up to 100 tickets per raffle.`}
+                    </Accordion.Content>
+                  </Accordion.Item>
+                  
+                  <Accordion.Item>
+                    <Accordion.Trigger header="h3">{_`What are the benefits of registering for a free account?`}</Accordion.Trigger>
+                    <Accordion.Content>
+                      {_`With a free registered account, your raffles are stored in our database, allowing you to access them from any device. You can create one raffle at a time with up to 1,000 tickets per raffle. Your data is securely saved, and you can track the status of your raffle over time.`}
+                    </Accordion.Content>
+                  </Accordion.Item>
+                  
+                  <Accordion.Item>
+                    <Accordion.Trigger header="h3">{_`What features are included in the Premium plan?`}</Accordion.Trigger>
+                    <Accordion.Content>
+                      {_`Our Premium plan offers multiple simultaneous raffles with up to 10,000 tickets per raffle. Premium users also get ad-free experience, detailed statistics on participation, customization options for colors and styles, payment integration, and priority support. It's perfect for businesses, influencers, or frequent raffle organizers.`}
+                    </Accordion.Content>
+                  </Accordion.Item>
+                  
+                  <Accordion.Item>
+                    <Accordion.Trigger header="h3">{_`How is the winner selection process conducted?`}</Accordion.Trigger>
+                    <Accordion.Content>
+                      {_`Our platform uses a cryptographically secure random number generator to ensure fair and unbiased selection of winners. The selection process is transparent and cannot be manipulated. Results are generated instantly and shown to all participants, ensuring trust in your raffle.`}
+                    </Accordion.Content>
+                  </Accordion.Item>
+                  
+                  <Accordion.Item>
+                    <Accordion.Trigger header="h3">{_`Can I customize the appearance of my raffle?`}</Accordion.Trigger>
+                    <Accordion.Content>
+                      {_`Yes, customization options depend on your account type. Free registered users get basic customization such as adding a title, description, and logo. Premium users can fully customize colors, fonts, backgrounds, and even add custom CSS for a completely personalized look that matches their brand identity.`}
+                    </Accordion.Content>
+                  </Accordion.Item>
+                  
+                  <Accordion.Item>
+                    <Accordion.Trigger header="h3">{_`How long are raffles stored in the system?`}</Accordion.Trigger>
+                    <Accordion.Content>
+                      {_`For users without an account, raffles are stored in your browser's local storage for up to 30 days. Free registered accounts can store one active raffle indefinitely until deleted. Premium accounts can store unlimited raffles with no time limitation, including historical data for analytics purposes.`}
+                    </Accordion.Content>
+                  </Accordion.Item>
+                </Accordion.Root>
               </div>
             </div>
           </section>
@@ -427,10 +494,10 @@ export default component$(() => {
               <div class="flex flex-col items-center justify-center space-y-6 text-center">
                 <div class="space-y-3 max-w-3xl">
                   <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-white">
-                    Ready to start?
+                    {_`Ready to start?`}
                   </h2>
                   <p class="max-w-[700px] text-white/90 md:text-xl/relaxed">
-                    Create your first raffle now and discover how easy it is
+                    {_`Create your first raffle now and discover how easy it is`}
                   </p>
                 </div>
                 <div class="mx-auto flex flex-col items-center justify-center sm:flex-row gap-4 max-w-md w-full">
@@ -438,13 +505,13 @@ export default component$(() => {
                     href="/create"
                     class="inline-flex h-12 items-center justify-center rounded-base bg-white px-8 text-base font-medium text-primary shadow-lg transition-all hover:bg-white/90 hover:shadow-xl press"
                   >
-                    Create a Free Raffle
+                    {_`Create a Free Raffle`}
                   </Link>
                   <Link
                     href="/app/register"
                     class="inline-flex h-12 items-center justify-center rounded-base bg-transparent border border-white px-8 text-base font-medium text-white shadow transition-all hover:bg-white/10 press"
                   >
-                    Register
+                    {_`Register`}
                   </Link>
                 </div>
               </div>
@@ -502,7 +569,7 @@ export default component$(() => {
                 <h3 class="mb-4 text-lg font-medium">Support</h3>
                 <nav class="flex flex-col space-y-3">
                   <Link href="/help" class="text-sm text-muted-foreground hover:text-primary transition-colors">Help Center</Link>
-                  <Link href="/faq" class="text-sm text-muted-foreground hover:text-primary transition-colors">FAQ</Link>
+                  <Link href="#faq" class="text-sm text-muted-foreground hover:text-primary transition-colors">FAQ</Link>
                   <Link href="/contact" class="text-sm text-muted-foreground hover:text-primary transition-colors">Contact Support</Link>
                 </nav>
               </div>
@@ -514,12 +581,12 @@ export default component$(() => {
         <Modal.Root bind:show={showLoginModal}>
           <Modal.Panel class="p-8">
             <div class="flex items-center justify-between">
-              <Modal.Title>Login</Modal.Title>
+              <Modal.Title>{_`Login`}</Modal.Title>
               <Modal.Close class="hover:scale-110 transition-transform duration-200">
                 <LuX class="h-5 w-5" />
               </Modal.Close>
             </div>
-            <Modal.Description class="mb-4">Login to your account</Modal.Description>
+            <Modal.Description class="mb-4">{_`Login to your account`}</Modal.Description>
             <SocialLoginButtons />
           </Modal.Panel>
         </Modal.Root>

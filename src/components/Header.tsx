@@ -3,7 +3,7 @@ import { Link } from '@builder.io/qwik-city';
 import { LuGift, LuX, LuUser, LuLogOut } from '@qwikest/icons/lucide';
 import ThemeToggle from '~/components/ThemeToggle';
 import { LocaleSelector } from '~/components/locale-selector';
-import { Avatar, Dropdown, Modal } from '~/components/ui';
+import { Avatar, Button, Dropdown, Modal } from '~/components/ui';
 import SocialLoginButtons from '~/components/SocialLoginButtons';
 import { useSession, useSignOut } from '~/routes/plugin@auth';
 
@@ -23,8 +23,6 @@ export default component$(() => {
                 </Link>
             </div>
             <div class="flex items-center space-x-4">
-                <LocaleSelector />
-                <ThemeToggle />
                 {session.value ? (
                     <Dropdown.Root>
                         <Dropdown.Trigger class="p-0">
@@ -53,22 +51,33 @@ export default component$(() => {
                         </Dropdown.Popover>
                     </Dropdown.Root>
                 ) : (
-                    <Modal.Root bind:show={show}>
-                        <Modal.Trigger>
-                            Sign In
-                        </Modal.Trigger>
-                        <Modal.Panel>
-                            <div class="flex items-center justify-between">
-                                <Modal.Title>Login</Modal.Title>
-                                <Modal.Close class="hover:scale-110 transition-transform duration-200">
-                                    <LuX class="h-5 w-5" />
-                                </Modal.Close>
-                            </div>
-                            <Modal.Description class="mb-4">Login to your account</Modal.Description>
-                            <SocialLoginButtons />
-                        </Modal.Panel>
-                    </Modal.Root>
+                    <>
+                        <Modal.Root bind:show={show}>
+                            <Modal.Trigger>
+                                Sign In
+                            </Modal.Trigger>
+                            <Modal.Panel>
+                                <div class="flex items-center justify-between">
+                                    <Modal.Title>Login</Modal.Title>
+                                    <Modal.Close class="hover:scale-110 transition-transform duration-200">
+                                        <LuX class="h-5 w-5" />
+                                    </Modal.Close>
+                                </div>
+                                <Modal.Description class="mb-4">Login to your account</Modal.Description>
+                                <SocialLoginButtons />
+                            </Modal.Panel>
+                        </Modal.Root>
+                        <Link href="/signup" class="text-primary dark:text-purple-400">
+                            <Button
+                                class="bg-primary hover:bg-primary-hover text-white rounded-lg px-4 py-2"
+                            >
+                                Sign Up
+                            </Button>
+                        </Link>
+                    </>
                 )}
+                <LocaleSelector />
+                <ThemeToggle />
             </div>
         </header>
     );
