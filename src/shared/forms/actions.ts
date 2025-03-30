@@ -88,6 +88,8 @@ export const useFormTicketAction = formAction$<TicketForm, TicketResponseData>(
                 .update(schema.raffleNumbers)
                 .set({
                     buyerName: values.buyerName,
+                    buyerPhone: values.buyerPhone || null,
+                    notes: values.notes || null,
                     status: values.status,
                     paymentStatus: values.status === "sold-paid",
                     updatedAt: new Date()

@@ -4,6 +4,7 @@ import { toast } from 'qwik-sonner';
 import { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 import styles from './raffle.css?inline';
 import Ticket from "~/components/raffle/ticket";
+import { LuUsers, LuCreditCard, LuDollarSign, LuGift, LuSearch, LuLink, LuDownload, LuTrash2 } from '@qwikest/icons/lucide';
 
 export { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 
@@ -98,21 +99,14 @@ export default component$(() => {
                         onClick$={generateClientLink}
                         class="flex items-center gap-2 px-4 py-2 border rounded-md hover:bg-purple-50 transition-colors"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                        </svg>
-                        Generate Client Link
+                        <LuLink class="w-4 h-4" />
+                        Copy Link
                     </button>
                     <button
                         onClick$={downloadRaffleInfo}
                         class="flex items-center gap-2 px-4 py-2 border rounded-md hover:bg-purple-50 transition-colors"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
+                        <LuDownload class="w-4 h-4" />
                         Download Information
                     </button>
                 </div>
@@ -121,12 +115,7 @@ export default component$(() => {
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="stats-card bg-white">
                     <div class="flex items-center gap-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
+                        <LuUsers class="w-6 h-6 text-purple-600" />
                         <div>
                             <div class="text-sm text-purple-600">Sold Tickets</div>
                             <div class="text-xl sm:text-2xl font-bold">{soldCount}/{raffle.value.numberCount}</div>
@@ -136,10 +125,7 @@ export default component$(() => {
 
                 <div class="stats-card bg-white">
                     <div class="flex items-center gap-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600">
-                            <line x1="12" y1="1" x2="12" y2="23"></line>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                        </svg>
+                        <LuCreditCard class="w-6 h-6 text-purple-600" />
                         <div>
                             <div class="text-sm text-purple-600">Paid Tickets</div>
                             <div class="text-xl sm:text-2xl font-bold">{paidCount}/{raffle.value.numberCount}</div>
@@ -149,11 +135,7 @@ export default component$(() => {
 
                 <div class="stats-card bg-white">
                     <div class="flex items-center gap-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="8 14 12 18 16 14"></polyline>
-                            <line x1="12" y1="6" x2="12" y2="18"></line>
-                        </svg>
+                        <LuDollarSign class="w-6 h-6 text-purple-600" />
                         <div>
                             <div class="text-sm text-purple-600">Total Collected</div>
                             <div class="text-xl sm:text-2xl font-bold">${totalCollected.toFixed(2)}</div>
@@ -165,10 +147,7 @@ export default component$(() => {
 
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div class="relative w-full sm:w-auto sm:flex-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-2 top-2.5 text-purple-500">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
+                    <LuSearch class="absolute left-2 top-2.5 text-purple-500 w-4 h-4" />
                     <input
                         type="text"
                         placeholder="Search number or name"
@@ -190,22 +169,24 @@ export default component$(() => {
                 </div>
             </div>
 
-            <div class="ticket-grid">
-                {raffleNumbers.value
-                    .filter(ticket =>
-                        (!showOnlyPending.value || ticket.status === "sold-unpaid") &&
-                        (!search.value ||
-                            ticket.number.toString().includes(search.value) ||
-                            ticket.buyerName?.toLowerCase().includes(search.value.toLowerCase()))
-                    )
-                    .map(ticket => (
-                        <Ticket
-                            key={ticket.number}
-                            ticket={ticket}
-                            raffleId={raffle.value.id || 0}
-                        />
-                    ))
-                }
+            <div class="ticket-container">
+                <div class="ticket-grid">
+                    {raffleNumbers.value
+                        .filter(ticket =>
+                            (!showOnlyPending.value || ticket.status === "sold-unpaid") &&
+                            (!search.value ||
+                                ticket.number.toString().includes(search.value) ||
+                                ticket.buyerName?.toLowerCase().includes(search.value.toLowerCase()))
+                        )
+                        .map(ticket => (
+                            <Ticket
+                                key={ticket.number}
+                                ticket={ticket}
+                                raffleId={raffle.value.id || 0}
+                            />
+                        ))
+                    }
+                </div>
             </div>
 
             <div class="border rounded-lg p-4 space-y-2">
@@ -230,10 +211,7 @@ export default component$(() => {
             {raffle.value.prizes && raffle.value.prizes.length > 0 && (
                 <div class="border rounded-lg p-4">
                     <div class="flex items-center gap-2 mb-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600">
-                            <circle cx="12" cy="8" r="7"></circle>
-                            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-                        </svg>
+                        <LuGift class="w-5 h-5 text-purple-600" />
                         <h3 class="font-semibold text-purple-800">Prizes</h3>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -260,8 +238,9 @@ export default component$(() => {
                             alert("Raffle reset");
                         }
                     }}
-                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors"
+                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2"
                 >
+                    <LuTrash2 class="w-4 h-4" />
                     Reset Raffle
                 </button>
             </div>

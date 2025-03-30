@@ -102,7 +102,7 @@
 }
 
 .modal-description {
-  @apply text-purple-600;
+  @apply text-purple-600 mb-4;
 }
 
 /* Estilos para dispositivos móviles */
@@ -128,4 +128,9 @@ button.submit-btn {
 .status-icon.h-5.w-5.text-amber-600,
 .status-icon.h-5.w-5.text-green-600 {
   @apply inline-block;
+}
+
+/* Estilos adicionales para textareas */
+textarea.input-field {
+  @apply resize-none;
 }

@@ -3,7 +3,7 @@ import { useForm, valiForm$ } from "@modular-forms/qwik"
 import { Input, Label } from "~/components/ui"
 import { type TicketForm, type TicketResponseData, TicketSchema } from "~/schemas/ticketSchema"
 import { useFormTicketAction } from "~/shared/forms/actions"
-import { LuUser, LuTicket, LuAlertCircle, LuCheckCircle, LuClock } from "@qwikest/icons/lucide";
+import { LuUser, LuPhone, LuTicket, LuAlertCircle, LuCheckCircle, LuClock, LuStickyNote } from "@qwikest/icons/lucide";
 import styles from './ticketForm.css?inline';
 import { toast } from "qwik-sonner"
 
@@ -11,13 +11,15 @@ export interface TicketFormProps {
     raffleId: number
     ticketNumber: number
     initialBuyerName: string | null
+    initialBuyerPhone?: string | null
+    initialNotes?: string | null
     initialStatus: "unsold" | "sold-unpaid" | "sold-paid"
     onSuccess$?: QRL<() => void>
     onCancel$?: QRL<() => void>
 }
 
 export default component$<TicketFormProps>(
-    ({ raffleId, ticketNumber, initialBuyerName, initialStatus, onSuccess$, onCancel$ }) => {
+    ({ raffleId, ticketNumber, initialBuyerName, initialBuyerPhone, initialNotes, initialStatus, onSuccess$, onCancel$ }) => {
         useStylesScoped$(styles);
 
         const [ticketForm, { Form, Field }] = useForm<TicketForm, TicketResponseData>({
@@ -26,6 +28,8 @@ export default component$<TicketFormProps>(
                     raffleId,
                     number: ticketNumber,
                     buyerName: initialBuyerName || "",
+                    buyerPhone: initialBuyerPhone || "",
+                    notes: initialNotes || "",
                     status: initialStatus === "unsold" ? "sold-paid" : initialStatus,
                 },
             },
@@ -78,6 +82,68 @@ export default component$<TicketFormProps>(
                                             value={field.value}
                                             placeholder="Enter buyer's name"
                                             class="input-field"
+                                            disabled={ticketForm.submitting}
+                                        />
+                                    </div>
+                                    {field.error && (
+                                        <div class="error-message">
+                                            <LuAlertCircle class="h-4 w-4 mr-1" />
+                                            {field.error}
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </Field>
+                    </div>
+
+                    {/* Phone Number Field */}
+                    <div class="form-field">
+                        <Field name="buyerPhone">
+                            {(field, props) => (
+                                <>
+                                    <Label for="buyerPhone" class="field-label">
+                                        Phone Number (optional)
+                                    </Label>
+                                    <div class="input-with-icon">
+                                        <LuPhone class="input-icon h-5 w-5" />
+                                        <Input
+                                            {...props}
+                                            id="buyerPhone"
+                                            type="text"
+                                            value={field.value}
+                                            placeholder="Enter phone number"
+                                            class="input-field"
+                                            disabled={ticketForm.submitting}
+                                        />
+                                    </div>
+                                    {field.error && (
+                                        <div class="error-message">
+                                            <LuAlertCircle class="h-4 w-4 mr-1" />
+                                            {field.error}
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </Field>
+                    </div>
+
+                    {/* Notes Field */}
+                    <div class="form-field">
+                        <Field name="notes">
+                            {(field, props) => (
+                                <>
+                                    <Label for="notes" class="field-label">
+                                        Notes (optional)
+                                    </Label>
+                                    <div class="input-with-icon">
+                                        <LuStickyNote class="input-icon h-5 w-5" />
+                                        <textarea
+                                            {...props}
+                                            id="notes"
+                                            value={field.value}
+                                            placeholder="Add any notes"
+                                            class="input-field min-h-[80px]"
+                                            rows={3}
                                             disabled={ticketForm.submitting}
                                         />
                                     </div>
