@@ -445,7 +445,7 @@ export default component$(() => {
                   <Accordion.Item>
                     <Accordion.Trigger header="h3">{_`How do I create a raffle without an account?`}</Accordion.Trigger>
                     <Accordion.Content>
-                      {_`You can easily create a raffle without registering. Simply go to the "Create a Raffle" page, set up your raffle parameters, and the system will generate a unique link. Your raffle data will be stored locally in your browser, and you can have up to 100 tickets per raffle.`}
+                      {_`create_raffle_instructions`}
                     </Accordion.Content>
                   </Accordion.Item>
                   
