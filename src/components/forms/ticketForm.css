@@ -11,12 +11,28 @@
   @apply block text-sm font-medium text-purple-800 mb-2;
 }
 
+:global(.dark) .field-label {
+  @apply text-purple-200;
+}
+
 .input-field {
   @apply w-full px-4 py-3 rounded-lg border border-purple-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-200 outline-none;
 }
 
+:global(.dark) .input-field {
+  @apply bg-gray-800 border-purple-900 text-white;
+}
+
+:global(.dark) .input-field:focus {
+  @apply border-purple-500 focus:ring-purple-800;
+}
+
 .error-message {
   @apply text-red-500 text-sm mt-1 flex items-center;
+}
+
+:global(.dark) .error-message {
+  @apply text-red-400;
 }
 
 .status-options {
@@ -27,28 +43,56 @@
   @apply flex items-center p-3 rounded-lg border border-gray-200 transition-all duration-200 cursor-pointer;
 }
 
+:global(.dark) .status-option {
+  @apply border-gray-700;
+}
+
 .status-option.unsold {
   @apply hover:bg-purple-50;
+}
+
+:global(.dark) .status-option.unsold {
+  @apply hover:bg-purple-900/30;
 }
 
 .status-option.unsold.selected {
   @apply bg-purple-100 border-purple-300;
 }
 
+:global(.dark) .status-option.unsold.selected {
+  @apply bg-purple-900/40 border-purple-700;
+}
+
 .status-option.unpaid {
   @apply hover:bg-amber-50;
+}
+
+:global(.dark) .status-option.unpaid {
+  @apply hover:bg-amber-900/30;
 }
 
 .status-option.unpaid.selected {
   @apply bg-amber-100 border-amber-300;
 }
 
+:global(.dark) .status-option.unpaid.selected {
+  @apply bg-amber-900/40 border-amber-700;
+}
+
 .status-option.paid {
   @apply hover:bg-green-50;
 }
 
+:global(.dark) .status-option.paid {
+  @apply hover:bg-green-900/30;
+}
+
 .status-option.paid.selected {
   @apply bg-green-100 border-green-300;
+}
+
+:global(.dark) .status-option.paid.selected {
+  @apply bg-green-900/40 border-green-700;
 }
 
 .status-radio {
@@ -57,6 +101,10 @@
 
 .status-label {
   @apply flex-1 font-medium;
+}
+
+:global(.dark) .status-label {
+  @apply text-gray-200;
 }
 
 .status-icon {
@@ -71,12 +119,24 @@
   @apply px-5 py-2.5 rounded-lg text-red-600 bg-transparent border border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300 transition-colors font-medium;
 }
 
+:global(.dark) .cancel-btn {
+  @apply text-red-400 border-red-900 hover:bg-red-900/30 hover:text-red-300 hover:border-red-700;
+}
+
 .submit-btn {
   @apply px-5 py-2.5 rounded-lg bg-green-600 text-white hover:bg-green-700 transition-colors font-medium flex items-center justify-center min-w-[120px];
 }
 
+:global(.dark) .submit-btn {
+  @apply bg-green-700 hover:bg-green-600;
+}
+
 .submit-btn:disabled {
   @apply bg-purple-400 cursor-not-allowed;
+}
+
+:global(.dark) .submit-btn:disabled {
+  @apply bg-purple-800 text-gray-300;
 }
 
 .input-with-icon {
@@ -87,8 +147,25 @@
   @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400;
 }
 
+:global(.dark) .input-icon {
+  @apply text-purple-300;
+}
+
 .input-with-icon .input-field {
   @apply pl-10;
+}
+
+/* Estilos específicos para textareas */
+textarea.input-field {
+  @apply resize-none min-h-[80px];
+}
+
+.input-with-icon textarea.input-field {
+  @apply pt-3;
+}
+
+:global(.dark) .input-with-icon textarea.input-field ~ .input-icon {
+  @apply top-[22px];
 }
 
 /* Agregar estilos para el modal */
@@ -96,13 +173,25 @@
   @apply max-w-md w-full bg-white p-6 rounded-lg shadow-lg relative;
 }
 
+:global(.dark) .modal-edit-ticket {
+  @apply bg-gray-800 border border-purple-900;
+}
+
 /* Agregar estilos para el título y descripción del modal */
 .modal-title {
   @apply text-xl font-bold text-purple-800;
 }
 
+:global(.dark) .modal-title {
+  @apply text-purple-300;
+}
+
 .modal-description {
   @apply text-purple-600 mb-4;
+}
+
+:global(.dark) .modal-description {
+  @apply text-purple-400;
 }
 
 /* Estilos para dispositivos móviles */
@@ -130,7 +219,14 @@ button.submit-btn {
   @apply inline-block;
 }
 
-/* Estilos adicionales para textareas */
-textarea.input-field {
-  @apply resize-none;
+:global(.dark) .status-icon.h-5.w-5.text-purple-600 {
+  @apply text-purple-400;
+}
+
+:global(.dark) .status-icon.h-5.w-5.text-amber-600 {
+  @apply text-amber-400;
+}
+
+:global(.dark) .status-icon.h-5.w-5.text-green-600 {
+  @apply text-green-400;
 }

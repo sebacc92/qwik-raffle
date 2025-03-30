@@ -1,6 +1,6 @@
 import { type QRL, $, component$, useSignal, useStylesScoped$ } from "@builder.io/qwik"
 import { useForm, valiForm$ } from "@modular-forms/qwik"
-import { Input, Label } from "~/components/ui"
+import { Input, Label, Textarea } from "~/components/ui"
 import { type TicketForm, type TicketResponseData, TicketSchema } from "~/schemas/ticketSchema"
 import { useFormTicketAction } from "~/shared/forms/actions"
 import { LuUser, LuPhone, LuTicket, LuAlertCircle, LuCheckCircle, LuClock, LuStickyNote } from "@qwikest/icons/lucide";
@@ -137,12 +137,12 @@ export default component$<TicketFormProps>(
                                     </Label>
                                     <div class="input-with-icon">
                                         <LuStickyNote class="input-icon h-5 w-5" />
-                                        <textarea
+                                        <Textarea
                                             {...props}
                                             id="notes"
                                             value={field.value}
                                             placeholder="Add any notes"
-                                            class="input-field min-h-[80px]"
+                                            class="input-field"
                                             rows={3}
                                             disabled={ticketForm.submitting}
                                         />
@@ -171,16 +171,21 @@ export default component$<TicketFormProps>(
                                     </Label>
                                     <div class="status-options">
                                         <div
-                                            class={`status-option paid ${field.value === "sold-paid" ? "selected" : ""}`}
-                                            onClick$={() => (field.value = "sold-paid")}
+                                            class={`status-option paid ${
+                                                field.value === "sold-paid" ? "selected" : ""
+                                            }`}
+                                            onClick$={() => {
+                                                field.value = "sold-paid"
+                                            }}
                                         >
                                             <input
-                                                {...props}
                                                 type="radio"
                                                 id="status-paid"
+                                                {...props}
                                                 value="sold-paid"
                                                 checked={field.value === "sold-paid"}
                                                 class="status-radio accent-green-600"
+                                                disabled={ticketForm.submitting}
                                             />
                                             <label for="status-paid" class="status-label">
                                                 Sold - Paid
@@ -189,16 +194,21 @@ export default component$<TicketFormProps>(
                                         </div>
 
                                         <div
-                                            class={`status-option unpaid ${field.value === "sold-unpaid" ? "selected" : ""}`}
-                                            onClick$={() => (field.value = "sold-unpaid")}
+                                            class={`status-option unpaid ${
+                                                field.value === "sold-unpaid" ? "selected" : ""
+                                            }`}
+                                            onClick$={() => {
+                                                field.value = "sold-unpaid"
+                                            }}
                                         >
                                             <input
-                                                {...props}
                                                 type="radio"
                                                 id="status-unpaid"
+                                                {...props}
                                                 value="sold-unpaid"
                                                 checked={field.value === "sold-unpaid"}
                                                 class="status-radio accent-amber-600"
+                                                disabled={ticketForm.submitting}
                                             />
                                             <label for="status-unpaid" class="status-label">
                                                 Sold - Unpaid
@@ -206,12 +216,6 @@ export default component$<TicketFormProps>(
                                             <LuClock class="status-icon h-5 w-5 text-amber-600" />
                                         </div>
                                     </div>
-                                    {field.error && (
-                                        <div class="error-message">
-                                            <LuAlertCircle class="h-4 w-4 mr-1" />
-                                            {field.error}
-                                        </div>
-                                    )}
                                 </>
                             )}
                         </Field>
@@ -219,18 +223,18 @@ export default component$<TicketFormProps>(
 
                     {/* Form Footer */}
                     <div class="form-footer">
-                        <button 
-                            type="button" 
-                            onClick$={onCancel$} 
-                            class="cancel-btn" 
+                        <button
+                            type="button"
+                            onClick$={onCancel$}
+                            class="cancel-btn"
                             disabled={ticketForm.submitting}
                         >
                             Cancel
                         </button>
-                        <button 
-                            type="submit" 
-                            disabled={ticketForm.submitting} 
+                        <button
+                            type="submit"
                             class="submit-btn"
+                            disabled={ticketForm.submitting}
                         >
                             {ticketForm.submitting ? "Saving..." : "Save Changes"}
                         </button>

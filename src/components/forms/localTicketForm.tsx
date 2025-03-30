@@ -3,6 +3,7 @@ import { toast } from 'qwik-sonner';
 import { openDB } from '~/shared/indexedDB/config';
 import styles from './ticketForm.css?inline';
 import { LuUser, LuPhone, LuTicket, LuCheckCircle, LuClock, LuStickyNote } from '@qwikest/icons/lucide';
+import { Textarea } from '~/components/ui';
 
 export interface LocalTicketFormProps {
     raffleId: number;
@@ -172,7 +173,7 @@ export default component$<LocalTicketFormProps>(
                         </label>
                         <div class="input-with-icon">
                             <LuStickyNote class="input-icon h-5 w-5" />
-                            <textarea
+                            <Textarea
                                 id="notes"
                                 value={notes.value}
                                 onInput$={(e) => notes.value = (e.target as HTMLTextAreaElement).value}

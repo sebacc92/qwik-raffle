@@ -15,7 +15,7 @@ export const PremiumInfoAlert = () => (
     <h3 class="font-semibold mb-2">Premium Benefits</h3>
     <ul class="space-y-2 text-sm text-muted-foreground">
       <li>✨ Unlimited raffles</li>
-      <li>✨ Up to 20,000 participants per raffle</li>
+      <li>✨ Up to 10,000 participants per raffle</li>
       <li>✨ Payment integration</li>
       <li>✨ Detailed statistics</li>
       <li>✨ Priority support</li>

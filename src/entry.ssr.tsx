@@ -14,16 +14,21 @@ import {
   renderToStream,
   type RenderToStreamOptions,
 } from "@builder.io/qwik/server";
+import { extractBase, setSsrLocaleGetter } from 'compiled-i18n/qwik'
 import { manifest } from "@qwik-client-manifest";
 import Root from "./root";
+
+// +++ Allow compiled-i18n to get the current SSR locale
+setSsrLocaleGetter()
 
 export default function (opts: RenderToStreamOptions) {
   return renderToStream(<Root />, {
     manifest,
     ...opts,
     // Use container attributes to set attributes on the html tag.
+		base: extractBase,
     containerAttributes: {
-      lang: "en-us",
+      lang: opts.serverData!.locale,
       ...opts.containerAttributes,
     },
     serverData: {

@@ -2,6 +2,7 @@ import { component$, useSignal } from '@builder.io/qwik';
 import { Link } from '@builder.io/qwik-city';
 import { LuGift, LuX, LuUser, LuLogOut } from '@qwikest/icons/lucide';
 import ThemeToggle from '~/components/ThemeToggle';
+import { LocaleSelector } from '~/components/locale-selector';
 import { Avatar, Dropdown, Modal } from '~/components/ui';
 import SocialLoginButtons from '~/components/SocialLoginButtons';
 import { useSession, useSignOut } from '~/routes/plugin@auth';
@@ -16,10 +17,13 @@ export default component$(() => {
             <div class="flex items-center">
                 <Link href="/" class="flex items-center">
                     <LuGift class="h-8 w-8 text-primary dark:text-purple-400 animate-pulse" />
-                    <span class="ml-2 text-xl font-bold bg-gradient-to-r from-primary to-primary-hover dark:from-purple-400 dark:to-purple-300 bg-clip-text text-transparent">QwikRaffle</span>
+                    <span class="ml-2 text-xl font-bold bg-gradient-to-r from-primary to-primary-hover dark:from-purple-400 dark:to-purple-300 bg-clip-text text-transparent">
+                        QwikRaffle
+                    </span>
                 </Link>
             </div>
             <div class="flex items-center space-x-4">
+                <LocaleSelector />
                 <ThemeToggle />
                 {session.value ? (
                     <Dropdown.Root>
@@ -34,7 +38,7 @@ export default component$(() => {
                         </Dropdown.Trigger>
                         <Dropdown.Popover gutter={8}>
                             <Dropdown.Item class="px-4 py-2 whitespace-nowrap">
-                                <Link href="/users/profile" class="flex items-center gap-2 w-full flex-nowrap">
+                                <Link href="/profile" class="flex items-center gap-2 w-full flex-nowrap">
                                     <LuUser class="h-4 w-4" />
                                     <span>My Profile</span>
                                 </Link>
