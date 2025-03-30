@@ -15,8 +15,8 @@ export default component$(() => {
         <header class="w-full py-4 px-4 md:px-6 flex items-center justify-between border-b border-border shadow-sm sticky top-0 z-30 bg-background/95 backdrop-blur-sm">
             <div class="flex items-center">
                 <Link href="/" class="flex items-center">
-                    <LuGift class="h-8 w-8 text-primary animate-pulse" />
-                    <span class="ml-2 text-xl font-bold bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent">QwikRaffle</span>
+                    <LuGift class="h-8 w-8 text-primary dark:text-purple-400 animate-pulse" />
+                    <span class="ml-2 text-xl font-bold bg-gradient-to-r from-primary to-primary-hover dark:from-purple-400 dark:to-purple-300 bg-clip-text text-transparent">QwikRaffle</span>
                 </Link>
             </div>
             <div class="flex items-center space-x-4">
@@ -41,7 +41,7 @@ export default component$(() => {
                             </Dropdown.Item>
                             <Dropdown.Separator />
                             <Dropdown.Item class="px-4 py-2">
-                                <div class="flex items-center gap-2 whitespace-nowrap" onClick$={() => signOut.submit({ redirectTo: "/" })}>
+                                <div class="flex items-center gap-2 whitespace-nowrap cursor-pointer" onClick$={() => signOut.submit({ redirectTo: "/" })}>
                                     <LuLogOut class="w-5 h-5" /> 
                                     <span>Sign Out</span>
                                 </div>

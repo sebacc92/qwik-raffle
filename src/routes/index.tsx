@@ -94,7 +94,7 @@ export default component$(() => {
                 </p>
               </div>
             </div>
-            <div class="mx-auto grid max-w-5xl items-center gap-8 py-12 md:grid-cols-2 lg:grid-cols-4">
+            <div class="mx-auto grid max-w-5xl items-center gap-8 py-12 md:grid-cols-2 lg:grid-cols-4 text-center">
               {/* Feature 1 */}
               <div class="flex flex-col items-center space-y-4 rounded-xl border p-6 shadow-sm transition-all hover:shadow-md hover:border-primary/50 bg-card">
                 <div class="rounded-full bg-primary/10 p-4">
@@ -428,7 +428,7 @@ export default component$(() => {
                   Create your first raffle now and discover how easy it is
                 </p>
               </div>
-              <div class="mx-auto flex flex-col sm:flex-row gap-4 max-w-md w-full">
+              <div class="mx-auto flex flex-col items-center justify-center sm:flex-row gap-4 max-w-md w-full">
                 <Link 
                   href="/create" 
                   class="inline-flex h-12 items-center justify-center rounded-base bg-white px-8 text-base font-medium text-primary shadow-lg transition-all hover:bg-white/90 hover:shadow-xl press"

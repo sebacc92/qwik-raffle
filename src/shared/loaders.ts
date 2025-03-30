@@ -1,5 +1,7 @@
 import { routeLoader$ } from "@builder.io/qwik-city";
 import Drizzler from "../../drizzle";
+import type { Session } from "~/types/session";
+import { createUser, getUser } from "~/server";
 
 // Tipo para los números del sorteo
 export interface RaffleNumber {
@@ -36,6 +38,22 @@ export interface RaffleData {
         imageUrl: string | null;
     }[];
 }
+
+export const useServerSession = routeLoader$(async (e) => {
+    const session = e.sharedMap.get("session") as Session | null;
+  
+    let user = (await getUser(session)) || [];
+    if (user.length === 0 && session) {
+      await createUser(session);
+      user = (await getUser(session)) || [];
+    }
+  
+    return {
+      user,
+      session,
+      isPremium: false
+    };
+  });
 
 export const useGetRaffle = routeLoader$(async (requestEvent) => {
     const raffleUuid = requestEvent.params["uuid"];

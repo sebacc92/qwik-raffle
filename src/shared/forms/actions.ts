@@ -5,14 +5,22 @@ import { schema } from "../../../drizzle/schema";
 import { v4 } from "uuid";
 import { and, eq } from "drizzle-orm";
 import { type TicketForm, type TicketResponseData, TicketSchema } from "~/schemas/ticketSchema";
+import type { Session } from "~/types/session";
+import { getUser } from "~/server";
 
 export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
-    async (values) => {
+    async (values, e) => {
+        const session = e.sharedMap.get("session") as Session | null;
+        const userData = await getUser(session);
+        const userId = userData?.[0]?.id;
+        
         const { prizes, ...raffleData } = values;
         const payload = {
             ...raffleData,
-            uuid: v4()
+            uuid: v4(),
+            creatorId: userId || null
         }
+        
         const db = Drizzler();
         try {
             // Create the raffle

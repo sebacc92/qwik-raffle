@@ -2,7 +2,7 @@ import { component$, useSignal, $, useStylesScoped$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { toast } from 'qwik-sonner';
 import { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
-import styles from './raffle.css?inline'; // Import styles
+import styles from './raffle.css?inline';
 import Ticket from "~/components/raffle/ticket";
 
 export { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";

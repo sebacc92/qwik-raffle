@@ -1,0 +1,176 @@
+.ticket-container {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #FDF4FF;
+}
+
+:global(.dark) .ticket-container {
+    background-color: #3b0764;
+}
+
+.ticket-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.ticket {
+    border: 2px solid;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    aspect-ratio: 1 / 1;
+    position: relative;
+    overflow: hidden;
+    font-size: 1.5em;
+}
+
+.ticket:hover {
+    transform: scale(1.05);
+    z-index: 1;
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.15);
+}
+
+:global(.dark) .ticket {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+:global(.dark) .ticket:hover {
+    box-shadow: 0 6px 14px rgba(168, 85, 247, 0.25);
+}
+
+/* Card styles for both modes */
+.raffle-card {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    border: 1px solid #e9d5ff;
+}
+
+.raffle-card:hover {
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.12);
+    transform: translateY(-2px);
+}
+
+:global(.dark) .raffle-card {
+    background-color: #1e1b4b;
+    border-color: #4a044e;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+:global(.dark) .raffle-card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Prize item styling */
+.prize-item {
+    transition: all 0.2s ease;
+    background-color: #f3e8ff;
+    border-radius: 0.5rem;
+    border: 1px solid #e9d5ff;
+}
+
+.prize-item:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 3px 10px rgba(168, 85, 247, 0.1);
+}
+
+:global(.dark) .prize-item {
+    background-color: #2e1065;
+    border-color: #4a044e;
+}
+
+:global(.dark) .prize-item:hover {
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+}
+
+/* Prize position indicator */
+.prize-position {
+    background-color: #9333ea;
+    box-shadow: 0 2px 5px rgba(147, 51, 234, 0.3);
+}
+
+:global(.dark) .prize-position {
+    background-color: #a855f7;
+    box-shadow: 0 2px 5px rgba(168, 85, 247, 0.4);
+}
+
+/* Available/Unavailable tickets */
+.available-ticket {
+    border-color: #22c55e;
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.available-ticket:hover {
+    background-color: #bbf7d0;
+    border-color: #16a34a;
+}
+
+.unavailable-ticket {
+    border-color: #d1d5db;
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
+
+:global(.dark) .available-ticket {
+    border-color: #22c55e;
+    background-color: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+}
+
+:global(.dark) .available-ticket:hover {
+    background-color: rgba(34, 197, 94, 0.3);
+}
+
+:global(.dark) .unavailable-ticket {
+    border-color: #374151;
+    background-color: #1f2937;
+    color: #9ca3af;
+}
+
+/* X mark for unavailable tickets */
+.unavailable-mark {
+    stroke: #ef4444;
+    opacity: 0.6;
+}
+
+:global(.dark) .unavailable-mark {
+    stroke: #f87171;
+    opacity: 0.7;
+}
+
+/* Search input styling */
+.search-input {
+    border-color: #e9d5ff;
+    transition: all 0.2s ease;
+}
+
+.search-input:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2);
+}
+
+:global(.dark) .search-input {
+    background-color: #1e1b4b;
+    border-color: #4a044e;
+    color: #f5f5f5;
+}
+
+:global(.dark) .search-input::placeholder {
+    color: #a1a1aa;
+}
+
+:global(.dark) .search-input:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.3);
+}

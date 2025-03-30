@@ -1,7 +1,8 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { component$, useSignal, useStylesScoped$ } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LuGift } from '@qwikest/icons/lucide';
+import styles from "./client.css?inline";
 
 interface Prize {
     name: string;
@@ -15,6 +16,8 @@ interface RaffleInfo {
 }
 
 export default component$(() => {
+    useStylesScoped$(styles);
+
     const location = useLocation();
     const raffle = useSignal<RaffleInfo | null>(null);
     const availableNumbers = useSignal<number[]>([]);
@@ -45,38 +48,43 @@ export default component$(() => {
     if (errorMessage.value) {
         return (
             <div class="p-4 max-w-7xl mx-auto">
-                <h1 class="text-2xl font-bold text-purple-800">Error</h1>
-                <p class="text-purple-600">{errorMessage.value}</p>
+                <h1 class="text-2xl font-bold text-purple-800 dark:text-purple-300">Error</h1>
+                <p class="text-purple-600 dark:text-purple-400">{errorMessage.value}</p>
             </div>
         );
     }
 
+    const availableCount = availableNumbers.value.length;
+
     return (
-        <div class="p-4 max-w-7xl mx-auto space-y-6">
-            <div class="text-center space-y-2">
-                <h1 class="text-3xl font-bold text-purple-800">{raffle.value?.name}</h1>
-                <p class="text-lg text-purple-600">
+        <div class="p-4 max-w-7xl mx-auto space-y-8">
+            <div class="text-center space-y-3">
+                <h1 class="text-3xl font-bold text-purple-800 dark:text-purple-300">{raffle.value?.name}</h1>
+                <p class="text-lg text-purple-600 dark:text-purple-400">
                     Price per number: ${raffle.value?.pricePerNumber.toFixed(2)}
+                </p>
+                <p class="text-green-600 dark:text-green-400 font-semibold mt-1">
+                    {availableCount} numbers available of {raffle.value?.numberCount}!
                 </p>
             </div>
 
             {/* Prize list */}
             {raffle.value?.prizes && raffle.value.prizes.length > 0 && (
-                <div class="bg-white border rounded-lg p-6 shadow-sm">
-                    <div class="flex items-center gap-2 mb-4">
-                        <LuGift class="w-6 h-6 text-purple-600" />
-                        <h2 class="text-2xl font-semibold text-purple-800">Available Prizes</h2>
+                <div class="raffle-card p-6">
+                    <div class="flex items-center gap-3 mb-5">
+                        <LuGift class="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                        <h2 class="text-2xl font-semibold text-purple-800 dark:text-purple-300">Available Prizes</h2>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {raffle.value.prizes.map((prize, index) => (
                             <div 
                                 key={index}
-                                class="flex items-center gap-3 bg-purple-50 rounded-lg p-4 shadow-sm transition-transform hover:scale-[1.02]"
+                                class="prize-item flex items-center gap-3 p-4"
                             >
-                                <span class="flex items-center justify-center w-8 h-8 bg-purple-600 text-white rounded-full text-lg font-medium">
+                                <span class="prize-position flex items-center justify-center w-8 h-8 text-white rounded-full text-lg font-medium">
                                     {index + 1}
                                 </span>
-                                <span class="text-purple-900 font-medium">{prize.name}</span>
+                                <span class="text-purple-900 dark:text-purple-200 font-medium">{prize.name}</span>
                             </div>
                         ))}
                     </div>
@@ -84,24 +92,20 @@ export default component$(() => {
             )}
 
             {/* Number grid */}
-            <div class="bg-white border rounded-lg p-6 shadow-sm">
-                <h2 class="text-xl font-semibold text-purple-800 mb-4">Select your number</h2>
-                <div class="grid grid-cols-5 sm:grid-cols-10 gap-2">
+            <div class="raffle-card p-6">
+                <h2 class="text-xl font-semibold text-purple-800 dark:text-purple-300 mb-4">Select your number</h2>
+                <div class="ticket-grid">
                     {Array.from({ length: raffle.value?.numberCount || 0 }, (_, i) => i + 1).map(number => {
                         const isAvailable = availableNumbers.value.includes(number);
                         return (
                             <div
                                 key={number}
-                                class={`relative aspect-square flex items-center justify-center text-lg font-medium rounded-lg border-2 ${
-                                    isAvailable 
-                                        ? 'border-green-500 bg-green-50 text-green-700 hover:bg-green-100 cursor-pointer transition-colors'
-                                        : 'border-gray-300 bg-gray-50 text-gray-400'
-                                }`}
+                                class={`ticket ${isAvailable ? 'available-ticket' : 'unavailable-ticket'}`}
                             >
                                 {number}
                                 {!isAvailable && (
                                     <div class="absolute inset-0 flex items-center justify-center">
-                                        <svg class="w-full h-full text-red-500 opacity-40" viewBox="0 0 24 24">
+                                        <svg class="w-full h-full unavailable-mark" viewBox="0 0 24 24">
                                             <path
                                                 d="M19 5L5 19M5.00001 5L19 19"
                                                 stroke="currentColor"
@@ -118,7 +122,7 @@ export default component$(() => {
             </div>
 
             {/* Contact information */}
-            <div class="text-center text-gray-600">
+            <div class="text-center text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
                 <p>Contact the raffle organizer to reserve your numbers</p>
             </div>
         </div>

@@ -223,20 +223,15 @@ export default component$(() => {
         try {
             // Obtener el ID desde los parámetros de ruta
             const id = location.params.id;
-            console.log('id', id)
 
             if (!id) {
                 errorMessage.value = "No raffle ID provided";
                 isLoading.value = false;
                 return;
             }
-            console.log(1)
 
             raffleId.value = Number(id);
-            console.log(2)
-            console.log('Number(id)', Number(id))
             const raffleData = await getRaffleById(Number(id));
-            console.log('raffleData', raffleData)
 
             if (!raffleData) {
                 errorMessage.value = "Raffle not found";
@@ -244,14 +239,10 @@ export default component$(() => {
                 return;
             }
 
-            console.log(3)
             raffle.value = raffleData;
-            console.log(4)
 
             // Intentar obtener tickets
             const ticketsData = await getTicketsForRaffle(Number(id));
-            console.log('ticketsData', ticketsData)
-            console.log(5)
 
             // Si no hay tickets, inicializar
             if (ticketsData.length === 0) {
