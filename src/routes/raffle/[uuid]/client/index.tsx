@@ -3,6 +3,7 @@ import type { DocumentHead } from "@builder.io/qwik-city";
 import { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 import { LuGift } from '@qwikest/icons/lucide';
 import styles from "./client.css?inline";
+import { _ } from "compiled-i18n";
 
 export { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 
@@ -15,8 +16,8 @@ export default component$(() => {
     const search = useSignal("");
     
     // Check if raffle data is loaded
-    if (!raffle.value || raffle.value.failed) {
-        return <div class="flex justify-center items-center min-h-screen text-purple-800 dark:text-purple-300">The raffle does not exist or is not available.</div>;
+    if (raffle.value.failed) {
+        return <div class="flex justify-center items-center min-h-screen text-purple-800 dark:text-purple-300">{_`The raffle does not exist or is not available.`}</div>;
     }
 
     // Calculate available numbers
@@ -31,10 +32,10 @@ export default component$(() => {
             <div class="text-center space-y-3">
                 <h1 class="text-3xl font-bold text-purple-800 dark:text-purple-300">{raffle.value.name}</h1>
                 <p class="text-lg text-purple-600 dark:text-purple-400">
-                    Price per number: ${raffle.value.pricePerNumber.toFixed(2)}
+                    {_`Price per number: `}${raffle.value.pricePerNumber.toFixed(2)}
                 </p>
                 <p class="text-green-600 dark:text-green-400 font-semibold mt-1">
-                    {availableCount} numbers available of {raffle.value.numberCount}!
+                    {availableCount} {_`numbers available of `}{raffle.value.numberCount}!
                 </p>
             </div>
 
@@ -43,7 +44,7 @@ export default component$(() => {
                 <div class="raffle-card p-6">
                     <div class="flex items-center gap-3 mb-5">
                         <LuGift class="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                        <h2 class="text-2xl font-semibold text-purple-800 dark:text-purple-300">Available Prizes</h2>
+                        <h2 class="text-2xl font-semibold text-purple-800 dark:text-purple-300">{_`Available Prizes`}</h2>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {raffle.value.prizes.map((prize) => (
@@ -80,7 +81,7 @@ export default component$(() => {
 
             {/* Number grid */}
             <div class="raffle-card p-6">
-                <h2 class="text-xl font-semibold text-purple-800 dark:text-purple-300 mb-4">Select your number</h2>
+                <h2 class="text-xl font-semibold text-purple-800 dark:text-purple-300 mb-4">{_`Select your number`}</h2>
                 <div class="ticket-grid">
                     {Array.from({ length: raffle.value.numberCount }, (_, i) => i + 1)
                         .filter(number => !search.value || number.toString().includes(search.value))
@@ -113,7 +114,7 @@ export default component$(() => {
 
             {/* Contact information */}
             <div class="text-center text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                <p>Contact the raffle organizer to reserve your numbers</p>
+                <p>{_`Contact the raffle organizer to reserve your numbers`}</p>
             </div>
         </div>
     );
@@ -122,11 +123,11 @@ export default component$(() => {
 export const head: DocumentHead = ({ resolveValue }) => {
     const raffle = resolveValue(useGetRaffle);
     return {
-        title: `Qwik Raffle - ${raffle?.name || "View Available Numbers"}`,
+        title: _`Qwik Raffle - ${raffle.name || "View Available Numbers"}`,
         meta: [
             {
                 name: "description",
-                content: `View and select available raffle numbers for ${raffle?.name || ""}`,
+                content: _`View and select available raffle numbers for ${raffle.name || ""}`,
             },
         ],
     };

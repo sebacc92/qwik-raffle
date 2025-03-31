@@ -6,6 +6,7 @@ import { useFormTicketAction } from "~/shared/forms/actions"
 import { LuUser, LuPhone, LuTicket, LuAlertCircle, LuCheckCircle, LuClock, LuStickyNote } from "@qwikest/icons/lucide";
 import styles from './ticketForm.css?inline';
 import { toast } from "qwik-sonner"
+import { _ } from "compiled-i18n"
 
 export interface TicketFormProps {
     raffleId: number
@@ -71,7 +72,7 @@ export default component$<TicketFormProps>(
                             {(field, props) => (
                                 <>
                                     <Label for="buyerName" class="field-label">
-                                        Buyer Name
+                                        {_`Buyer Name`}
                                     </Label>
                                     <div class="input-with-icon">
                                         <LuUser class="input-icon h-5 w-5" />
@@ -80,7 +81,7 @@ export default component$<TicketFormProps>(
                                             id="buyerName"
                                             type="text"
                                             value={field.value}
-                                            placeholder="Enter buyer's name"
+                                            placeholder={_`Enter buyer's name`}
                                             class="input-field"
                                             disabled={ticketForm.submitting}
                                         />
@@ -102,7 +103,7 @@ export default component$<TicketFormProps>(
                             {(field, props) => (
                                 <>
                                     <Label for="buyerPhone" class="field-label">
-                                        Phone Number (optional)
+                                        {_`Phone Number (optional)`}
                                     </Label>
                                     <div class="input-with-icon">
                                         <LuPhone class="input-icon h-5 w-5" />
@@ -111,7 +112,7 @@ export default component$<TicketFormProps>(
                                             id="buyerPhone"
                                             type="text"
                                             value={field.value}
-                                            placeholder="Enter phone number"
+                                            placeholder={_`Enter phone number`}
                                             class="input-field"
                                             disabled={ticketForm.submitting}
                                         />
@@ -133,7 +134,7 @@ export default component$<TicketFormProps>(
                             {(field, props) => (
                                 <>
                                     <Label for="notes" class="field-label">
-                                        Notes (optional)
+                                        {_`Notes (optional)`}
                                     </Label>
                                     <div class="input-with-icon">
                                         <LuStickyNote class="input-icon h-5 w-5" />
@@ -141,7 +142,7 @@ export default component$<TicketFormProps>(
                                             {...props}
                                             id="notes"
                                             value={field.value}
-                                            placeholder="Add any notes"
+                                            placeholder={_`Add any notes`}
                                             class="input-field"
                                             rows={3}
                                             disabled={ticketForm.submitting}
@@ -166,7 +167,7 @@ export default component$<TicketFormProps>(
                                     <Label class="field-label">
                                         <div class="flex items-center">
                                             <LuTicket class="h-5 w-5 mr-2" />
-                                            Ticket Status
+                                            {_`Ticket Status`}
                                         </div>
                                     </Label>
                                     <div class="status-options">
@@ -188,7 +189,7 @@ export default component$<TicketFormProps>(
                                                 disabled={ticketForm.submitting}
                                             />
                                             <label for="status-paid" class="status-label">
-                                                Sold - Paid
+                                                {_`Sold - Paid`}
                                             </label>
                                             <LuCheckCircle class="status-icon h-5 w-5 text-green-600" />
                                         </div>
@@ -211,7 +212,7 @@ export default component$<TicketFormProps>(
                                                 disabled={ticketForm.submitting}
                                             />
                                             <label for="status-unpaid" class="status-label">
-                                                Sold - Unpaid
+                                                {_`Sold - Unpaid`}
                                             </label>
                                             <LuClock class="status-icon h-5 w-5 text-amber-600" />
                                         </div>
@@ -229,14 +230,14 @@ export default component$<TicketFormProps>(
                             class="cancel-btn"
                             disabled={ticketForm.submitting}
                         >
-                            Cancel
+                            {_`Cancel`}
                         </button>
                         <button
                             type="submit"
                             class="submit-btn"
                             disabled={ticketForm.submitting}
                         >
-                            {ticketForm.submitting ? "Saving..." : "Save Changes"}
+                            {ticketForm.submitting ? _`Saving...` : _`Save Changes`}
                         </button>
                     </div>
                 </Form>

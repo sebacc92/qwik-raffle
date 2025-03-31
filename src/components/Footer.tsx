@@ -1,4 +1,5 @@
 import { component$ } from '@builder.io/qwik';
+import { _ } from 'compiled-i18n';
 
 export default component$(() => {
   return (
@@ -6,7 +7,7 @@ export default component$(() => {
       <div class="container mx-auto px-4">
         <div class="mt-4 text-center space-y-2">
           <p class="text-sm font-medium">
-            Made with <span class="text-red-500">❤️</span> by{' '}
+            {_`Made with `}<span class="text-red-500">❤️</span> {_`by`}{' '}
             <a 
               href="https://sebastiancardoso.com" 
               target="_blank" 
@@ -17,7 +18,7 @@ export default component$(() => {
             </a>
           </p>
           <p class="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} QwikRaffle. All rights reserved.
+            © {new Date().getFullYear()} {_`QwikRaffle. All rights reserved.`}
           </p>
         </div>
       </div>

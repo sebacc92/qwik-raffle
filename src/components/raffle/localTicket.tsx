@@ -4,6 +4,7 @@ import { LuX } from '@qwikest/icons/lucide';
 import styles from '~/routes/raffle/[uuid]/raffle.css?inline';
 import type { Ticket } from '~/shared/indexedDB/config';
 import LocalTicketForm from '~/components/forms/localTicketForm';
+import { _ } from "compiled-i18n";
 
 interface LocalTicketProps {
     ticket: Ticket;
@@ -67,10 +68,10 @@ export default component$<LocalTicketProps>(({ ticket, raffleId, onUpdate$ }) =>
                         </Modal.Close>
                         <div class="pb-4">
                             <Modal.Title class="text-xl font-bold text-purple-800">
-                                Edit Ticket #{ticket.number}
+                                {_`Edit Ticket`} #{ticket.number}
                             </Modal.Title>
                             <Modal.Description class="text-purple-600">
-                                Update ticket information
+                                {_`Update ticket information`}
                             </Modal.Description>
                         </div>
 

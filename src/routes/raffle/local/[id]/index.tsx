@@ -6,6 +6,7 @@ import { LuSearch, LuUsers, LuDollarSign, LuDownload, LuTrash2, LuCreditCard, Lu
 import { openDB, type LocalRaffle, type Ticket, type Prize } from '~/shared/indexedDB/config';
 import LocalTicket from "~/components/raffle/localTicket";
 import styles from '../../[uuid]/raffle.css?inline';
+import { _ } from "compiled-i18n";
 
 // Función para obtener un sorteo por su ID
 const getRaffleById = async (id: number): Promise<LocalRaffle | null> => {
@@ -225,7 +226,7 @@ export default component$(() => {
             const id = location.params.id;
 
             if (!id) {
-                errorMessage.value = "No raffle ID provided";
+                errorMessage.value = _`No raffle ID provided`;
                 isLoading.value = false;
                 return;
             }
@@ -234,7 +235,7 @@ export default component$(() => {
             const raffleData = await getRaffleById(Number(id));
 
             if (!raffleData) {
-                errorMessage.value = "Raffle not found";
+                errorMessage.value = _`Raffle not found`;
                 isLoading.value = false;
                 return;
             }
@@ -256,7 +257,7 @@ export default component$(() => {
             isLoading.value = false;
         } catch (error) {
             console.error('Error loading raffle:', error);
-            errorMessage.value = "Error loading raffle data";
+            errorMessage.value = _`Error loading raffle data`;
             isLoading.value = false;
         }
     });
@@ -282,24 +283,24 @@ export default component$(() => {
 
         const link = `${window.location.href}client?${params.toString()}`;
         navigator.clipboard.writeText(link);
-        toast.info("Link copied to clipboard");
+        toast.info(_`Link copied to clipboard`);
     });
 
     const downloadRaffleInfo = $(() => {
         if (!raffle.value) return;
 
-        let info = `Raffle Information: ${raffle.value.name}\n\n`;
-        info += `Price per number: $${getPricePerNumber.value.toFixed(2)}\n`;
-        info += `Total numbers: ${getNumberCount.value}\n`;
+        let info = `${_`Raffle Information`}: ${raffle.value.name}\n\n`;
+        info += `${_`Price per number`}: $${getPricePerNumber.value.toFixed(2)}\n`;
+        info += `${_`Total numbers`}: ${getNumberCount.value}\n`;
 
         const soldCount = tickets.value.filter(t => t.status !== "unsold").length;
         const paidCount = tickets.value.filter(t => t.status === "sold-paid").length;
         const totalCollected = paidCount * getPricePerNumber.value;
 
-        info += `Sold numbers: ${soldCount}\n`;
-        info += `Paid numbers: ${paidCount}\n`;
-        info += `Total collected: $${totalCollected.toFixed(2)}\n\n`;
-        info += "Prizes:\n";
+        info += `${_`Sold numbers`}: ${soldCount}\n`;
+        info += `${_`Paid numbers`}: ${paidCount}\n`;
+        info += `${_`Total collected`}: $${totalCollected.toFixed(2)}\n\n`;
+        info += `${_`Prizes`}:\n`;
 
         // Manejar el caso donde prizes podría ser undefined
         if (raffle.value.prizes && raffle.value.prizes.length > 0) {
@@ -307,22 +308,22 @@ export default component$(() => {
                 info += `${index + 1}. ${prize.name}\n`;
             });
         } else {
-            info += "No prizes registered\n";
+            info += `${_`No prizes registered`}\n`;
         }
 
-        info += "\nTicket details:\n";
+        info += `\n${_`Ticket details`}:\n`;
 
         tickets.value.forEach(ticket => {
-            info += `Number ${ticket.number}: `;
+            info += `${_`Number`} ${ticket.number}: `;
             switch (ticket.status) {
                 case "unsold":
-                    info += "Unsold\n";
+                    info += `${_`Unsold`}\n`;
                     break;
                 case "sold-unpaid":
-                    info += `Reserved by ${ticket.buyerName} (Pending payment)\n`;
+                    info += `${_`Reserved by`} ${ticket.buyerName} (${_`Pending payment`})\n`;
                     break;
                 case "sold-paid":
-                    info += `Sold to ${ticket.buyerName}\n`;
+                    info += `${_`Sold to`} ${ticket.buyerName}\n`;
                     break;
             }
         });
@@ -336,14 +337,14 @@ export default component$(() => {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        toast.info("Raffle information downloaded");
+        toast.info(_`Raffle information downloaded`);
     });
 
     // Función para resetear el sorteo
     const resetRaffle = $(async () => {
         if (!raffle.value || !raffleId.value) return;
 
-        if (!confirm("Are you sure you want to reset all tickets? This will mark all tickets as unsold and remove buyer information.")) {
+        if (!confirm(_`Are you sure you want to reset all tickets? This will mark all tickets as unsold and remove buyer information.`)) {
             return;
         }
 
@@ -378,11 +379,11 @@ export default component$(() => {
                     buyerPhone: null,
                     notes: null
                 }));
-                toast.success("Raffle has been reset");
+                toast.success(_`Raffle has been reset`);
             };
         } catch (error) {
             console.error('Error resetting raffle:', error);
-            toast.error("Error resetting raffle");
+            toast.error(_`Error resetting raffle`);
         }
     });
 
@@ -390,7 +391,7 @@ export default component$(() => {
     const deleteRaffle = $(async () => {
         if (!raffle.value || !raffleId.value) return;
 
-        if (!confirm("Are you sure you want to delete this raffle? This action cannot be undone.")) {
+        if (!confirm(_`Are you sure you want to delete this raffle? This action cannot be undone.`)) {
             return;
         }
 
@@ -443,13 +444,13 @@ export default component$(() => {
             });
 
             db.close();
-            toast.success("Raffle deleted successfully");
+            toast.success(_`Raffle deleted successfully`);
             // Redirigir al inicio
             navigate("/");
             
         } catch (error) {
             console.error('Error deleting raffle:', error);
-            toast.error("Error deleting raffle");
+            toast.error(_`Error deleting raffle`);
         }
     });
 
@@ -472,13 +473,13 @@ export default component$(() => {
     if (errorMessage.value) {
         return (
             <div class="p-4 max-w-7xl mx-auto">
-                <h1 class="text-2xl font-bold text-purple-800">Error</h1>
+                <h1 class="text-2xl font-bold text-purple-800">{_`Error`}</h1>
                 <p class="text-purple-600">{errorMessage.value}</p>
                 <button
                     onClick$={() => navigate("/")}
                     class="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
                 >
-                    Go Home
+                    {_`Go Home`}
                 </button>
             </div>
         );
@@ -489,7 +490,7 @@ export default component$(() => {
         return (
             <div class="p-4 max-w-7xl mx-auto flex justify-center items-center min-h-[300px]">
                 <div class="loading-spinner"></div>
-                <p class="ml-3 text-purple-600">Loading raffle data...</p>
+                <p class="ml-3 text-purple-600">{_`Loading raffle data...`}</p>
             </div>
         );
     }
@@ -507,14 +508,14 @@ export default component$(() => {
                             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
                             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
                         </svg>
-                        Copy Link
+                        {_`Copy Link`}
                     </button>
                     <button
                         onClick$={downloadRaffleInfo}
                         class="flex items-center gap-2 px-4 py-2 border rounded-md hover:bg-purple-50 transition-colors"
                     >
                         <LuDownload class="w-4 h-4" />
-                        Download Information
+                        {_`Download Information`}
                     </button>
                 </div>
             </div>
@@ -524,7 +525,7 @@ export default component$(() => {
                     <div class="flex items-center gap-4">
                         <LuUsers class="w-6 h-6 text-purple-600" />
                         <div>
-                            <div class="text-sm text-purple-600">Sold Tickets</div>
+                            <div class="text-sm text-purple-600">{_`Sold Tickets`}</div>
                             <div class="text-xl sm:text-2xl font-bold">
                                 {soldCount}/{getNumberCount.value}
                             </div>
@@ -536,7 +537,7 @@ export default component$(() => {
                     <div class="flex items-center gap-4">
                         <LuCreditCard class="w-6 h-6 text-purple-600" />
                         <div>
-                            <div class="text-sm text-purple-600">Paid Tickets</div>
+                            <div class="text-sm text-purple-600">{_`Paid Tickets`}</div>
                             <div class="text-xl sm:text-2xl font-bold">
                                 {paidCount}/{getNumberCount.value}
                             </div>
@@ -548,12 +549,12 @@ export default component$(() => {
                     <div class="flex items-center gap-4">
                         <LuDollarSign class="w-6 h-6 text-purple-600" />
                         <div>
-                            <div class="text-sm text-purple-600">Total Collected</div>
+                            <div class="text-sm text-purple-600">{_`Total Collected`}</div>
                             <div class="text-xl sm:text-2xl font-bold">
                                 ${totalCollected.toFixed(2)}
                             </div>
                             <div class="text-xs text-purple-400">
-                                Price per ticket: ${getPricePerNumber.value.toFixed(2)}
+                                {_`Price per ticket:`} ${getPricePerNumber.value.toFixed(2)}
                             </div>
                         </div>
                     </div>
@@ -565,7 +566,7 @@ export default component$(() => {
                     <LuSearch class="absolute left-2 top-2.5 text-purple-500 w-4 h-4" />
                     <input
                         type="text"
-                        placeholder="Search number or name"
+                        placeholder={_`Search number or name`}
                         class="pl-8 w-full border rounded-md p-2"
                         value={search.value}
                         onInput$={(e: any) => search.value = e.target.value}
@@ -579,7 +580,7 @@ export default component$(() => {
                         onChange$={() => showOnlyPending.value = !showOnlyPending.value}
                     />
                     <label for="pending" class="text-sm sm:text-base">
-                        Show only pending ({tickets.value.filter(t => t.status === "sold-unpaid").length})
+                        {_`Show only pending`} ({tickets.value.filter(t => t.status === "sold-unpaid").length})
                     </label>
                 </div>
             </div>
@@ -610,19 +611,19 @@ export default component$(() => {
             </div>
 
             <div class="border rounded-lg p-4 space-y-2">
-                <h3 class="font-semibold text-purple-800">Color Reference</h3>
+                <h3 class="font-semibold text-purple-800">{_`Color Reference`}</h3>
                 <div class="flex flex-wrap gap-4">
                     <div class="flex items-center gap-2">
                         <div class="w-4 h-4 border-2 border-purple-200 rounded"></div>
-                        <span>Unsold</span>
+                        <span>{_`Unsold`}</span>
                     </div>
                     <div class="flex items-center gap-2">
                         <div class="w-4 h-4 bg-yellow-100 border-2 border-yellow-500 rounded"></div>
-                        <span>Sold (Pending payment)</span>
+                        <span>{_`Sold (Pending payment)`}</span>
                     </div>
                     <div class="flex items-center gap-2">
                         <div class="w-4 h-4 bg-green-100 border-2 border-green-500 rounded"></div>
-                        <span>Sold and paid</span>
+                        <span>{_`Sold and paid`}</span>
                     </div>
                 </div>
             </div>
@@ -632,7 +633,7 @@ export default component$(() => {
                 <div class="border rounded-lg p-4">
                     <div class="flex items-center gap-2 mb-3">
                         <LuGift class="w-5 h-5 text-purple-600" />
-                        <h3 class="font-semibold text-purple-800">Prizes</h3>
+                        <h3 class="font-semibold text-purple-800">{_`Prizes`}</h3>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                         {raffle.value.prizes.map((prize, index) => (
@@ -656,14 +657,14 @@ export default component$(() => {
                     class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2"
                 >
                     <LuTrash2 class="w-4 h-4" />
-                    Reset Raffle
+                    {_`Reset Raffle`}
                 </button>
                 <button
                     onClick$={deleteRaffle}
                     class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2"
                 >
                     <LuTrash2 class="w-4 h-4" />
-                    Delete Raffle
+                    {_`Delete Raffle`}
                 </button>
             </div>
         </div>
@@ -672,11 +673,11 @@ export default component$(() => {
 
 export const head: DocumentHead = () => {
     return {
-        title: "Qwik Raffle - Local Raffle Management",
+        title: _`Qwik Raffle - Local Raffle Management`,
         meta: [
             {
                 name: "description",
-                content: "Manage your locally saved raffle",
+                content: _`Manage your locally saved raffle`,
             },
         ],
     };

@@ -4,6 +4,7 @@ import { openDB } from '~/shared/indexedDB/config';
 import styles from './ticketForm.css?inline';
 import { LuUser, LuPhone, LuTicket, LuCheckCircle, LuClock, LuStickyNote } from '@qwikest/icons/lucide';
 import { Textarea } from '~/components/ui';
+import { _ } from "compiled-i18n";
 
 export interface LocalTicketFormProps {
     raffleId: number;
@@ -131,7 +132,7 @@ export default component$<LocalTicketFormProps>(
                     {/* Buyer Name Field */}
                     <div class="form-field">
                         <label for="buyerName" class="field-label">
-                            Buyer Name
+                            {_`Buyer Name`}
                         </label>
                         <div class="input-with-icon">
                             <LuUser class="input-icon h-5 w-5" />
@@ -141,7 +142,7 @@ export default component$<LocalTicketFormProps>(
                                 value={buyerName.value}
                                 onInput$={(e) => buyerName.value = (e.target as HTMLInputElement).value}
                                 class="input-field"
-                                placeholder="Enter buyer's name"
+                                placeholder={_`Enter buyer's name`}
                                 disabled={isSaving.value}
                             />
                         </div>
@@ -150,7 +151,7 @@ export default component$<LocalTicketFormProps>(
                     {/* Phone Number Field */}
                     <div class="form-field">
                         <label for="buyerPhone" class="field-label">
-                            Phone Number (optional)
+                            {_`Phone Number (optional)`}
                         </label>
                         <div class="input-with-icon">
                             <LuPhone class="input-icon h-5 w-5" />
@@ -160,7 +161,7 @@ export default component$<LocalTicketFormProps>(
                                 value={buyerPhone.value}
                                 onInput$={(e) => buyerPhone.value = (e.target as HTMLInputElement).value}
                                 class="input-field"
-                                placeholder="Enter phone number"
+                                placeholder={_`Enter phone number`}
                                 disabled={isSaving.value}
                             />
                         </div>
@@ -169,7 +170,7 @@ export default component$<LocalTicketFormProps>(
                     {/* Notes Field */}
                     <div class="form-field">
                         <label for="notes" class="field-label">
-                            Notes (optional)
+                            {_`Notes (optional)`}
                         </label>
                         <div class="input-with-icon">
                             <LuStickyNote class="input-icon h-5 w-5" />
@@ -178,7 +179,7 @@ export default component$<LocalTicketFormProps>(
                                 value={notes.value}
                                 onInput$={(e) => notes.value = (e.target as HTMLTextAreaElement).value}
                                 class="input-field"
-                                placeholder="Add any notes"
+                                placeholder={_`Add any notes`}
                                 rows={3}
                                 disabled={isSaving.value}
                             />
@@ -190,7 +191,7 @@ export default component$<LocalTicketFormProps>(
                         <label class="field-label">
                             <div class="flex items-center">
                                 <LuTicket class="h-5 w-5 mr-2" />
-                                Ticket Status
+                                {_`Ticket Status`}
                             </div>
                         </label>
                         <div class="status-options">
@@ -207,7 +208,7 @@ export default component$<LocalTicketFormProps>(
                                     disabled={isSaving.value}
                                 />
                                 <label for="status-paid" class="status-label">
-                                    Sold - Paid
+                                    {_`Sold - Paid`}
                                 </label>
                                 <LuCheckCircle class="status-icon h-5 w-5 text-green-600" />
                             </div>
@@ -225,7 +226,7 @@ export default component$<LocalTicketFormProps>(
                                     disabled={isSaving.value}
                                 />
                                 <label for="status-unpaid" class="status-label">
-                                    Sold - Unpaid
+                                    {_`Sold - Unpaid`}
                                 </label>
                                 <LuClock class="status-icon h-5 w-5 text-amber-600" />
                             </div>
@@ -241,7 +242,7 @@ export default component$<LocalTicketFormProps>(
                                 class="cancel-btn"
                                 disabled={isSaving.value}
                             >
-                                Cancel Sale
+                                {_`Cancel Sale`}
                             </button>
                         )}
                         <div class="flex-1"></div>
@@ -251,7 +252,7 @@ export default component$<LocalTicketFormProps>(
                             class="cancel-btn"
                             disabled={isSaving.value}
                         >
-                            Cancel
+                            {_`Cancel`}
                         </button>
                         <button
                             type="button"
@@ -259,7 +260,7 @@ export default component$<LocalTicketFormProps>(
                             class="submit-btn"
                             disabled={isSaving.value}
                         >
-                            {isSaving.value ? "Saving..." : "Save Changes"}
+                            {isSaving.value ? _`Saving...` : _`Save Changes`}
                         </button>
                     </div>
                 </div>

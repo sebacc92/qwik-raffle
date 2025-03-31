@@ -364,9 +364,9 @@ export default component$(() => {
                   </div>
                   <div class="mt-6 pt-6 border-t border-border">
                     <div class="flex items-center">
-                      <div class="h-10 w-10 rounded-full bg-gradient-to-br from-primary/60 to-primary-hover/60 flex items-center justify-center text-white font-semibold">JP</div>
+                      <div class="h-10 w-10 rounded-full bg-gradient-to-br from-primary/60 to-primary-hover/60 flex items-center justify-center text-white font-semibold">DL</div>
                       <div class="ml-3">
-                        <p class="font-medium">Daiana Lentz.</p>
+                        <p class="font-medium">Daiana Lentz</p>
                         <p class="text-sm text-muted-foreground">{_`Consultora`}</p>
                       </div>
                     </div>

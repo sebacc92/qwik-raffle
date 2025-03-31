@@ -5,6 +5,7 @@ import { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 import styles from './raffle.css?inline';
 import Ticket from "~/components/raffle/ticket";
 import { LuUsers, LuCreditCard, LuDollarSign, LuGift, LuSearch, LuLink, LuDownload, LuTrash2 } from '@qwikest/icons/lucide';
+import { _ } from "compiled-i18n";
 
 export { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 
@@ -74,14 +75,14 @@ export default component$(() => {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        toast.info("Raffle information downloaded");
+        toast.info(_`Raffle information downloaded`);
     });
 
     if(raffle.value.failed){
         return (
             <div class="p-4 max-w-7xl mx-auto">
-                <h1 class="text-2xl font-bold text-purple-800">Raffle not found</h1>
-                <p class="text-purple-600">The raffle you are looking for does not exist or has been deleted.</p>
+                <h1 class="text-2xl font-bold text-purple-800">{_`Raffle not found`}</h1>
+                <p class="text-purple-600">{_`The raffle you are looking for does not exist or has been deleted.`}</p>
             </div>
         );
     }
@@ -100,14 +101,14 @@ export default component$(() => {
                         class="flex items-center gap-2 px-4 py-2 border rounded-md hover:bg-purple-50 transition-colors"
                     >
                         <LuLink class="w-4 h-4" />
-                        Copy Link
+                        {_`Copy Link`}
                     </button>
                     <button
                         onClick$={downloadRaffleInfo}
                         class="flex items-center gap-2 px-4 py-2 border rounded-md hover:bg-purple-50 transition-colors"
                     >
                         <LuDownload class="w-4 h-4" />
-                        Download Information
+                        {_`Download Information`}
                     </button>
                 </div>
             </div>
@@ -117,7 +118,7 @@ export default component$(() => {
                     <div class="flex items-center gap-4">
                         <LuUsers class="w-6 h-6 text-purple-600" />
                         <div>
-                            <div class="text-sm text-purple-600">Sold Tickets</div>
+                            <div class="text-sm text-purple-600">{_`Sold Tickets`}</div>
                             <div class="text-xl sm:text-2xl font-bold">{soldCount}/{raffle.value.numberCount}</div>
                         </div>
                     </div>
@@ -127,7 +128,7 @@ export default component$(() => {
                     <div class="flex items-center gap-4">
                         <LuCreditCard class="w-6 h-6 text-purple-600" />
                         <div>
-                            <div class="text-sm text-purple-600">Paid Tickets</div>
+                            <div class="text-sm text-purple-600">{_`Paid Tickets`}</div>
                             <div class="text-xl sm:text-2xl font-bold">{paidCount}/{raffle.value.numberCount}</div>
                         </div>
                     </div>
@@ -137,9 +138,9 @@ export default component$(() => {
                     <div class="flex items-center gap-4">
                         <LuDollarSign class="w-6 h-6 text-purple-600" />
                         <div>
-                            <div class="text-sm text-purple-600">Total Collected</div>
+                            <div class="text-sm text-purple-600">{_`Total Collected`}</div>
                             <div class="text-xl sm:text-2xl font-bold">${totalCollected.toFixed(2)}</div>
-                            <div class="text-xs text-purple-400">Price per ticket: ${raffle.value.pricePerNumber.toFixed(2)}</div>
+                            <div class="text-xs text-purple-400">{_`Price per ticket: `}${raffle.value.pricePerNumber.toFixed(2)}</div>
                         </div>
                     </div>
                 </div>
@@ -164,7 +165,7 @@ export default component$(() => {
                         onChange$={() => showOnlyPending.value = !showOnlyPending.value}
                     />
                     <label for="pending" class="text-sm sm:text-base">
-                        Show only pending ({raffleNumbers.value.filter(t => t.status === "sold-unpaid").length})
+                        {_`Show only pending `}({raffleNumbers.value.filter(t => t.status === "sold-unpaid").length})
                     </label>
                 </div>
             </div>
@@ -190,29 +191,29 @@ export default component$(() => {
             </div>
 
             <div class="border rounded-lg p-4 space-y-2">
-                <h3 class="font-semibold text-purple-800">Color Reference</h3>
+                <h3 class="font-semibold text-purple-800">{_`Color Reference`}</h3>
                 <div class="flex flex-wrap gap-4">
                     <div class="flex items-center gap-2">
                         <div class="w-4 h-4 border-2 border-purple-200 rounded"></div>
-                        <span>Unsold</span>
+                        <span>{_`Unsold`}</span>
                     </div>
                     <div class="flex items-center gap-2">
                         <div class="w-4 h-4 bg-yellow-100 border-2 border-yellow-500 rounded"></div>
-                        <span>Sold (Pending payment)</span>
+                        <span>{_`Sold (Pending payment)`}</span>
                     </div>
                     <div class="flex items-center gap-2">
                         <div class="w-4 h-4 bg-green-100 border-2 border-green-500 rounded"></div>
-                        <span>Sold and paid</span>
+                        <span>{_`Sold and paid`}</span>
                     </div>
                 </div>
             </div>
 
-            {/* Lista de premios */}
+            {/* Prizes list */}
             {raffle.value.prizes && raffle.value.prizes.length > 0 && (
                 <div class="border rounded-lg p-4">
                     <div class="flex items-center gap-2 mb-3">
                         <LuGift class="w-5 h-5 text-purple-600" />
-                        <h3 class="font-semibold text-purple-800">Prizes</h3>
+                        <h3 class="font-semibold text-purple-800">{_`Prizes`}</h3>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                         {raffle.value.prizes.sort((a, b) => a.position - b.position).map((prize) => (
@@ -241,7 +242,7 @@ export default component$(() => {
                     class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2"
                 >
                     <LuTrash2 class="w-4 h-4" />
-                    Reset Raffle
+                    {_`Reset Raffle`}
                 </button>
             </div>
         </div>
@@ -252,10 +253,10 @@ export const head: DocumentHead = ({ resolveValue }) => {
     const raffle = resolveValue(useGetRaffle);
     const title = raffle.failed
         ? raffle.errorMessage
-        : `Qwik Raffle - ${raffle.name}`;
+        : _`Qwik Raffle - ${raffle.name}`;
     const description = raffle.failed
-        ? "Raffle not found"
-        : `Raffle details ${raffle.name}`;
+        ? _`Raffle not found`
+        : _`Raffle details ${raffle.name}`;
     return {
         title,
         meta: [
