@@ -48,3 +48,6 @@ lerna-debug.log*
 /drizzle/db/*
 /drizzle/db/.gitkeep
 /drizzle/db/db.sqlite
+drizzle/db/*
+drizzle/db/.gitkeep
+drizzle/db/db.sqlite

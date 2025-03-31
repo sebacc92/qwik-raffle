@@ -1,8 +1,7 @@
 import { component$, useSignal } from '@builder.io/qwik';
 import { type DocumentHead, Link } from '@builder.io/qwik-city';
 import { Modal } from '@qwik-ui/headless';
-import { LuFacebook, LuTwitter, LuInstagram, LuCheck, LuPlay, LuGift, LuShare, LuClock, LuSettings, LuStar, LuTrophy, LuUserPlus, LuShield, LuX, LuHelpCircle } from '@qwikest/icons/lucide';
-import { Image } from "@unpic/qwik";
+import { LuFacebook, LuTwitter, LuInstagram, LuCheck, LuPlay, LuGift, LuShare, LuClock, LuSettings, LuStar, LuTrophy, LuShield, LuX, LuHelpCircle } from '@qwikest/icons/lucide';
 import SocialLoginButtons from '~/components/SocialLoginButtons';
 import { Accordion } from '~/components/ui';
 import { _ } from 'compiled-i18n';
@@ -58,26 +57,6 @@ export default component$(() => {
                       <p class="text-sm font-medium text-primary">{_`See how it works`}</p>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              {/* Stats Banner */}
-              <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-                <div class="rounded-xl border bg-card p-4 shadow-sm">
-                  <div class="text-3xl font-bold text-primary">+10K</div>
-                  <p class="text-sm text-muted-foreground">{_`Raffles created`}</p>
-                </div>
-                <div class="rounded-xl border bg-card p-4 shadow-sm">
-                  <div class="text-3xl font-bold text-primary">+50K</div>
-                  <p class="text-sm text-muted-foreground">{_`Happy participants`}</p>
-                </div>
-                <div class="rounded-xl border bg-card p-4 shadow-sm">
-                  <div class="text-3xl font-bold text-primary">99%</div>
-                  <p class="text-sm text-muted-foreground">{_`Satisfaction`}</p>
-                </div>
-                <div class="rounded-xl border bg-card p-4 shadow-sm">
-                  <div class="text-3xl font-bold text-primary">24/7</div>
-                  <p class="text-sm text-muted-foreground">{_`Support available`}</p>
                 </div>
               </div>
             </div>
@@ -146,42 +125,6 @@ export default component$(() => {
                 </div>
               </div>
 
-              {/* Feature highlight */}
-              <div class="mt-12 rounded-xl border bg-card overflow-hidden shadow-lg">
-                <div class="grid md:grid-cols-2">
-                  <div class="p-8 md:p-12 flex flex-col justify-center space-y-4">
-                    <div class="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm text-primary w-fit">
-                      <LuUserPlus class="mr-1 h-3.5 w-3.5" />
-                      <span>{_`Easy participation`}</span>
-                    </div>
-                    <h3 class="text-2xl md:text-3xl font-bold">{_`Simple experience for participants`}</h3>
-                    <p class="text-muted-foreground">
-                      {_`We allow your participants to join raffles in seconds, without complex registrations or long processes.`}
-                    </p>
-                    <ul class="space-y-2">
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Intuitive and friendly interface`}</span>
-                      </li>
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Support for multiple devices`}</span>
-                      </li>
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Real-time notifications`}</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="bg-gradient-to-br from-primary/20 to-primary-hover/20 flex items-center justify-center p-8">
-                    <Image
-                      src="https://placehold.co/600x400/0284c7/FFFFFF/png?text=Experiencia+de+Usuario&font=montserrat"
-                      alt="User experience"
-                      class="rounded-lg shadow-lg max-w-full h-auto"
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
           </section>
 
@@ -204,31 +147,47 @@ export default component$(() => {
               </div>
 
               <div class="mx-auto grid max-w-5xl gap-6 py-12 lg:grid-cols-3">
-                {/* Sin Sesión */}
-                <div class="flex flex-col rounded-xl border bg-card shadow-sm hover:shadow-md transition-all">
+                {/* Plan Básico */}
+                <div id="plan-basico" class="flex flex-col rounded-xl border bg-card shadow-sm hover:shadow-md transition-all">
                   <div class="p-6">
                     <div class="flex justify-between items-center mb-4">
-                      <h3 class="text-2xl font-bold">{_`No Session`}</h3>
+                      <h3 class="text-2xl font-bold">{_`Basic`}</h3>
                       <span class="inline-flex items-center rounded-full border border-muted-foreground/30 bg-muted-foreground/10 px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
                         {_`Basic`}
                       </span>
                     </div>
                     <div class="mt-4 text-center">
                       <div class="text-4xl font-bold">{_`Free`}</div>
-                      <p class="text-sm text-muted-foreground mt-1">{_`No commitments`}</p>
+                      <p class="text-sm text-muted-foreground mt-1">{_`Ideal for quick tests and small raffles`}</p>
                     </div>
                     <ul class="mt-6 space-y-3">
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Temporary raffles`}</span>
+                        <span>{_`Storage`}: {_`Local (Browser)`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Limit of 100 participants`}</span>
+                        <span>{_`Ticket limit`}: {_`Up to 100`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Immediate results`}</span>
+                        <span>{_`Active raffles`}: {_`1 at a time`}</span>
+                      </li>
+                      <li class="flex items-center">
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground" />
+                        <span class="text-muted-foreground">{_`Customization`}</span>
+                      </li>
+                      <li class="flex items-center">
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground" />
+                        <span class="text-muted-foreground">{_`Detailed statistics`}</span>
+                      </li>
+                      <li class="flex items-center">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
+                        <span>{_`Support`}: {_`Community`}</span>
+                      </li>
+                      <li class="flex items-center">
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground" />
+                        <span class="text-muted-foreground">{_`No ads`}</span>
                       </li>
                     </ul>
                   </div>
@@ -242,46 +201,62 @@ export default component$(() => {
                   </div>
                 </div>
 
-                {/* Registrado (Gratis) */}
-                <div class="flex flex-col rounded-xl border bg-card shadow-sm hover:shadow-md transition-all">
+                {/* Plan Gratis */}
+                <div id="plan-gratis" class="flex flex-col rounded-xl border bg-card shadow-sm hover:shadow-md transition-all">
                   <div class="p-6">
                     <div class="flex justify-between items-center mb-4">
-                      <h3 class="text-2xl font-bold">{_`Registered`}</h3>
+                      <h3 class="text-2xl font-bold">{_`Free`}</h3>
                       <span class="inline-flex items-center rounded-full border border-muted-foreground/30 bg-muted-foreground/10 px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
                         {_`Popular`}
                       </span>
                     </div>
                     <div class="mt-4 text-center">
                       <div class="text-4xl font-bold">{_`Free`}</div>
-                      <p class="text-sm text-muted-foreground mt-1">{_`With user account`}</p>
+                      <p class="text-sm text-muted-foreground mt-1">{_`Perfect for registered users with standard needs`}</p>
                     </div>
                     <ul class="mt-6 space-y-3">
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`1 saved raffle`}</span>
+                        <span>{_`Storage`}: {_`Cloud`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Limit of 1000 participants`}</span>
+                        <span>{_`Ticket limit`}: {_`Up to 1000`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Basic customization`}</span>
+                        <span>{_`Active raffles`}: {_`1 at a time`}</span>
+                      </li>
+                      <li class="flex items-center">
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground" />
+                        <span class="text-muted-foreground">{_`Customization`}</span>
+                      </li>
+                      <li class="flex items-center">
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground" />
+                        <span class="text-muted-foreground">{_`Detailed statistics`}</span>
+                      </li>
+                      <li class="flex items-center">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
+                        <span>{_`Support`}: {_`Standard`}</span>
+                      </li>
+                      <li class="flex items-center">
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground" />
+                        <span class="text-muted-foreground">{_`No ads`}</span>
                       </li>
                     </ul>
                   </div>
-                  <div17 class="mt-auto p-6 pt-0">
+                  <div class="mt-auto p-6 pt-0">
                     <Link
                       class="inline-flex h-10 w-full items-center justify-center rounded-base border border-primary bg-card px-8 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary/10 press"
                       href="/signup"
                     >
                       {_`Register for Free`}
                     </Link>
-                  </div17>
+                  </div>
                 </div>
 
-                {/* Premium */}
-                <div class="flex flex-col rounded-xl border-2 border-primary bg-card shadow-lg hover:shadow-xl scale-[1.02] transition-all">
+                {/* Plan Premium */}
+                <div id="plan-premium" class="flex flex-col rounded-xl border-2 border-primary bg-card shadow-lg hover:shadow-xl scale-[1.02] transition-all">
                   <div class="bg-primary/10 py-2 px-6 rounded-t-xl">
                     <div class="text-center text-primary font-semibold">{_`Recommended`}</div>
                   </div>
@@ -293,21 +268,25 @@ export default component$(() => {
                       </span>
                     </div>
                     <div class="mt-4 text-center">
-                      <div class="text-4xl font-bold">$ 4900<span class="text-base font-normal">/{_`month`}</span></div>
-                      <p class="text-sm text-muted-foreground mt-1">{_`Monthly billing`}</p>
+                      <div class="text-4xl font-bold">$ 4900 ARS<span class="text-base font-normal">/{_`month`}</span></div>
+                      <p class="text-sm text-muted-foreground mt-1">{_`For advanced users, businesses and multiple raffles`}</p>
                     </div>
                     <ul class="mt-6 space-y-3">
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Unlimited raffles`}</span>
+                        <span>{_`Storage`}: {_`Cloud`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Limit of 10,000 participants per raffle`}</span>
+                        <span>{_`Ticket limit`}: {_`Unlimited`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Payment integration`}</span>
+                        <span>{_`Active raffles`}: {_`Multiple`}</span>
+                      </li>
+                      <li class="flex items-center">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
+                        <span>{_`Advanced customization`}</span>
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
@@ -315,7 +294,11 @@ export default component$(() => {
                       </li>
                       <li class="flex items-center">
                         <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Priority support`}</span>
+                        <span>{_`Support`}: {_`Priority`}</span>
+                      </li>
+                      <li class="flex items-center">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
+                        <span>{_`No ads`}</span>
                       </li>
                     </ul>
                   </div>
@@ -367,7 +350,7 @@ export default component$(() => {
                       <div class="h-10 w-10 rounded-full bg-gradient-to-br from-primary/60 to-primary-hover/60 flex items-center justify-center text-white font-semibold">DL</div>
                       <div class="ml-3">
                         <p class="font-medium">Daiana Lentz</p>
-                        <p class="text-sm text-muted-foreground">{_`Consultora`}</p>
+                        <p class="text-sm text-muted-foreground">{_`Consultant`}</p>
                       </div>
                     </div>
                   </div>
@@ -529,7 +512,7 @@ export default component$(() => {
                   <span class="ml-2 text-lg font-bold bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent">QwikRaffle</span>
                 </div>
                 <p class="text-sm text-muted-foreground">
-                  The easiest platform to create and manage online raffles.
+                  {_`The easiest platform to create and manage online raffles.`}
                 </p>
                 <div class="flex space-x-4">
                   <Link href="https://twitter.com" class="text-muted-foreground hover:text-primary transition-colors">
@@ -550,27 +533,27 @@ export default component$(() => {
               <div>
                 <h3 class="mb-4 text-lg font-medium">Links</h3>
                 <nav class="flex flex-col space-y-3">
-                  <Link href="/about" class="text-sm text-muted-foreground hover:text-primary transition-colors">About</Link>
-                  <Link href="/blog" class="text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link>
-                  <Link href="/contact" class="text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link>
+                  <Link href="/about" class="text-sm text-muted-foreground hover:text-primary transition-colors">{_`About`}</Link>
+                  <Link href="/blog" class="text-sm text-muted-foreground hover:text-primary transition-colors">{_`Blog`}</Link>
+                  <Link href="/contact" class="text-sm text-muted-foreground hover:text-primary transition-colors">{_`Contact`}</Link>
                 </nav>
               </div>
 
               <div>
-                <h3 class="mb-4 text-lg font-medium">Legal</h3>
+                <h3 class="mb-4 text-lg font-medium">{_`Legal`}</h3>
                 <nav class="flex flex-col space-y-3">
-                  <Link href="/terms" class="text-sm text-muted-foreground hover:text-primary transition-colors">Terms of Use</Link>
-                  <Link href="/privacy" class="text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
-                  <Link href="/cookies" class="text-sm text-muted-foreground hover:text-primary transition-colors">Cookies Policy</Link>
+                  <Link href="/terms" class="text-sm text-muted-foreground hover:text-primary transition-colors">{_`Terms of Use`}</Link>
+                  <Link href="/privacy" class="text-sm text-muted-foreground hover:text-primary transition-colors">{_`Privacy Policy`}</Link>
+                  <Link href="/cookies" class="text-sm text-muted-foreground hover:text-primary transition-colors">{_`Cookies Policy`}</Link>
                 </nav>
               </div>
 
               <div>
-                <h3 class="mb-4 text-lg font-medium">Support</h3>
+                <h3 class="mb-4 text-lg font-medium">{_`Support`}</h3>
                 <nav class="flex flex-col space-y-3">
-                  <Link href="/help" class="text-sm text-muted-foreground hover:text-primary transition-colors">Help Center</Link>
+                  <Link href="/help" class="text-sm text-muted-foreground hover:text-primary transition-colors">{_`Help Center`}</Link>
                   <Link href="#faq" class="text-sm text-muted-foreground hover:text-primary transition-colors">FAQ</Link>
-                  <Link href="/contact" class="text-sm text-muted-foreground hover:text-primary transition-colors">Contact Support</Link>
+                  <Link href="/contact" class="text-sm text-muted-foreground hover:text-primary transition-colors">{_`Contact Support`}</Link>
                 </nav>
               </div>
             </div>
@@ -594,6 +577,7 @@ export default component$(() => {
     </>
   );
 });
+
 export const head: DocumentHead = {
   title: 'QwikRaffle - Create Online Raffles in Minutes',
   meta: [

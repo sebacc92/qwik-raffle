@@ -78,6 +78,7 @@ export default component$<TicketFormProps>(
                                         <LuUser class="input-icon h-5 w-5" />
                                         <Input
                                             {...props}
+                                            autofocus
                                             id="buyerName"
                                             type="text"
                                             value={field.value}

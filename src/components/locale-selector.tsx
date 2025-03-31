@@ -1,14 +1,19 @@
 import { component$, getLocale, useSignal } from '@builder.io/qwik'
-import { LuLanguages } from '@qwikest/icons/lucide';
+import { LuChevronDown, LuLanguages } from '@qwikest/icons/lucide';
 import { _, locales } from 'compiled-i18n'
 
 export const LocaleSelector = component$(() => {
 	const currentLocale = getLocale()
     const showLanguageDropdown = useSignal<boolean>(false);
-    const languageNames: Record<string, string> = {
-        'es': 'Español',
-        'en': 'English',
+    const languageNamesShort: Record<string, string> = {
+        'es_AR': 'ES',
+        'en_US': 'EN',
     };
+    const languageNames: Record<string, string> = {
+        'es_AR': 'Español',
+        'en_US': 'English',
+    };
+    console.log('locales', locales)
     return (
         <div class="relative">
             <button 
@@ -17,7 +22,10 @@ export const LocaleSelector = component$(() => {
                 aria-label={_`Change language`}
             >
                 <LuLanguages class="w-5 h-5" />
-                <span class="ml-1 text-sm hidden sm:inline">{languageNames[currentLocale] || currentLocale}</span>
+                <span class="ml-1 text-sm hidden sm:inline">{languageNamesShort[currentLocale] || currentLocale}</span>
+                <LuChevronDown 
+                    class={`w-5 h-5 transition-transform duration-200 ${showLanguageDropdown.value ? "rotate-180" : "rotate-0"}`}
+                />
             </button>
             
             {showLanguageDropdown.value && (

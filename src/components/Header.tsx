@@ -6,6 +6,7 @@ import { LocaleSelector } from '~/components/locale-selector';
 import { Avatar, Button, Dropdown, Modal } from '~/components/ui';
 import SocialLoginButtons from '~/components/SocialLoginButtons';
 import { useSession, useSignOut } from '~/routes/plugin@auth';
+import { _ } from 'compiled-i18n';
 
 export default component$(() => {
     const session = useSession();
@@ -38,14 +39,14 @@ export default component$(() => {
                             <Dropdown.Item class="px-4 py-2 whitespace-nowrap">
                                 <Link href="/profile" class="flex items-center gap-2 w-full flex-nowrap">
                                     <LuUser class="h-4 w-4" />
-                                    <span>My Profile</span>
+                                    <span>{_`My Profile`}</span>
                                 </Link>
                             </Dropdown.Item>
                             <Dropdown.Separator />
                             <Dropdown.Item class="px-4 py-2">
                                 <div class="flex items-center gap-2 whitespace-nowrap cursor-pointer" onClick$={() => signOut.submit({ redirectTo: "/" })}>
                                     <LuLogOut class="w-5 h-5" /> 
-                                    <span>Sign Out</span>
+                                    <span>{_`Sign Out`}</span>
                                 </div>
                             </Dropdown.Item>
                         </Dropdown.Popover>
@@ -53,17 +54,17 @@ export default component$(() => {
                 ) : (
                     <>
                         <Modal.Root bind:show={show}>
-                            <Modal.Trigger>
-                                Sign In
+                            <Modal.Trigger class="transition-all duration-200 hover:font-semibold">
+                                {_`Sign In`}
                             </Modal.Trigger>
                             <Modal.Panel>
                                 <div class="flex items-center justify-between">
-                                    <Modal.Title>Login</Modal.Title>
+                                    <Modal.Title>{_`Login`}</Modal.Title>
                                     <Modal.Close class="hover:scale-110 transition-transform duration-200">
                                         <LuX class="h-5 w-5" />
                                     </Modal.Close>
                                 </div>
-                                <Modal.Description class="mb-4">Login to your account</Modal.Description>
+                                <Modal.Description class="mb-4">{_`Login to your account`}</Modal.Description>
                                 <SocialLoginButtons />
                             </Modal.Panel>
                         </Modal.Root>
@@ -71,7 +72,7 @@ export default component$(() => {
                             <Button
                                 class="bg-primary hover:bg-primary-hover text-white rounded-lg px-4 py-2"
                             >
-                                Sign Up
+                                {_`Sign Up`}
                             </Button>
                         </Link>
                     </>
