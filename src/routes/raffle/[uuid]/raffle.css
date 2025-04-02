@@ -481,6 +481,15 @@
     background-color: #D97706;
 }
 
+.action-button.success {
+    background-color: #10B981;
+    color: white;
+}
+
+.action-button.success:hover {
+    background-color: #059669;
+}
+
 /* Estilos para la lista de premios */
 .prizes-grid {
     display: grid;

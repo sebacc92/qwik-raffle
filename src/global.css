@@ -124,7 +124,7 @@
         --card-foreground: 240 20% 99%;
         --border: 214 26.2% 23.9%;
         --input: 214 26.2% 23.9%;
-        --primary: #06b6d4;
+        --primary: 192 91.4% 36.5%;
         --primary-foreground: 0 0% 100%;
         --secondary: 210 57.1% 97.3%;
         --secondary-foreground: #000000;
@@ -132,7 +132,7 @@
         --accent-foreground: 240 20% 99%;
         --alert: 25 100% 50%;
         --alert-foreground: 240 20% 99%;
-        --ring: 216 59.3% 89.4%;
+        --ring: 192 91.4% 36.5%;
         --border-width: 0px;
         --border-radius: 0;
         --shadow-base: 0 1px 2px 0 rgba(0, 0, 0, 0.01);
@@ -197,7 +197,7 @@
 /* Estilos generales */
 body {
     @apply bg-gray-50 dark:bg-gray-900;
-    color: var(--text-primary);
+    color: hsl(var(--text-primary));
 }
 
 textarea {
@@ -558,4 +558,146 @@ textarea {
     .submit-btn {
         @apply w-full;
     }
+}
+
+/* Añadir estilos específicos para textos en modo oscuro */
+.dark input, 
+.dark textarea, 
+.dark select,
+.dark label,
+.dark button,
+.dark .card-foreground,
+.dark h1, 
+.dark h2, 
+.dark h3, 
+.dark h4, 
+.dark h5, 
+.dark h6, 
+.dark p, 
+.dark span, 
+.dark div {
+    color: hsl(var(--text-primary));
+}
+
+.dark .text-muted-foreground {
+    color: hsl(var(--text-secondary));
+}
+
+.dark ::placeholder {
+    color: var(--muted-foreground);
+}
+
+/* Mejorar la visualización de errores en modo oscuro */
+.dark .text-alert {
+    color: hsl(var(--alert));
+}
+
+/* Mejorar estilos de formularios en modo oscuro */
+.dark .form-footer {
+    border-top-color: hsl(var(--border));
+}
+
+.dark .error-message svg {
+    color: hsl(var(--alert));
+}
+
+/* Estilos mejorados para tarjetas en modo oscuro */
+.dark .card-header {
+    border-bottom-color: hsl(var(--border));
+}
+
+.dark .card-footer {
+    border-top-color: hsl(var(--border));
+}
+
+/* Mejoras de accesibilidad para contrastes en modo oscuro */
+.dark .text-primary {
+    color: hsl(var(--primary));
+}
+
+.dark .bg-primary {
+    background-color: hsl(var(--primary));
+}
+
+.dark .border-primary {
+    border-color: hsl(var(--primary));
+}
+
+/* Estilos específicos para formularios en modo oscuro */
+.dark .card input,
+.dark .card textarea {
+    background-color: rgba(15, 23, 42, 0.6);
+    border-color: hsl(var(--border));
+}
+
+.dark .card input:focus,
+.dark .card textarea:focus {
+    border-color: hsl(var(--primary));
+    background-color: rgba(15, 23, 42, 0.8);
+}
+
+.dark .card input:hover,
+.dark .card textarea:hover {
+    border-color: rgba(148, 163, 184, 0.5);
+}
+
+/* Mejorar la visibilidad de los elementos interactivos */
+.dark button[type="submit"],
+.dark button[look="primary"] {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+}
+
+.dark button[type="submit"]:hover,
+.dark button[look="primary"]:hover {
+    background-color: hsl(var(--primary-hover, var(--primary)));
+    filter: brightness(110%);
+}
+
+/* Mejorar la visualización de etiquetas y textos de ayuda */
+.dark label {
+    color: hsl(var(--text-secondary));
+    font-weight: 500;
+}
+
+.dark .text-sm.text-gray-500 {
+    color: hsl(var(--text-tertiary));
+}
+
+/* Asegurar que el modo oscuro se aplique correctamente a toda la aplicación */
+html.dark {
+    background-color: hsl(var(--bg-primary));
+    color: hsl(var(--text-primary));
+}
+
+/* Asegurar que los componentes Card apliquen correctamente el tema oscuro */
+.dark .rounded-lg.border {
+    background-color: hsl(var(--card-bg));
+    border-color: hsl(var(--border));
+    color: hsl(var(--card-foreground));
+}
+
+/* Mejorar el contraste de los textos en el modo oscuro */
+.dark .text-muted-foreground {
+    color: hsl(var(--muted-foreground, var(--text-secondary)));
+}
+
+/* Estilos específicos para las tarjetas en modo oscuro */
+.dark .card-bg, 
+.dark [class*="bg-card"] {
+    background-color: hsl(var(--card-bg)) !important;
+}
+
+.dark .card-content {
+    background-color: hsl(var(--card-bg));
+}
+
+.dark .card-header {
+    background-color: hsl(var(--card-bg));
+    border-bottom-color: hsl(var(--border));
+}
+
+/* Asegurar consistencia en todo el documento en modo oscuro */
+body.dark {
+    color-scheme: dark;
 }

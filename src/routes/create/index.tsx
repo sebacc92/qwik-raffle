@@ -69,7 +69,7 @@ export default component$(() => {
   const session = useServerSession();
   
   return (
-    <div class="flex flex-col justify-center items-center min-h-screen bg-gray-50 py-6">
+    <div class="flex flex-col justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900 py-6">
       <div class="w-full max-w-[1200px] mx-auto px-4 flex flex-col lg:flex-row lg:items-start lg:gap-6">
         <div class="w-full lg:w-[400px] lg:sticky lg:top-6">
           {!session.value.session ? (

@@ -4,7 +4,8 @@ import { toast } from 'qwik-sonner';
 import { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 import styles from './raffle.css?inline';
 import Ticket from "~/components/raffle/ticket";
-import { LuUsers, LuCreditCard, LuDollarSign, LuGift, LuSearch, LuLink, LuDownload, LuTrash2 } from '@qwikest/icons/lucide';
+import { LuUsers, LuCreditCard, LuDollarSign, LuGift, LuSearch, LuLink, LuDownload, LuTrash2, LuTrophy, LuX } from '@qwikest/icons/lucide';
+import RaffleWheel from "~/components/raffle/RaffleWheel";
 import { _ } from "compiled-i18n";
 
 export { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
@@ -28,6 +29,11 @@ export default component$(() => {
     
     const search = useSignal("");
     const showOnlyPending = useSignal(false);
+
+    // Signals for draw functionality
+    const showDrawConfirmation = useSignal(false);
+    const showDrawingWheel = useSignal(false);
+    const eligibleTickets = useSignal<Ticket[]>([]);
 
     const generateClientLink = $(() => {
         if(raffle.value.failed) return;
@@ -76,6 +82,46 @@ export default component$(() => {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         toast.info(_`Raffle information downloaded`);
+    });
+
+    // Function to start the draw process
+    const startDrawProcess = $(() => {
+        if (raffle.value.failed) return;
+        
+        if (!raffle.value.prizes || raffle.value.prizes.length === 0) {
+            toast.error(_`Esta rifa no tiene premios registrados`, {
+                duration: 3000,
+                position: 'top-center'
+            });
+            return;
+        }
+
+        // Show confirmation modal
+        showDrawConfirmation.value = true;
+    });
+
+    // Function to confirm and proceed with the draw
+    const confirmDraw = $(() => {
+        if (raffle.value.failed) return;
+
+        // Filter tickets to only include paid tickets
+        const paid = raffleNumbers.value.filter(t => t.status === "sold-paid");
+        eligibleTickets.value = [...paid];
+
+        // Check if there are enough tickets
+        const numberOfPrizes = raffle.value.prizes?.length || 0;
+        if (paid.length < numberOfPrizes) {
+            toast.error(_`No hay suficientes boletos pagados para sortear todos los premios`, {
+                duration: 3000,
+                position: 'top-center'
+            });
+            showDrawConfirmation.value = false;
+            return;
+        }
+
+        // Hide confirmation and show wheel
+        showDrawConfirmation.value = false;
+        showDrawingWheel.value = true;
     });
 
     if(raffle.value.failed){
@@ -231,7 +277,14 @@ export default component$(() => {
                 </div>
             )}
 
-            <div class="flex justify-center">
+            <div class="flex justify-center gap-4">
+                <button
+                    onClick$={startDrawProcess}
+                    class="action-button success px-4 py-2 rounded-md transition-colors flex items-center gap-2"
+                >
+                    <LuTrophy class="w-4 h-4" />
+                    {_`Finalizar y Sortear`}
+                </button>
                 <button
                     onClick$={() => {
                         if (confirm("Are you sure you want to reset the raffle? This will delete all data.")) {
@@ -245,6 +298,54 @@ export default component$(() => {
                     {_`Reset Raffle`}
                 </button>
             </div>
+
+            {/* Confirmation modal for draw */}
+            {showDrawConfirmation.value && (
+                <div class="confirmation-dialog">
+                    <div class="confirmation-content">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="confirmation-title">{_`Confirmar Sorteo`}</h2>
+                            <button
+                                onClick$={() => showDrawConfirmation.value = false}
+                                class="text-gray-500 hover:text-gray-700"
+                            >
+                                <LuX class="w-5 h-5" />
+                            </button>
+                        </div>
+                        <p class="mb-4">
+                            {_`¿Estás seguro que deseas finalizar la rifa y sortear ${raffle.value.prizes?.length || 0} premio(s)?`}
+                        </p>
+                        <p class="mb-4 text-amber-600">
+                            {_`Hay ${raffleNumbers.value.filter(t => t.status === "sold-unpaid").length} boleto(s) con pago pendiente. Estos boletos NO serán incluidos en el sorteo.`}
+                        </p>
+
+                        <div class="confirmation-actions">
+                            <button
+                                onClick$={() => showDrawConfirmation.value = false}
+                                class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                            >
+                                {_`Cancelar`}
+                            </button>
+                            <button
+                                onClick$={confirmDraw}
+                                class="action-button success px-4 py-2 rounded-md transition-colors"
+                            >
+                                {_`Continuar con el sorteo`}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Raffle Wheel Modal */}
+            {showDrawingWheel.value && (
+                <RaffleWheel
+                    eligibleTickets={eligibleTickets.value}
+                    numberOfPrizes={raffle.value.prizes?.length || 0}
+                    raffleName={raffle.value.name}
+                    onClose$={$(() => showDrawingWheel.value = false)}
+                />
+            )}
         </div>
     );
 });

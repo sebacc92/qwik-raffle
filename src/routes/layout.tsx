@@ -5,7 +5,7 @@ import { Toaster } from 'qwik-sonner';
 import Header from '~/components/Header';
 import Footer from '~/components/Footer';
 
-import { useServerSession } from "~/shared/loaders";
+// import { useServerSession } from "~/shared/loaders";
 
 export { useServerSession } from "~/shared/loaders";
 
@@ -27,8 +27,8 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
 };
 
 export default component$(() => {
-  const user = useServerSession();
-  console.log('user', user.value)
+  // const user = useServerSession();
+  // console.log('user', user.value)
   return (
     <div class="min-h-screen flex flex-col bg-background text-foreground">
       <Toaster position="top-center" richColors />

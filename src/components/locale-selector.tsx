@@ -13,7 +13,6 @@ export const LocaleSelector = component$(() => {
         'es_AR': 'Español',
         'en_US': 'English',
     };
-    console.log('locales', locales)
     return (
         <div class="relative">
             <button 

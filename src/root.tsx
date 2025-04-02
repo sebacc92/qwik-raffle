@@ -31,7 +31,8 @@ export default component$(() => {
           dangerouslySetInnerHTML={`
             (function() {
               function setTheme(theme) {
-                document.documentElement.className = theme;
+                document.documentElement.class = theme;
+                document.body.class = theme;
                 localStorage.setItem('theme', theme);
               }
               const theme = localStorage.getItem('theme');

@@ -1,12 +1,14 @@
-import { $, component$, useTask$ } from '@builder.io/qwik'
+import { $, component$, useSignal, useTask$ } from '@builder.io/qwik'
 import { useNavigate } from '@builder.io/qwik-city'
-import { useForm, valiForm$, insert, remove } from '@modular-forms/qwik'
+import { useForm, valiForm$, insert, remove, setValue } from '@modular-forms/qwik'
 import { toast } from 'qwik-sonner';
 import { Button, Input, Label, Textarea } from '~/components/ui'
 import { type RaffleForm, type RaffleResponseData, RaffleSchema } from '~/schemas/raffleSchema'
 import { useFormRaffleAction } from '~/shared/forms/actions'
 import { useFormRaffleLoader } from '~/shared/forms/loaders'
 import { LuTrash, LuPlus } from '@qwikest/icons/lucide'
+import { _ } from 'compiled-i18n';
+import { CustomToggle } from '~/components/CustomToggle';
 
 export default component$(() => {
     const nav = useNavigate();
@@ -16,7 +18,9 @@ export default component$(() => {
         fieldArrays: ['prizes'],
         validate: valiForm$(RaffleSchema)
     })
-    
+
+    const isPubic = useSignal<boolean>(false);
+
     useTask$(({ track }) => {
         track(() => raffleForm.response.status)
         if (raffleForm.response.status === 'success') {
@@ -27,11 +31,11 @@ export default component$(() => {
             }
         }
     })
-    
+
     const handleSubmit = $((values: RaffleForm) => {
         console.log('values', values)
     })
-    
+
     return (
         <Form onSubmit$={handleSubmit} class="space-y-5 w-full">
             <Field name="name">
@@ -39,7 +43,7 @@ export default component$(() => {
                     <div class="space-y-1.5">
                         <Label for="raffle-name" class="flex items-center">
                             <span class="inline-block mr-2 text-primary font-bold">#</span>
-                            Raffle Name
+                            {_`Raffle Name`}
                         </Label>
                         <Input
                             {...props}
@@ -47,7 +51,7 @@ export default component$(() => {
                             type="text"
                             maxLength={100}
                             value={field.value}
-                            placeholder="Enter a descriptive name"
+                            placeholder={_`Enter a descriptive name`}
                             class="transition-all duration-200 focus:border-primary hover:border-gray-400 dark:hover:border-gray-600"
                         />
                         {field.error && <div class="text-alert text-sm flex items-center">
@@ -56,7 +60,7 @@ export default component$(() => {
                             </svg>
                             {field.error}
                         </div>}
-                        <div class="text-sm text-gray-500">{(field.value?.length || 0)}/100 characters</div>
+                        <div class="text-sm text-gray-500">{(field.value?.length || 0)}/100 {_`characters`}</div>
                     </div>
                 )}
             </Field>
@@ -65,14 +69,14 @@ export default component$(() => {
                 {(field, props) => (
                     <div class="space-y-1.5">
                         <Label for="raffle-description" class="flex items-center">
-                            Description (optional)
+                            {_`Description (optional)`}
                         </Label>
                         <Textarea
                             {...props}
                             id="raffle-description"
                             maxLength={500}
                             value={field.value}
-                            placeholder="Add a description or note for your raffle"
+                            placeholder={_`Add a description or note for your raffle`}
                             class="w-full px-3 py-2 border rounded-md transition-all duration-200 focus:border-primary hover:border-gray-400 dark:hover:border-gray-600 dark:bg-gray-800"
                         />
                         {field.error && <div class="text-alert text-sm flex items-center">
@@ -81,19 +85,19 @@ export default component$(() => {
                             </svg>
                             {field.error}
                         </div>}
-                        <div class="text-sm text-gray-500">{(field.value?.length || 0)}/500 characters</div>
+                        <div class="text-sm text-gray-500">{(field.value?.length || 0)}/500 {_`characters`}</div>
                     </div>
                 )}
             </Field>
-            
-            {/* Contenedor flex para los campos numéricos */}
+
+            {/* Flex container for number fields */}
             <div class="flex gap-6">
                 <Field name="numberCount" type="number">
                     {(field, props) => (
                         <div class="space-y-1.5 flex-1">
                             <Label for="number-quantity" class="flex items-center whitespace-nowrap">
                                 <span class="inline-block mr-2 text-primary font-bold">+</span>
-                                Number Quantity
+                                {_`Number Quantity`}
                             </Label>
                             <Input
                                 {...props}
@@ -113,13 +117,13 @@ export default component$(() => {
                         </div>
                     )}
                 </Field>
-                
+
                 <Field name="pricePerNumber" type="number">
                     {(field, props) => (
                         <div class="space-y-1.5 flex-1">
                             <Label for="price-per-number" class="flex items-center whitespace-nowrap">
                                 <span class="inline-block mr-2 text-primary font-bold">$</span>
-                                Price per number
+                                {_`Price per number`}
                             </Label>
                             <Input
                                 {...props}
@@ -147,7 +151,7 @@ export default component$(() => {
                 <div class="flex justify-between items-center">
                     <Label class="flex items-center">
                         <span class="inline-block mr-2 text-primary font-bold">🎁</span>
-                        Prizes
+                        {_`Prizes`}
                     </Label>
                 </div>
 
@@ -160,13 +164,13 @@ export default component$(() => {
                                         <Field name={`prizes.${index}.name`}>
                                             {(field, props) => (
                                                 <div class="space-y-1.5">
-                                                    <Label for={`prize-${index}`}>Prize {index + 1}</Label>
+                                                    <Label for={`prize-${index}`}>{_`Prize`} {index + 1}</Label>
                                                     <Input
                                                         {...props}
                                                         id={`prize-${index}`}
                                                         type="text"
                                                         value={field.value}
-                                                        placeholder={`Enter prize ${index + 1} name`}
+                                                        placeholder={_`Enter prize ${index + 1} name`}
                                                         class="transition-all duration-200 focus:border-primary hover:border-gray-400 dark:hover:border-gray-600"
                                                     />
                                                     {field.error && <div class="text-alert text-sm flex items-center">
@@ -189,14 +193,14 @@ export default component$(() => {
                                             type="button"
                                             class="mt-8 p-2 text-gray-500 hover:text-red-500 transition-colors"
                                             onClick$={() => remove(raffleForm, 'prizes', { at: index })}
-                                            aria-label="Remove prize"
+                                            aria-label={_`Remove prize`}
                                         >
                                             <LuTrash class="w-5 h-5" />
                                         </button>
                                     )}
                                 </div>
                             ))}
-                            
+
                             {fieldArray.items.length < 10 && (
                                 <button
                                     type="button"
@@ -206,14 +210,35 @@ export default component$(() => {
                                     class="inline-flex items-center text-sm text-primary hover:text-primary/80"
                                 >
                                     <LuPlus class="w-4 h-4 mr-1" />
-                                    Add Prize
+                                    {_`Add Prize`}
                                 </button>
                             )}
                         </div>
                     )}
                 </FieldArray>
             </div>
-            
+
+            <div>
+                <CustomToggle
+                    label={_`Public raffle`}
+                    checked={isPubic.value}
+                    onChange$={$((checked) => {
+                        isPubic.value = checked;
+                        setValue(raffleForm, 'isPublic', checked);
+                    })}
+                />
+                <Field name="isPublic" type="boolean">
+                    {(field, props) => (
+                        <input type="hidden" {...props} value={field.value ? 'true' : 'false'} />
+                    )}
+                </Field>
+                <p class="mt-2 text-sm text-muted-foreground">
+                    {raffleForm.internal.fields.isPublic?.value
+                        ? _`Any registered user can request numbers.`
+                        : _`Accessible only via direct link.`}
+                </p>
+            </div>
+
             <div class="pt-2">
                 <Button
                     type="submit"
@@ -221,7 +246,7 @@ export default component$(() => {
                     class="w-full h-12 font-medium text-white transition-all duration-200 transform hover:shadow-md active:press flex items-center justify-center"
                 >
                     <span class="mr-2">+</span>
-                    Create Raffle
+                    {_`Create Raffle`}
                 </Button>
             </div>
         </Form>

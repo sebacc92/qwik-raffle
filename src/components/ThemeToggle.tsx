@@ -19,7 +19,7 @@ export default component$(() => {
             <input
                 onClick$={() => {
                     const newTheme = theme.value === 'light' ? 'dark' : 'light';
-                    document.documentElement.className = newTheme;
+                    document.documentElement.class = newTheme;
                     localStorage.setItem('theme', newTheme);
                     theme.value = newTheme;
                 }}

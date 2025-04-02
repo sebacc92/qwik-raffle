@@ -1,10 +1,11 @@
 import { component$, useSignal, $, useVisibleTask$, useStylesScoped$, useComputed$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { useNavigate, useLocation } from "@builder.io/qwik-city";
-import { LuSearch, LuUsers, LuCreditCard, LuDollarSign, LuDownload, LuTrash2, LuGift, LuLink, LuAlertTriangle, LuX } from '@qwikest/icons/lucide';
+import { LuSearch, LuUsers, LuCreditCard, LuDollarSign, LuDownload, LuTrash2, LuGift, LuLink, LuAlertTriangle, LuX, LuTrophy } from '@qwikest/icons/lucide';
 import { toast } from 'qwik-sonner';
 import { openDB, type LocalRaffle, type Ticket, type Prize } from '~/shared/indexedDB/config';
 import LocalTicket from "~/components/raffle/localTicket";
+import RaffleWheel from "~/components/raffle/RaffleWheel";
 import styles from '../../[uuid]/raffle.css?inline';
 import { _ } from "compiled-i18n";
 
@@ -271,6 +272,11 @@ export default component$(() => {
     const showDeleteConfirmation = useSignal(false);
     const deleteConfirmationInput = useSignal("");
     const isProcessing = useSignal(false);
+
+    // Signals for draw functionality
+    const showDrawConfirmation = useSignal(false);
+    const showDrawingWheel = useSignal(false);
+    const eligibleTickets = useSignal<Ticket[]>([]);
 
     // Load the raffle ID from the route parameters
     // eslint-disable-next-line qwik/no-use-visible-task
@@ -561,6 +567,44 @@ export default component$(() => {
     const paidCount = tickets.value.filter(t => t.status === "sold-paid").length;
     const totalCollected = paidCount * getPricePerNumber.value;
 
+    // Function to start the draw process
+    const startDrawProcess = $(() => {
+        if (!raffle.value || !raffle.value.prizes || raffle.value.prizes.length === 0) {
+            toast.error(_`Esta rifa no tiene premios registrados`, {
+                duration: 3000,
+                position: 'top-center'
+            });
+            return;
+        }
+
+        // Show confirmation modal
+        showDrawConfirmation.value = true;
+    });
+
+    // Function to confirm and proceed with the draw
+    const confirmDraw = $(() => {
+        if (!raffle.value) return;
+
+        // Filter tickets to only include paid tickets
+        const paid = tickets.value.filter(t => t.status === "sold-paid");
+        eligibleTickets.value = [...paid];
+
+        // Check if there are enough tickets
+        const numberOfPrizes = raffle.value.prizes?.length || 0;
+        if (paid.length < numberOfPrizes) {
+            toast.error(_`No hay suficientes boletos pagados para sortear todos los premios`, {
+                duration: 3000,
+                position: 'top-center'
+            });
+            showDrawConfirmation.value = false;
+            return;
+        }
+
+        // Hide confirmation and show wheel
+        showDrawConfirmation.value = false;
+        showDrawingWheel.value = true;
+    });
+
     // Render error message if necessary
     if (errorMessage.value) {
         return (
@@ -749,6 +793,13 @@ export default component$(() => {
 
             <div class="flex justify-center gap-4">
                 <button
+                    onClick$={startDrawProcess}
+                    class="action-button success px-4 py-2 rounded-md transition-colors flex items-center gap-2"
+                >
+                    <LuTrophy class="w-4 h-4" />
+                    {_`Finalizar y Sortear`}
+                </button>
+                <button
                     onClick$={() => showResetConfirmation.value = true}
                     class="action-button warning px-4 py-2 rounded-md transition-colors flex items-center gap-2"
                 >
@@ -841,6 +892,54 @@ export default component$(() => {
                         </div>
                     </div>
                 </div>
+            )}
+
+            {/* Confirmation modal for draw */}
+            {showDrawConfirmation.value && (
+                <div class="confirmation-dialog">
+                    <div class="confirmation-content">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="confirmation-title">{_`Confirmar Sorteo`}</h2>
+                            <button
+                                onClick$={() => showDrawConfirmation.value = false}
+                                class="text-gray-500 hover:text-gray-700"
+                            >
+                                <LuX class="w-5 h-5" />
+                            </button>
+                        </div>
+                        <p class="mb-4">
+                            {_`¿Estás seguro que deseas finalizar la rifa y sortear ${raffle.value?.prizes?.length || 0} premio(s)?`}
+                        </p>
+                        <p class="mb-4 text-amber-600">
+                            {_`Hay ${tickets.value.filter(t => t.status === "sold-unpaid").length} boleto(s) con pago pendiente. Estos boletos NO serán incluidos en el sorteo.`}
+                        </p>
+
+                        <div class="confirmation-actions">
+                            <button
+                                onClick$={() => showDrawConfirmation.value = false}
+                                class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                            >
+                                {_`Cancelar`}
+                            </button>
+                            <button
+                                onClick$={confirmDraw}
+                                class="action-button success px-4 py-2 rounded-md transition-colors"
+                            >
+                                {_`Continuar con el sorteo`}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Raffle Wheel Modal */}
+            {showDrawingWheel.value && (
+                <RaffleWheel
+                    eligibleTickets={eligibleTickets.value}
+                    numberOfPrizes={raffle.value?.prizes?.length || 0}
+                    raffleName={raffle.value?.name || ""}
+                    onClose$={$(() => showDrawingWheel.value = false)}
+                />
             )}
         </div>
     );

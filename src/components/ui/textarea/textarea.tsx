@@ -31,7 +31,7 @@ export const Textarea = component$<TextareaProps>(
           )}
           id={textareaId}
         />
-        {error && <div id={`${textareaId}-error`}>{error}</div>}
+        {error && <div id={`${textareaId}-error`} class="text-alert mt-1 text-sm">{error}</div>}
       </>
     );
   },

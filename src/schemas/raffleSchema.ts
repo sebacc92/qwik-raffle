@@ -35,7 +35,8 @@ export const RaffleSchema = v.object({
         v.minValue(MIN_PRICE, `Price must be at least ${MIN_PRICE}`),
         v.maxValue(MAX_PRICE, `Price must be at most ${MAX_PRICE}`)
     ),
-    prizes: v.array(PrizeSchema, "At least one prize is required")
+    prizes: v.array(PrizeSchema, "At least one prize is required"),
+    isPublic: v.boolean(),
 })
 
 export type RaffleForm = v.InferInput<typeof RaffleSchema>

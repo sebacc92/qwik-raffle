@@ -7,6 +7,7 @@ import { and, eq } from "drizzle-orm";
 import { type TicketForm, type TicketResponseData, TicketSchema } from "~/schemas/ticketSchema";
 import type { Session } from "~/types/session";
 import { getUser } from "~/server";
+import { _ } from "compiled-i18n";
 
 export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
     async (values, e) => {
@@ -19,7 +20,7 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
             ...raffleData,
             uuid: v4(),
             creatorId: userId || null
-        }
+        };
         
         const db = Drizzler();
         try {
@@ -58,10 +59,10 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
             
             return {
                 status: 'success',
-                message: "Raffle created successfully",
+                message: _`Raffle created successfully`,
                 data: {
                     success: true,
-                    message: "Raffle created successfully",
+                    message: _`Raffle created successfully`,
                     data: {
                         raffle_id: raffleId,
                         share_link: fullShareLink
@@ -69,7 +70,7 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
                 }
             } as FormActionResult<RaffleForm, RaffleResponseData>;
         } catch (error: any) {
-            console.error("Error creating raffle: ", error);
+            console.error(_`Error creating raffle: `, error);
             return {
                 status: 'error',
                 message: error.message
@@ -77,7 +78,7 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
         }
     },
     valiForm$(RaffleSchema)
-)
+);
 
 export const useFormTicketAction = formAction$<TicketForm, TicketResponseData>(
     async (values) => {
@@ -103,17 +104,17 @@ export const useFormTicketAction = formAction$<TicketForm, TicketResponseData>(
             
             return {
                 status: 'success',
-                message: "Ticket actualizado correctamente",
+                message: _`Ticket updated successfully`,
                 data: {
                     success: true,
-                    message: "Ticket actualizado correctamente",
+                    message: _`Ticket updated successfully`,
                     data: {
                         ticket_id: values.number
                     }
                 }
             } as FormActionResult<TicketForm, TicketResponseData>;
         } catch (error: any) {
-            console.error("Error actualizando ticket: ", error);
+            console.error(_`Error updating ticket: `, error);
             return {
                 status: 'error',
                 message: error.message
