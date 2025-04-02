@@ -570,7 +570,7 @@ export default component$(() => {
     // Function to start the draw process
     const startDrawProcess = $(() => {
         if (!raffle.value || !raffle.value.prizes || raffle.value.prizes.length === 0) {
-            toast.error(_`Esta rifa no tiene premios registrados`, {
+            toast.error(_`This raffle has no registered prizes`, {
                 duration: 3000,
                 position: 'top-center'
             });
@@ -592,7 +592,7 @@ export default component$(() => {
         // Check if there are enough tickets
         const numberOfPrizes = raffle.value.prizes?.length || 0;
         if (paid.length < numberOfPrizes) {
-            toast.error(_`No hay suficientes boletos pagados para sortear todos los premios`, {
+            toast.error(_`There are not enough paid tickets to draw all the prizes`, {
                 duration: 3000,
                 position: 'top-center'
             });
@@ -797,7 +797,7 @@ export default component$(() => {
                     class="action-button success px-4 py-2 rounded-md transition-colors flex items-center gap-2"
                 >
                     <LuTrophy class="w-4 h-4" />
-                    {_`Finalizar y Sortear`}
+                    {_`Finalize and Draw`}
                 </button>
                 <button
                     onClick$={() => showResetConfirmation.value = true}

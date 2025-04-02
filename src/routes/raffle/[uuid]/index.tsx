@@ -89,7 +89,7 @@ export default component$(() => {
         if (raffle.value.failed) return;
         
         if (!raffle.value.prizes || raffle.value.prizes.length === 0) {
-            toast.error(_`Esta rifa no tiene premios registrados`, {
+            toast.error(_`This raffle has no registered prizes`, {
                 duration: 3000,
                 position: 'top-center'
             });
@@ -111,7 +111,7 @@ export default component$(() => {
         // Check if there are enough tickets
         const numberOfPrizes = raffle.value.prizes?.length || 0;
         if (paid.length < numberOfPrizes) {
-            toast.error(_`No hay suficientes boletos pagados para sortear todos los premios`, {
+            toast.error(_`There are not enough paid tickets to draw all the prizes`, {
                 duration: 3000,
                 position: 'top-center'
             });
@@ -283,7 +283,7 @@ export default component$(() => {
                     class="action-button success px-4 py-2 rounded-md transition-colors flex items-center gap-2"
                 >
                     <LuTrophy class="w-4 h-4" />
-                    {_`Finalizar y Sortear`}
+                    {_`Finalize and Draw`}
                 </button>
                 <button
                     onClick$={() => {
@@ -304,7 +304,7 @@ export default component$(() => {
                 <div class="confirmation-dialog">
                     <div class="confirmation-content">
                         <div class="flex justify-between items-center mb-4">
-                            <h2 class="confirmation-title">{_`Confirmar Sorteo`}</h2>
+                            <h2 class="confirmation-title">{_`Confirm Draw`}</h2>
                             <button
                                 onClick$={() => showDrawConfirmation.value = false}
                                 class="text-gray-500 hover:text-gray-700"
@@ -313,24 +313,25 @@ export default component$(() => {
                             </button>
                         </div>
                         <p class="mb-4">
-                            {_`¿Estás seguro que deseas finalizar la rifa y sortear ${raffle.value.prizes?.length || 0} premio(s)?`}
+                            {_`Are you sure you want to finalize the raffle and draw ${raffle.value.prizes?.length || 0} prize(s)?`}
                         </p>
-                        <p class="mb-4 text-amber-600">
-                            {_`Hay ${raffleNumbers.value.filter(t => t.status === "sold-unpaid").length} boleto(s) con pago pendiente. Estos boletos NO serán incluidos en el sorteo.`}
-                        </p>
-
+                        {!!raffleNumbers.value.filter(t => t.status === "sold-unpaid").length && (
+                            <p class="mb-4 text-amber-600">
+                                {_`There are ${raffleNumbers.value.filter(t => t.status === "sold-unpaid").length} ticket(s) with pending payment. These tickets will NOT be included in the draw.`}
+                            </p>
+                        )}
                         <div class="confirmation-actions">
                             <button
                                 onClick$={() => showDrawConfirmation.value = false}
                                 class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
                             >
-                                {_`Cancelar`}
+                                {_`Cancel`}
                             </button>
                             <button
                                 onClick$={confirmDraw}
                                 class="action-button success px-4 py-2 rounded-md transition-colors"
                             >
-                                {_`Continuar con el sorteo`}
+                                {_`Continue with the draw`}
                             </button>
                         </div>
                     </div>

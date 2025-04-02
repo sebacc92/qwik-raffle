@@ -56,6 +56,9 @@ export default component$<TicketFormProps>(
 
         return (
             <div class="form-container">
+                <h2 class="form-title">{_`Edit Ticket #${ticketNumber}`}</h2>
+                <p class="form-subtitle">{_`Update ticket information`}</p>
+                
                 <Form onSubmit$={handleSubmit} class="space-y-5">
                     {/* Hidden fields */}
                     <Field name="raffleId" type="number">
@@ -135,20 +138,20 @@ export default component$<TicketFormProps>(
                             {(field, props) => (
                                 <>
                                     <Label for="notes" class="field-label">
-                                        {_`Notes (optional)`}
+                                        <div class="flex items-center">
+                                            <LuStickyNote class="h-5 w-5 mr-2" />
+                                            {_`Notes (optional)`}
+                                        </div>
                                     </Label>
-                                    <div class="input-with-icon">
-                                        <LuStickyNote class="input-icon h-5 w-5" />
-                                        <Textarea
-                                            {...props}
-                                            id="notes"
-                                            value={field.value}
-                                            placeholder={_`Add any notes`}
-                                            class="input-field"
-                                            rows={3}
-                                            disabled={ticketForm.submitting}
-                                        />
-                                    </div>
+                                    <Textarea
+                                        {...props}
+                                        id="notes"
+                                        value={field.value}
+                                        placeholder={_`Add any notes about this ticket or buyer`}
+                                        class="input-field textarea-field"
+                                        rows={3}
+                                        disabled={ticketForm.submitting}
+                                    />
                                     {field.error && (
                                         <div class="error-message">
                                             <LuAlertCircle class="h-4 w-4 mr-1" />
@@ -161,7 +164,7 @@ export default component$<TicketFormProps>(
                     </div>
 
                     {/* Ticket Status Field */}
-                    <div class="form-field">
+                    <div class="form-field status-field">
                         <Field name="status">
                             {(field, props) => (
                                 <>
@@ -246,4 +249,3 @@ export default component$<TicketFormProps>(
         )
     },
 )
-

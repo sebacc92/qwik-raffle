@@ -65,14 +65,6 @@ export default component$<TicketProps>(({ ticket, raffleId }) => {
                         >
                             <LuX class="h-5 w-5" />
                         </Modal.Close>
-                        <div class="pb-4">
-                            <Modal.Title class="text-xl font-bold text-purple-800">
-                                Edit Ticket #{ticket.number}
-                            </Modal.Title>
-                            <Modal.Description class="text-purple-600">
-                                Update ticket information
-                            </Modal.Description>
-                        </div>
                         <TicketForm 
                             raffleId={raffleId}
                             ticketNumber={ticket.number}

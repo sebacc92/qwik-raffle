@@ -14,7 +14,7 @@ export interface RaffleWheelProps {
 export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, raffleName, onClose$ }) => {
   useStylesScoped$(styles);
 
-  // Señales para manejar el estado del componente
+  // Signals to manage the component's state
   const isSpinning = useSignal(false);
   const currentPrize = useSignal(1);
   const winners = useSignal<Array<{ ticket: Ticket; prizeIndex: number }>>([]);
@@ -33,7 +33,7 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
     blue: ["#DBEAFE", "#BFDBFE", "#93C5FD", "#60A5FA", "#3B82F6", "#2563EB"]
   };
 
-  // Lanzar confeti cuando hay un ganador
+  // Trigger confetti when there is a winner
   const triggerConfetti = $(() => {
     if (typeof window !== "undefined" && (window as any).confetti) {
       const confetti = (window as any).confetti;
@@ -46,7 +46,7 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
   });
 
 
-  // Función para dibujar la rueda
+  // Function to draw the wheel
   const drawWheel = $(() => {
     const canvas = document.getElementById("wheel-canvas") as HTMLCanvasElement;
     if (!canvas) return;
@@ -58,7 +58,7 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
     const centerY = canvas.height / 2;
     const radius = Math.min(centerX, centerY) - 10;
     
-    // Limpiar el canvas
+    // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     const tickets = remainingTickets.value;
@@ -67,7 +67,7 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
     const sliceAngle = (2 * Math.PI) / tickets.length;
     const colors = colorSchemes[selectedColorScheme.value];
     
-    // Dibujar las secciones de la rueda
+    // Draw the wheel sections
     for (let i = 0; i < tickets.length; i++) {
       const startAngle = i * sliceAngle + rotationAngle.value;
       const endAngle = (i + 1) * sliceAngle + rotationAngle.value;
@@ -77,14 +77,14 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
       ctx.arc(centerX, centerY, radius, startAngle, endAngle);
       ctx.closePath();
       
-      // Alternar colores
+      // Alternate colors
       ctx.fillStyle = colors[i % colors.length];
       ctx.fill();
       ctx.strokeStyle = "#fff";
       ctx.lineWidth = 1;
       ctx.stroke();
       
-      // Añadir texto (número de boleto y nombre si está habilitado)
+      // Add text (ticket number and name if enabled)
       ctx.save();
       ctx.translate(centerX, centerY);
       ctx.rotate(startAngle + sliceAngle / 2);
@@ -98,7 +98,7 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
         text += ` - ${ticket.buyerName}`;
       }
       
-      // Limitar el texto para que no sea demasiado largo
+      // Limit the text so it's not too long
       if (text.length > 15) {
         text = text.substring(0, 15) + "...";
       }
@@ -107,7 +107,7 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
       ctx.restore();
     }
     
-    // Dibujar el círculo central
+    // Draw the center circle
     ctx.beginPath();
     ctx.arc(centerX, centerY, 20, 0, 2 * Math.PI);
     ctx.fillStyle = "#ffffff";
@@ -116,7 +116,7 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
     ctx.lineWidth = 2;
     ctx.stroke();
     
-    // Dibujar el puntero
+    // Draw the pointer
     ctx.beginPath();
     ctx.moveTo(centerX, centerY - radius - 10);
     ctx.lineTo(centerX - 10, centerY - radius + 10);
@@ -126,21 +126,21 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
     ctx.fill();
   });
 
-  // Inicializar la rueda y cargar la librería de confeti
+  // Initialize the wheel and load the confetti library
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
-    // Cargar el script de confeti
+    // Load the confetti script
     const script = document.createElement("script");
     script.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js";
     document.body.appendChild(script);
 
-    // Ajustar tamaño en cambio de ventana
+    // Adjust size on window change
     const handleResize = () => {
       canvasSize.value = Math.min(window.innerWidth * 0.7, 500);
     };
     window.addEventListener("resize", handleResize);
 
-    // Inicializar la rueda
+    // Initialize the wheel
     drawWheel();
 
     cleanup(() => {
@@ -161,40 +161,40 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
     drawWheel();
   });
 
-  // Función para girar la rueda y seleccionar un ganador
+  // Function to spin the wheel and select a winner
   const spinWheel = $(async () => {
     if (isSpinning.value || remainingTickets.value.length === 0) return;
     
-    // Reiniciar el ganador mostrado
+    // Reset the displayed winner
     winnerDisplayed.value = null;
     confettiActivated.value = false;
     
-    // Comprobar si queda algún premio por sortear
+    // Check if there are any prizes left to draw
     if (currentPrize.value > numberOfPrizes) {
       return;
     }
     
     isSpinning.value = true;
     
-    // Reproducir sonido si está habilitado
+    // Play sound if enabled
     if (enableSound.value) {
       const audio = new Audio("/sounds/wheel-spin.mp3");
       audio.play().catch(e => console.error("Error playing sound:", e));
     }
     
-    // Seleccionar un ganador aleatorio
+    // Select a random winner
     const randomIndex = Math.floor(Math.random() * remainingTickets.value.length);
     const winningTicket = remainingTickets.value[randomIndex];
     
-    // Calcular el ángulo al que debe detenerse la rueda
+    // Calculate the angle at which the wheel should stop
     const sliceAngle = (2 * Math.PI) / remainingTickets.value.length;
     const targetAngle = -(randomIndex * sliceAngle);
-    const fullRotations = 4; // Número de rotaciones completas antes de detenerse
+    const fullRotations = 4; // Number of complete rotations before stopping
     const finalAngle = targetAngle - fullRotations * 2 * Math.PI;
     
-    // Animar la rueda
+    // Animate the wheel
     const startTime = Date.now();
-    const duration = 5000; // Duración de la animación en ms
+    const duration = 5000; // Animation duration in ms
     const initialAngle = rotationAngle.value;
     
     const animate = () => {
@@ -202,7 +202,7 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
       const elapsed = now - startTime;
       
       if (elapsed < duration) {
-        const easeOut = (t: number) => 1 - Math.pow(1 - t, 3); // Función de ease-out cúbica
+        const easeOut = (t: number) => 1 - Math.pow(1 - t, 3); // Cubic ease-out function
         const progress = easeOut(elapsed / duration);
         rotationAngle.value = initialAngle + progress * (finalAngle - initialAngle);
         requestAnimationFrame(animate);
@@ -210,28 +210,28 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
         rotationAngle.value = finalAngle;
         isSpinning.value = false;
         
-        // Guardar el ganador
+        // Save the winner
         winners.value = [...winners.value, { ticket: winningTicket, prizeIndex: currentPrize.value - 1 }];
         
-        // Eliminar el boleto ganador de los boletos restantes
+        // Remove the winning ticket from the remaining tickets
         remainingTickets.value = remainingTickets.value.filter(t => t.number !== winningTicket.number);
         
-        // Mostrar el ganador
+        // Show the winner
         winnerDisplayed.value = winningTicket;
         
-        // Activar confeti
+        // Activate confetti
         confettiActivated.value = true;
         setTimeout(() => {
           triggerConfetti();
         }, 300);
         
-        // Reproducir sonido de victoria si está habilitado
+        // Play win sound if enabled
         if (enableSound.value) {
           const winAudio = new Audio("/sounds/win-sound.mp3");
           winAudio.play().catch(e => console.error("Error playing win sound:", e));
         }
         
-        // Avanzar al siguiente premio
+        // Advance to the next prize
         currentPrize.value++;
       }
     };
@@ -239,7 +239,7 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
     requestAnimationFrame(animate);
   });
 
-  // Función para volver a sortear
+  // Function to restart the draw
   const restartDraw = $(() => {
     winners.value = [];
     remainingTickets.value = [...eligibleTickets];
@@ -252,7 +252,7 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
   return (
     <div class="raffle-wheel-container">
       <div class="wheel-header">
-        <h2>{_`Sorteo de premios - ${raffleName}`}</h2>
+        <h2>{_`Prize Draw - ${raffleName}`}</h2>
         <button onClick$={onClose$} class="close-button">
           <LuX />
         </button>
@@ -268,12 +268,12 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
                   checked={showBuyerNames.value}
                   onChange$={() => showBuyerNames.value = !showBuyerNames.value}
                 />
-                {_`Mostrar nombres de compradores`}
+                {_`Show buyer names`}
               </label>
             </div>
             
             <div class="option-group">
-              <span>{_`Esquema de colores:`}</span>
+              <span>{_`Color scheme:`}</span>
               <div class="color-schemes">
                 <button 
                   class={{
@@ -311,7 +311,7 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
                   value={canvasSize.value}
                   onChange$={(e: any) => canvasSize.value = parseInt(e.target.value)}
                 />
-                {_`Tamaño de la rueda: ${canvasSize.value}px`}
+                {_`Wheel size: ${canvasSize.value}px`}
               </label>
             </div>
             
@@ -321,7 +321,7 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
                 class="sound-toggle"
               >
                 {enableSound.value ? <LuVolume2 /> : <LuVolumeX />}
-                {enableSound.value ? _`Sonido activado` : _`Sonido desactivado`}
+                {enableSound.value ? _`Sound enabled` : _`Sound disabled`}
               </button>
             </div>
           </div>
@@ -330,13 +330,13 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
             {currentPrize.value <= numberOfPrizes ? (
               <div class="current-prize">
                 <LuTrophy class="trophy-icon" />
-                <span>{_`Sorteando premio ${currentPrize.value} de ${numberOfPrizes}`}</span>
+                <span>{_`Drawing prize ${currentPrize.value} of ${numberOfPrizes}`}</span>
               </div>
             ) : (
               <div class="all-prizes-drawn">
-                <span>{_`¡Todos los premios han sido sorteados!`}</span>
+                <span>{_`All prizes have been drawn!`}</span>
                 <button onClick$={restartDraw} class="restart-button">
-                  {_`Volver a sortear`}
+                  {_`Redraw`}
                 </button>
               </div>
             )}
@@ -348,7 +348,7 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
               class="spin-button"
               disabled={isSpinning.value}
             >
-              {isSpinning.value ? _`Girando...` : _`¡Girar la rueda!`}
+              {isSpinning.value ? _`Spinning...` : _`Spin the wheel!`}
             </button>
           )}
         </div>
@@ -363,7 +363,7 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
           
           {winnerDisplayed.value && confettiActivated.value && (
             <div class="winner-display">
-              <h3>{_`¡Ganador del premio ${winners.value.length}!`}</h3>
+              <h3>{_`Prize ${winners.value.length} winner!`}</h3>
               <div class="winner-info">
                 <div class="winner-number">#{winnerDisplayed.value.number}</div>
                 {winnerDisplayed.value.buyerName && (
@@ -379,11 +379,11 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
         
         {winners.value.length > 0 && (
           <div class="winners-list">
-            <h3>{_`Ganadores`}</h3>
+            <h3>{_`Winners`}</h3>
             <ul>
               {winners.value.map((winner, index) => (
                 <li key={index} class="winner-item">
-                  <div class="winner-prize-number">{_`Premio ${index + 1}`}</div>
+                  <div class="winner-prize-number">{_`Prize ${index + 1}`}</div>
                   <div class="winner-ticket-info">
                     <span class="ticket-number">#{winner.ticket.number}</span>
                     {winner.ticket.buyerName && (
@@ -398,4 +398,4 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
       </div>
     </div>
   );
-}); 
+});
