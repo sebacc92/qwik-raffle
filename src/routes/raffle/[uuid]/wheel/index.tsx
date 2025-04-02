@@ -1,11 +1,11 @@
 import { component$, useSignal, useStylesScoped$, useVisibleTask$, $ } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
 import { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
-import { LuVolume2, LuVolumeX, LuTrophy, LuChevronLeft, LuSettings, LuDownload, LuRefreshCw, LuX, LuLoader2 } from "@qwikest/icons/lucide";
+import { LuVolume2, LuVolumeX, LuTrophy, LuChevronLeft, LuSettings, LuDownload, LuRefreshCw, LuX, LuLoader2, LuMaximize, LuMinimize } from "@qwikest/icons/lucide";
 import type { Ticket } from "~/routes/raffle/[uuid]/index";
 import styles from "./wheel.css?inline";
-import { _ } from "compiled-i18n";
 import { toast } from "qwik-sonner";
+import { _ } from "compiled-i18n";
 
 export { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 
@@ -18,6 +18,7 @@ export default component$(() => {
   useStylesScoped$(styles);
 
   const navigating = useSignal<boolean>(false)
+  const isFullscreen = useSignal<boolean>(false);
 
   // Get raffle data
   const raffle = useGetRaffle();
@@ -111,7 +112,6 @@ export default component$(() => {
   // Function to draw the wheel
   const drawWheel = $(() => {
     const canvas = document.getElementById("wheel-canvas") as HTMLCanvasElement;
-    if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -411,6 +411,19 @@ export default component$(() => {
     });
   });
 
+  // Function to toggle fullscreen mode
+  const toggleFullscreen = $(() => {
+    isFullscreen.value = !isFullscreen.value;
+    
+    if (isFullscreen.value) {
+      // Add class to body to prevent scrolling when in fullscreen
+      document.body.classList.add('wheel-fullscreen-mode');
+    } else {
+      // Remove class when exiting fullscreen
+      document.body.classList.remove('wheel-fullscreen-mode');
+    }
+  });
+
   if (raffle.value.failed) {
     return (
       <div class="p-4 max-w-7xl mx-auto">
@@ -423,44 +436,108 @@ export default component$(() => {
   const prizeCount = raffle.value.prizes.length;
 
   return (
-    <div class="wheel-page">
+    <div class={`wheel-page ${isFullscreen.value ? 'fullscreen-mode' : ''}`}>
       <div class="wheel-container">
-        <div class="wheel-header">
-          <Link href={`/raffle/${raffle.value.uuid}`}>
-            <button class="back-button" onClick$={() => navigating.value = true}>
-              <LuChevronLeft class="w-5 h-5" />
-              <span>{_`Back to raffle`}</span>
-              {navigating.value && <LuLoader2 class="w-5 h-5 animate-spin" />}
-            </button>
-          </Link>
-          <h1>{raffle.value.name || _`Prize Draw`}</h1>
-          <div class="header-actions">
-            <button 
-              onClick$={() => showSettings.value = !showSettings.value}
-              class="action-button"
-              title={_`Wheel settings`}
-            >
-              <LuSettings class="w-5 h-5" />
-            </button>
-            <button 
-              onClick$={downloadWinners} 
-              class="action-button"
-              title={_`Download winners`}
-              disabled={winners.value.length === 0}
-            >
-              <LuDownload class="w-5 h-5" />
-            </button>
-            <button 
-              onClick$={restartDraw} 
-              class="action-button"
-              title={_`Restart draw`}
-            >
-              <LuRefreshCw class="w-5 h-5" />
-            </button>
+        {!isFullscreen.value && (
+          <div class="wheel-header">
+            <Link href={`/raffle/${raffle.value.uuid}`}>
+              <button class="back-button" onClick$={() => navigating.value = true}>
+                <LuChevronLeft class="w-5 h-5" />
+                <span>{_`Back to raffle`}</span>
+                {navigating.value && <LuLoader2 class="w-5 h-5 animate-spin" />}
+              </button>
+            </Link>
+            <h1>{raffle.value.name || _`Prize Draw`}</h1>
+            <div class="header-actions">
+              <button 
+                class="action-button" 
+                title={_`Fullscreen`}
+                onClick$={toggleFullscreen}
+              >
+                <LuMaximize class="w-5 h-5" />
+              </button>
+              <button 
+                class="action-button"
+                title={enableSound.value ? _`Mute Sound` : _`Enable Sound`}
+                onClick$={() => enableSound.value = !enableSound.value}
+              >
+                {enableSound.value ? (
+                  <LuVolume2 class="w-5 h-5" />
+                ) : (
+                  <LuVolumeX class="w-5 h-5" />
+                )}
+              </button>
+              <button 
+                class="action-button"
+                title={_`Settings`}
+                onClick$={() => showSettings.value = true}
+              >
+                <LuSettings class="w-5 h-5" />
+              </button>
+              <button 
+                class="action-button"
+                title={_`Download Results`}
+                disabled={winners.value.length === 0}
+                onClick$={downloadWinners}
+              >
+                <LuDownload class="w-5 h-5" />
+              </button>
+              <button 
+                class="action-button"
+                title={_`Restart Draw`}
+                onClick$={restartDraw}
+              >
+                <LuRefreshCw class="w-5 h-5" />
+              </button>
+            </div>
           </div>
-        </div>
-
+        )}
         <div class="wheel-body">
+          {isFullscreen.value && (
+            <div class="fullscreen-controls">
+              <button 
+                class="action-button fullscreen-action" 
+                title={_`Exit Fullscreen`}
+                onClick$={toggleFullscreen}
+              >
+                <LuMinimize class="w-5 h-5" />
+              </button>
+              <button 
+                class="action-button fullscreen-action"
+                title={enableSound.value ? _`Mute Sound` : _`Enable Sound`}
+                onClick$={() => enableSound.value = !enableSound.value}
+              >
+                {enableSound.value ? (
+                  <LuVolume2 class="w-5 h-5" />
+                ) : (
+                  <LuVolumeX class="w-5 h-5" />
+                )}
+              </button>
+              <button 
+                class="action-button fullscreen-action"
+                title={_`Settings`}
+                onClick$={() => showSettings.value = true}
+              >
+                <LuSettings class="w-5 h-5" />
+              </button>
+              {winners.value.length > 0 && (
+                <button 
+                  class="action-button fullscreen-action"
+                  title={_`Download Results`}
+                  onClick$={downloadWinners}
+                >
+                  <LuDownload class="w-5 h-5" />
+                </button>
+              )}
+              <button 
+                class="action-button fullscreen-action"
+                title={_`Restart Draw`}
+                onClick$={restartDraw}
+              >
+                <LuRefreshCw class="w-5 h-5" />
+              </button>
+            </div>
+          )}
           <div class="wheel-main">
             <div class="wheel-controls">
               <div class="prize-status">

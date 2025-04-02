@@ -195,7 +195,7 @@ export default component$(() => {
                     <LuSearch class="absolute left-2 top-2.5 text-purple-500 w-4 h-4" />
                     <input
                         type="text"
-                        placeholder="Search number or name"
+                        placeholder={_`Search number or name`}
                         class="pl-8 w-full border rounded-md p-2"
                         value={search.value}
                         onInput$={(e: any) => search.value = e.target.value}
@@ -285,9 +285,9 @@ export default component$(() => {
                 </button>
                 <button
                     onClick$={() => {
-                        if (confirm("Are you sure you want to reset the raffle? This will delete all data.")) {
+                        if (confirm(_`Are you sure you want to reset the raffle? This will delete all data.`)) {
                             // Aquí iría la lógica para resetear el sorteo
-                            alert("Raffle reset");
+                            alert(_`Raffle reset`);
                         }
                     }}
                     class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2"
