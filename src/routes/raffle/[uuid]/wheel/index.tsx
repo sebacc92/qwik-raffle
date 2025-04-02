@@ -1,7 +1,7 @@
 import { component$, useSignal, useStylesScoped$, useVisibleTask$, $ } from "@builder.io/qwik";
-import { useNavigate } from "@builder.io/qwik-city";
+import { Link } from "@builder.io/qwik-city";
 import { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
-import { LuVolume2, LuVolumeX, LuTrophy, LuChevronLeft, LuSettings, LuDownload, LuRefreshCw, LuX } from "@qwikest/icons/lucide";
+import { LuVolume2, LuVolumeX, LuTrophy, LuChevronLeft, LuSettings, LuDownload, LuRefreshCw, LuX, LuLoader2 } from "@qwikest/icons/lucide";
 import type { Ticket } from "~/routes/raffle/[uuid]/index";
 import styles from "./wheel.css?inline";
 import { _ } from "compiled-i18n";
@@ -16,7 +16,8 @@ export interface WheelSegment {
 
 export default component$(() => {
   useStylesScoped$(styles);
-  const navigate = useNavigate();
+
+  const navigating = useSignal<boolean>(false)
 
   // Get raffle data
   const raffle = useGetRaffle();
@@ -410,11 +411,6 @@ export default component$(() => {
     });
   });
 
-  // Function to go back to raffle page
-  const goBack = $(() => {
-    navigate(`/raffle/${raffle.value.uuid}`);
-  });
-
   if (raffle.value.failed) {
     return (
       <div class="p-4 max-w-7xl mx-auto">
@@ -424,16 +420,19 @@ export default component$(() => {
     );
   }
 
-  const prizeCount = raffle.value.prizes?.length ?? 0;
+  const prizeCount = raffle.value.prizes.length;
 
   return (
     <div class="wheel-page">
       <div class="wheel-container">
         <div class="wheel-header">
-          <button onClick$={goBack} class="back-button">
-            <LuChevronLeft class="w-5 h-5" />
-            <span>{_`Back to raffle`}</span>
-          </button>
+          <Link href={`/raffle/${raffle.value.uuid}`}>
+            <button class="back-button" onClick$={() => navigating.value = true}>
+              <LuChevronLeft class="w-5 h-5" />
+              <span>{_`Back to raffle`}</span>
+              {navigating.value && <LuLoader2 class="w-5 h-5 animate-spin" />}
+            </button>
+          </Link>
           <h1>{raffle.value.name || _`Prize Draw`}</h1>
           <div class="header-actions">
             <button 
@@ -663,11 +662,9 @@ export default component$(() => {
               
               <div class="prize-info">
                 <LuTrophy class="trophy-icon-win w-6 h-6" />
-                {raffle.value.prizes && (
-                  <span class="prize-name">
-                    {_`Prize #${currentPrize.value - 1}: ${raffle.value.prizes.find(p => p.position === currentPrize.value - 1)?.name || "Prize"}`}
-                  </span>
-                )}
+                <span class="prize-name">
+                  {_`Prize #${currentPrize.value - 1}: ${raffle.value.prizes.find(p => p.position === currentPrize.value - 1)?.name || "Prize"}`}
+                </span>
               </div>
             </div>
           </div>

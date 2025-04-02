@@ -14,7 +14,7 @@ export default component$(() => {
     const show = useSignal(false);
 
     return (
-        <header class="w-full py-4 px-4 md:px-6 flex items-center justify-between border-b border-border shadow-sm sticky top-0 z-30 bg-background/95 backdrop-blur-sm">
+        <header class="w-full py-2 px-4 md:px-6 flex items-center justify-between border-b border-border shadow-sm sticky top-0 z-30 bg-background/95 backdrop-blur-sm">
             <div class="flex items-center">
                 <Link href="/" class="flex items-center">
                     <LuGift class="h-8 w-8 text-primary dark:text-purple-400 animate-pulse" />

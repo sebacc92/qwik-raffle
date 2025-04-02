@@ -3,7 +3,7 @@ import { _ } from 'compiled-i18n';
 
 export default component$(() => {
   return (
-    <footer class="w-full border-t py-6 bg-background">
+    <footer class="w-full border-t py-4 bg-background">
       <div class="container mx-auto px-4">
         <div class="mt-4 text-center space-y-2">
           <p class="text-sm font-medium">
