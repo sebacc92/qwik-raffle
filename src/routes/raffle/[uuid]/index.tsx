@@ -5,7 +5,7 @@ import { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 import styles from './raffle.css?inline';
 import Ticket from "~/components/raffle/ticket";
 import { LuUsers, LuCreditCard, LuDollarSign, LuGift, LuSearch, LuLink, LuDownload, LuTrash2, LuTrophy, LuX } from '@qwikest/icons/lucide';
-import RaffleWheel from "~/components/raffle/RaffleWheel";
+import { useNavigate } from "@builder.io/qwik-city";
 import { _ } from "compiled-i18n";
 
 export { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
@@ -23,6 +23,7 @@ export interface Ticket {
 
 export default component$(() => {
     useStylesScoped$(styles);
+    const navigate = useNavigate();
 
     const raffle = useGetRaffle();
     const raffleNumbers = useGetRaffleNumbers();
@@ -32,8 +33,6 @@ export default component$(() => {
 
     // Signals for draw functionality
     const showDrawConfirmation = useSignal(false);
-    const showDrawingWheel = useSignal(false);
-    const eligibleTickets = useSignal<Ticket[]>([]);
 
     const generateClientLink = $(() => {
         if(raffle.value.failed) return;
@@ -106,7 +105,6 @@ export default component$(() => {
 
         // Filter tickets to only include paid tickets
         const paid = raffleNumbers.value.filter(t => t.status === "sold-paid");
-        eligibleTickets.value = [...paid];
 
         // Check if there are enough tickets
         const numberOfPrizes = raffle.value.prizes?.length || 0;
@@ -119,9 +117,9 @@ export default component$(() => {
             return;
         }
 
-        // Hide confirmation and show wheel
+        // Hide confirmation and navigate to wheel page
         showDrawConfirmation.value = false;
-        showDrawingWheel.value = true;
+        navigate(`/raffle/${raffle.value.uuid}/wheel`);
     });
 
     if(raffle.value.failed){
@@ -336,16 +334,6 @@ export default component$(() => {
                         </div>
                     </div>
                 </div>
-            )}
-
-            {/* Raffle Wheel Modal */}
-            {showDrawingWheel.value && (
-                <RaffleWheel
-                    eligibleTickets={eligibleTickets.value}
-                    numberOfPrizes={raffle.value.prizes?.length || 0}
-                    raffleName={raffle.value.name}
-                    onClose$={$(() => showDrawingWheel.value = false)}
-                />
             )}
         </div>
     );
