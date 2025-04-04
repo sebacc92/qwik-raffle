@@ -51,6 +51,7 @@ export default component$(() => {
   // Variables to track pin position and sound
   const lastSegmentIndex = useSignal(-1);
   const pinSound = useSignal<HTMLAudioElement | null>(null);
+  const completeSound = useSignal<HTMLAudioElement | null>(null);
 
   // Function to check if pin hits a dot and play sound
   const checkPinDotCollision = $(() => {
@@ -285,6 +286,7 @@ export default component$(() => {
     // Preload sound effects
     if (enableSound.value) {
       pinSound.value = new Audio("/sounds/spin_wheel.ogg");
+      completeSound.value = new Audio("/sounds/spin-complete.mp3");
     }
 
     // Initialize the wheel
@@ -327,7 +329,7 @@ export default component$(() => {
     confettiActivated.value = false;
     
     // Check if there are any prizes left to draw
-    const prizeCount = raffle.value.prizes?.length ?? 0;
+    const prizeCount = raffle.value.prizes?.length || 0;
     if (currentPrize.value > prizeCount) {
       toast.info(_`All prizes have been drawn`, {
         position: "top-center"
@@ -350,25 +352,43 @@ export default component$(() => {
     // Calculate the angle at which the wheel should stop
     const sliceAngle = (2 * Math.PI) / segments.value.length;
     const targetAngle = -(randomIndex * sliceAngle);
-    const fullRotations = 4; // Number of complete rotations before stopping
+    
+    // Increase number of full rotations before stopping for more dramatic effect
+    const minRotations = 5;
+    const maxRotations = 8;
+    const fullRotations = minRotations + Math.floor(Math.random() * (maxRotations - minRotations));
+    
+    // Calculate final angle to ensure the wheel always spins with consistent momentum
+    // regardless of its current position
     const finalAngle = targetAngle - fullRotations * 2 * Math.PI;
     
     // Animate the wheel
     const startTime = Date.now();
-    const duration = 5000 - (wheelSpeed.value * 300); // Faster with higher wheelSpeed
-    const initialAngle = rotationAngle.value;
+    
+    // Set duration to approximately 7-10 seconds, adjusted by wheel speed
+    const baseDuration = 8500;
+    const speedFactor = (11 - wheelSpeed.value) / 5; // Convert 1-10 scale to a 2.0-0.2 multiplier
+    const duration = baseDuration * speedFactor; 
+    
+    // Always use a fixed starting point for consistent animation
+    const initialAngle = rotationAngle.value % (2 * Math.PI);
+    const totalRotation = finalAngle - initialAngle;
     
     const animate = () => {
       const now = Date.now();
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Easing function for smooth deceleration
-      const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
-      const easedProgress = easeOut(progress);
+      // Simple power curve for natural deceleration - higher power means more dramatic slowdown
+      // A higher exponent gives a faster start and more gradual slowdown
+      const naturalEasing = (t: number) => {
+        // Using a single power function for smooth natural slowing
+        return 1 - Math.pow(1 - t, 4);
+      };
       
-      // Calculate the current angle
-      rotationAngle.value = initialAngle + (finalAngle - initialAngle) * easedProgress;
+      // Calculate the current angle with natural easing
+      const easedProgress = naturalEasing(progress);
+      rotationAngle.value = initialAngle + totalRotation * easedProgress;
       
       // Check for pin-dot collision
       checkPinDotCollision();
@@ -397,8 +417,14 @@ export default component$(() => {
         
         // Play winning sound if enabled
         if (enableSound.value) {
-          const audio = new Audio("/sounds/win.mp3");
-          audio.play().catch(e => console.error("Error playing sound:", e));
+          // Play spin-complete sound
+          if (completeSound.value) {
+            completeSound.value.currentTime = 0;
+            completeSound.value.play().catch(e => console.error("Error playing sound:", e));
+          } else {
+            const audio = new Audio("/sounds/spin-complete.mp3");
+            audio.play().catch(e => console.error("Error playing sound:", e));
+          }
         }
         
         // Remove the winner from eligible tickets for the next draw
@@ -493,7 +519,7 @@ export default component$(() => {
     );
   }
 
-  const prizeCount = raffle.value.prizes.length;
+  const prizeCount = raffle.value.prizes?.length || 0;
 
   return (
     <div class={`wheel-page ${isFullscreen.value ? 'fullscreen-mode' : ''}`}>
@@ -812,8 +838,32 @@ export default component$(() => {
               <div class="prize-info">
                 <LuTrophy class="trophy-icon-win w-6 h-6" />
                 <span class="prize-name">
-                  {_`Prize #${currentPrize.value - 1}: ${raffle.value.prizes.find(p => p.position === currentPrize.value - 1)?.name || "Prize"}`}
+                  {_`Prize #${currentPrize.value - 1}: ${raffle.value.prizes?.find(p => p.position === currentPrize.value - 1)?.name || "Prize"}`}
                 </span>
+              </div>
+
+              <div class="winner-actions">
+                {/* Close button to dismiss the winner display */}
+                <button 
+                  class="action-button close-winner"
+                  onClick$={() => winnerDisplayed.value = null}
+                >
+                  <LuX class="w-5 h-5" />
+                </button>
+
+                {/* Spin again button - only show if there are more prizes and tickets */}
+                {segments.value.length > 0 && currentPrize.value <= (raffle.value.prizes?.length || 0) && (
+                  <button 
+                    class="spin-again-button"
+                    onClick$={() => {
+                      winnerDisplayed.value = null;
+                      setTimeout(() => spinWheel(), 300);
+                    }}
+                  >
+                    <LuRefreshCw class="w-5 h-5 mr-2" />
+                    {_`Spin Again`}
+                  </button>
+                )}
               </div>
             </div>
           </div>
