@@ -363,6 +363,9 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
           
           {winnerDisplayed.value && confettiActivated.value && (
             <div class="winner-display">
+              <button onClick$={() => winnerDisplayed.value = null} class="close-button">
+                <LuX />
+              </button>
               <h3>{_`Prize ${winners.value.length} winner!`}</h3>
               <div class="winner-info">
                 <div class="winner-number">#{winnerDisplayed.value.number}</div>
@@ -373,6 +376,16 @@ export default component$<RaffleWheelProps>(({ eligibleTickets, numberOfPrizes, 
                   <div class="winner-phone">{winnerDisplayed.value.buyerPhone}</div>
                 )}
               </div>
+              {currentPrize.value <= numberOfPrizes && (
+                <button 
+                  onClick$={spinWheel} 
+                  class="spin-button"
+                  disabled={isSpinning.value}
+                  style={{ marginTop: '1.5rem' }}
+                >
+                  {isSpinning.value ? _`Spinning...` : _`Draw Prize ${currentPrize.value} of ${numberOfPrizes}`}
+                </button>
+              )}
             </div>
           )}
         </div>

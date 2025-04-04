@@ -251,27 +251,50 @@
 }
 
 .winner-display {
-  margin-top: 1.5rem;
-  text-align: center;
-  background-color: #f3f4f6;
-  padding: 1rem;
+  position: relative;
+  background-color: white;
   border-radius: 0.5rem;
-  border: 2px solid #8b5cf6;
-  animation: pulse 0.5s ease-in-out infinite alternate;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 2rem;
+  text-align: center;
+  margin-top: 1rem;
+  animation: fade-in 0.5s ease-out;
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 :global(.dark) .winner-display {
   background-color: #4a044e;
-  border-color: #8b5cf6;
 }
 
-@keyframes pulse {
-  from {
-    box-shadow: 0 0 10px 0 rgba(139, 92, 246, 0.5);
-  }
-  to {
-    box-shadow: 0 0 20px 5px rgba(139, 92, 246, 0.7);
-  }
+.winner-display .close-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.winner-display .close-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+:global(.dark) .winner-display .close-button {
+  color: #e5e7eb;
+}
+
+:global(.dark) .winner-display .close-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .winner-display h3 {
@@ -404,4 +427,13 @@
   .winners-list ul {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
-} 
+}
+
+@keyframes pulse {
+  from {
+    box-shadow: 0 0 10px 0 rgba(139, 92, 246, 0.5);
+  }
+  to {
+    box-shadow: 0 0 20px 5px rgba(139, 92, 246, 0.7);
+  }
+}

@@ -6,8 +6,12 @@ import type { Ticket } from "~/routes/raffle/[uuid]/index";
 import styles from "./wheel.css?inline";
 import { toast } from "qwik-sonner";
 import { _ } from "compiled-i18n";
+import WinnerDisplay from "~/components/modals/WinnerDisplay";
 
 export { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
+
+const MIN_ROTATIONS = 5;
+const MAX_ROTATIONS = 10;
 
 export interface WheelSegment {
   ticket: Ticket;
@@ -322,6 +326,7 @@ export default component$(() => {
 
   // Function to spin the wheel and select a winner
   const spinWheel = $(async () => {
+    console.log('spinWheel')
     if (isSpinning.value || segments.value.length === 0) return;
     
     // Reset the displayed winner
@@ -330,7 +335,11 @@ export default component$(() => {
     
     // Check if there are any prizes left to draw
     const prizeCount = raffle.value.prizes?.length || 0;
+    console.log(2)
+    console.log('currentPrize.value', currentPrize.value)
+    console.log('prizeCount', prizeCount)
     if (currentPrize.value > prizeCount) {
+      console.log(1)
       toast.info(_`All prizes have been drawn`, {
         position: "top-center"
       });
@@ -347,20 +356,24 @@ export default component$(() => {
     
     // Select a random winner
     const randomIndex = Math.floor(Math.random() * segments.value.length);
+    console.log('randomIndex', randomIndex)
     const winningSegment = segments.value[randomIndex];
+    console.log('winningSegment', winningSegment)
     
     // Calculate the angle at which the wheel should stop
     const sliceAngle = (2 * Math.PI) / segments.value.length;
-    const targetAngle = -(randomIndex * sliceAngle);
+    console.log('sliceAngle', sliceAngle)
+    const targetAngle = -Math.PI / 2 - (randomIndex + 0.5) * sliceAngle;
+    console.log('targetAngle', targetAngle)
     
-    // Increase number of full rotations before stopping for more dramatic effect
-    const minRotations = 5;
-    const maxRotations = 8;
-    const fullRotations = minRotations + Math.floor(Math.random() * (maxRotations - minRotations));
+    
+    const fullRotations = MIN_ROTATIONS + Math.floor(Math.random() * (MAX_ROTATIONS - MIN_ROTATIONS));
+    console.log('fullRotations', fullRotations)
     
     // Calculate final angle to ensure the wheel always spins with consistent momentum
     // regardless of its current position
     const finalAngle = targetAngle - fullRotations * 2 * Math.PI;
+    console.log('finalAngle', finalAngle)
     
     // Animate the wheel
     const startTime = Date.now();
@@ -816,57 +829,17 @@ export default component$(() => {
         </div>
 
         {winnerDisplayed.value && (
-          <div class="winner-display">
-            <div class="winner-content">
-              <h3>{_`Winner!`}</h3>
-              <div class="winner-info">
-                <div class="winner-ticket">
-                  <span class="ticket-number">#{winnerDisplayed.value.number}</span>
-                </div>
-                {winnerDisplayed.value.buyerName && (
-                  <div class="winner-name">
-                    <span>{winnerDisplayed.value.buyerName}</span>
-                  </div>
-                )}
-                {winnerDisplayed.value.buyerPhone && (
-                  <div class="winner-phone">
-                    <span>{winnerDisplayed.value.buyerPhone}</span>
-                  </div>
-                )}
-              </div>
-              
-              <div class="prize-info">
-                <LuTrophy class="trophy-icon-win w-6 h-6" />
-                <span class="prize-name">
-                  {_`Prize #${currentPrize.value - 1}: ${raffle.value.prizes?.find(p => p.position === currentPrize.value - 1)?.name || "Prize"}`}
-                </span>
-              </div>
-
-              <div class="winner-actions">
-                {/* Close button to dismiss the winner display */}
-                <button 
-                  class="action-button close-winner"
-                  onClick$={() => winnerDisplayed.value = null}
-                >
-                  <LuX class="w-5 h-5" />
-                </button>
-
-                {/* Spin again button - only show if there are more prizes and tickets */}
-                {segments.value.length > 0 && currentPrize.value <= (raffle.value.prizes?.length || 0) && (
-                  <button 
-                    class="spin-again-button"
-                    onClick$={() => {
-                      winnerDisplayed.value = null;
-                      setTimeout(() => spinWheel(), 300);
-                    }}
-                  >
-                    <LuRefreshCw class="w-5 h-5 mr-2" />
-                    {_`Spin Again`}
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
+          <WinnerDisplay 
+            winner={winnerDisplayed.value}
+            prizePosition={currentPrize.value - 1}
+            prizeName={raffle.value.prizes?.find(p => p.position === currentPrize.value - 1)?.name}
+            onClose$={() => winnerDisplayed.value = null}
+            onSpinAgain$={() => {
+              winnerDisplayed.value = null;
+              setTimeout(() => spinWheel(), 300);
+            }}
+            canSpinAgain={segments.value.length > 0 && currentPrize.value <= (raffle.value.prizes?.length || 0)}
+          />
         )}
 
         {winners.value.length > 0 && (
