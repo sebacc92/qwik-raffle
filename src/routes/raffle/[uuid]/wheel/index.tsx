@@ -199,15 +199,6 @@ export default component$(() => {
       };
       img.src = wheelCenterImage.value;
     }
-    
-    // Draw the pointer
-    ctx.beginPath();
-    ctx.moveTo(centerX, centerY - radius - 10);
-    ctx.lineTo(centerX - 10, centerY - radius + 10);
-    ctx.lineTo(centerX + 10, centerY - radius + 10);
-    ctx.closePath();
-    ctx.fillStyle = pointerColor.value;
-    ctx.fill();
   });
 
   // Initialize the wheel and load the confetti library
@@ -543,38 +534,50 @@ export default component$(() => {
               <div class="prize-status">
                 {winners.value.length < prizeCount ? (
                   <div class="current-prize">
-                    <LuTrophy class="trophy-icon w-5 h-5" />
-                    <span>{_`Drawing prize ${currentPrize.value} of ${prizeCount}`}</span>
+                    <LuTrophy class="w-5 h-5 trophy-icon" />
+                    <span>
+                      {_`Drawing prize ${currentPrize.value} of ${prizeCount}`}
+                    </span>
                   </div>
                 ) : (
                   <div class="all-prizes-drawn">
-                    <LuTrophy class="trophy-icon-large w-8 h-8" />
-                    <span>{_`All prizes have been drawn!`}</span>
+                    <div>
+                      <LuTrophy class="w-8 h-8 trophy-icon-large" />
+                    </div>
+                    <div>{_`All prizes have been drawn!`}</div>
+                    <button class="restart-button" onClick$={restartDraw}>
+                      {_`Restart Draw`}
+                    </button>
                   </div>
                 )}
               </div>
-
-              <button
-                onClick$={spinWheel}
-                disabled={isSpinning.value || segments.value.length === 0 || currentPrize.value > prizeCount}
-                class="spin-button"
-              >
-                {_`Spin the wheel!`}
-              </button>
-
-              <button 
-                onClick$={() => enableSound.value = !enableSound.value}
-                class="sound-toggle"
-                title={enableSound.value ? _`Mute` : _`Unmute`}
-              >
-                {enableSound.value ? <LuVolume2 class="w-5 h-5" /> : <LuVolumeX class="w-5 h-5" />}
-              </button>
+              
+              {winners.value.length < prizeCount && (
+                <button 
+                  class="spin-button"
+                  onClick$={spinWheel}
+                  disabled={isSpinning.value || segments.value.length === 0}
+                >
+                  {isSpinning.value ? (
+                    <div class="spin-loading">
+                      <div class="spin-loading-text">{_`Spinning...`}</div>
+                    </div>
+                  ) : (
+                    _`Spin the wheel!`
+                  )}
+                </button>
+              )}
             </div>
-
-            <div class="wheel-viewport">
-              <canvas
-                id="wheel-canvas"
-                width={canvasSize.value}
+            
+            <div class="wheel-canvas-container">
+              {/* Pin indicator above the wheel */}
+              <div class="wheel-pin-indicator">
+                <img src="/icons/pin-icon.svg" alt="Pin indicator" />
+              </div>
+              
+              <canvas 
+                id="wheel-canvas" 
+                width={canvasSize.value} 
                 height={canvasSize.value}
               ></canvas>
             </div>

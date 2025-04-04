@@ -57,29 +57,60 @@ body.wheel-fullscreen-mode {
   transform: translateY(-2px);
 }
 
+.wheel-canvas-container {
+  position: relative;
+  margin-top: 40px; /* Aumentado para dejar más espacio al pin */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .wheel-page.fullscreen-mode .wheel-canvas-container {
-  width: 90vh;
-  height: 90vh;
-  max-width: 90vw;
-  max-height: 90vh;
+  position: relative;
+  width: auto;
+  height: auto;
+  max-width: 85vh;
+  max-height: 85vh;
+  margin-top: 60px; /* Más espacio para el pin en modo pantalla completa */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilos para el pin indicador */
+.wheel-pin-indicator {
+  position: absolute;
+  top: -25px; /* Ajustado para que aparezca en el borde superior */
+  z-index: 10;
+}
+
+.wheel-pin-indicator img {
+  width: 40px;
+  height: 56px;
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.4));
+}
+
+.wheel-page.fullscreen-mode .wheel-pin-indicator {
+  top: -35px;
+}
+
+.wheel-page.fullscreen-mode .wheel-pin-indicator img {
+  width: 50px;
+  height: 70px;
 }
 
 .wheel-page.fullscreen-mode .wheel-main {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100vh;
+  width: 100vw;
 }
 
-.wheel-page.fullscreen-mode .wheel-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
+.wheel-page.fullscreen-mode canvas {
   max-width: 100%;
+  max-height: 100%;
 }
 
 .wheel-container {
