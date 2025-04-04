@@ -730,6 +730,27 @@ body.wheel-fullscreen-mode {
   color: #d1d5db;
 }
 
+/* Estilos para los puntos divisores de la ruleta */
+.wheel-dots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.wheel-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, -50%);
+}
+
 /* Animations */
 @keyframes fadeIn {
   from {

@@ -48,6 +48,48 @@ export default component$(() => {
   const showTicketNumbers = useSignal(true);
   const wheelCenterImage = useSignal<string | null>(null);
 
+  // Variables to track pin position and sound
+  const lastSegmentIndex = useSignal(-1);
+  const pinSound = useSignal<HTMLAudioElement | null>(null);
+
+  // Function to check if pin hits a dot and play sound
+  const checkPinDotCollision = $(() => {
+    if (!isSpinning.value || segments.value.length === 0) return;
+    
+    // Calculate which segment the pin is pointing to
+    const segmentCount = segments.value.length;
+    const sliceAngle = (2 * Math.PI) / segmentCount;
+    
+    // The pin is fixed at the top (3π/2 or -π/2 in the unit circle)
+    // Calculate which segment it's pointing to based on current rotation
+    const pinPosition = -Math.PI / 2; // Fixed pin position (top of wheel)
+    
+    // Normalize the rotation angle to be between 0 and 2π
+    let normalizedAngle = rotationAngle.value % (2 * Math.PI);
+    if (normalizedAngle < 0) normalizedAngle += 2 * Math.PI;
+    
+    // Calculate the segment index that the pin is pointing to
+    // We add π/2 to adjust for the pin being at the top position
+    let segmentIndex = Math.floor(((pinPosition - normalizedAngle + Math.PI / 2) % (2 * Math.PI)) / sliceAngle);
+    if (segmentIndex < 0) segmentIndex += segmentCount;
+    
+    // If we've moved to a new segment, play the sound
+    if (segmentIndex !== lastSegmentIndex.value) {
+      lastSegmentIndex.value = segmentIndex;
+      
+      // Play the click sound when crossing segments
+      if (enableSound.value && pinSound.value) {
+        // Reset and play the sound
+        pinSound.value.currentTime = 0;
+        pinSound.value.play().catch(e => console.error("Error playing sound:", e));
+      } else if (enableSound.value) {
+        // Lazy-load the sound if it hasn't been created yet
+        pinSound.value = new Audio("/sounds/spin_wheel.ogg");
+        pinSound.value.play().catch(e => console.error("Error playing sound:", e));
+      }
+    }
+  });
+
   // Color schemes
   const colorSchemes = {
     rainbow: ["#FF9AA2", "#FFB7B2", "#FFDAC1", "#E2F0CB", "#B5EAD7", "#C7CEEA"],
@@ -176,6 +218,22 @@ export default component$(() => {
       ctx.restore();
     }
     
+    // Draw the white dots at segment boundaries (similar to the second image)
+    for (let i = 0; i < segments.value.length; i++) {
+      const dotAngle = i * sliceAngle + rotationAngle.value;
+      const dotX = centerX + radius * Math.cos(dotAngle);
+      const dotY = centerY + radius * Math.sin(dotAngle);
+      
+      // Draw white dot
+      ctx.beginPath();
+      ctx.arc(dotX, dotY, 5, 0, 2 * Math.PI);
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fill();
+      ctx.strokeStyle = "#DDDDDD";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    
     // Draw the center circle
     ctx.beginPath();
     ctx.arc(centerX, centerY, 20, 0, 2 * Math.PI);
@@ -204,14 +262,18 @@ export default component$(() => {
   // Initialize the wheel and load the confetti library
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ cleanup }) => {
-    // Set canvas size based on window width
-    canvasSize.value = Math.min(window.innerWidth * 0.8, 600);
+    // Function to handle window resize
+    const handleResize = () => {
+      // Adjust the canvas size based on window size and device orientation
+      const containerWidth = isFullscreen.value ? 
+        Math.min(window.innerWidth, window.innerHeight * 0.85) : 
+        Math.min(window.innerWidth * 0.9, 600);
+      
+      canvasSize.value = Math.floor(containerWidth);
+    };
     
     // Handle window resize
-    const handleResize = () => {
-      canvasSize.value = Math.min(window.innerWidth * 0.8, 600);
-      drawWheel();
-    };
+    handleResize();
     
     window.addEventListener('resize', handleResize);
     
@@ -219,11 +281,15 @@ export default component$(() => {
     const script = document.createElement("script");
     script.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js";
     document.body.appendChild(script);
+    
+    // Preload sound effects
+    if (enableSound.value) {
+      pinSound.value = new Audio("/sounds/spin_wheel.ogg");
+    }
 
     // Initialize the wheel
-    setTimeout(() => drawWheel(), 500);
-    
-    // Cleanup
+    drawWheel();
+
     cleanup(() => {
       window.removeEventListener("resize", handleResize);
       if (script.parentNode) {
@@ -303,6 +369,9 @@ export default component$(() => {
       
       // Calculate the current angle
       rotationAngle.value = initialAngle + (finalAngle - initialAngle) * easedProgress;
+      
+      // Check for pin-dot collision
+      checkPinDotCollision();
       
       // Continue animation if not complete
       if (progress < 1) {
