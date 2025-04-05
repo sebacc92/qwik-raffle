@@ -1,12 +1,13 @@
 import { component$, useSignal, useStylesScoped$, useVisibleTask$, $ } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
 import { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
-import { LuVolume2, LuVolumeX, LuTrophy, LuChevronLeft, LuSettings, LuDownload, LuRefreshCw, LuX, LuLoader2, LuMaximize, LuMinimize } from "@qwikest/icons/lucide";
+import { LuVolume2, LuVolumeX, LuTrophy, LuChevronLeft, LuSettings, LuDownload, LuX, LuLoader2, LuMaximize, LuMinimize } from "@qwikest/icons/lucide";
 import type { Ticket } from "~/routes/raffle/[uuid]/index";
 import styles from "./wheel.css?inline";
 import { toast } from "qwik-sonner";
 import { _ } from "compiled-i18n";
 import WinnerDisplay from "~/components/modals/WinnerDisplay";
+import SheetSettingsWheel from "~/components/SheetSettingsWheel";
 
 export { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 
@@ -326,7 +327,6 @@ export default component$(() => {
 
   // Function to spin the wheel and select a winner
   const spinWheel = $(async () => {
-    console.log('spinWheel')
     if (isSpinning.value || segments.value.length === 0) return;
     
     // Reset the displayed winner
@@ -335,11 +335,7 @@ export default component$(() => {
     
     // Check if there are any prizes left to draw
     const prizeCount = raffle.value.prizes?.length || 0;
-    console.log(2)
-    console.log('currentPrize.value', currentPrize.value)
-    console.log('prizeCount', prizeCount)
     if (currentPrize.value > prizeCount) {
-      console.log(1)
       toast.info(_`All prizes have been drawn`, {
         position: "top-center"
       });
@@ -356,24 +352,17 @@ export default component$(() => {
     
     // Select a random winner
     const randomIndex = Math.floor(Math.random() * segments.value.length);
-    console.log('randomIndex', randomIndex)
     const winningSegment = segments.value[randomIndex];
-    console.log('winningSegment', winningSegment)
     
     // Calculate the angle at which the wheel should stop
     const sliceAngle = (2 * Math.PI) / segments.value.length;
-    console.log('sliceAngle', sliceAngle)
     const targetAngle = -Math.PI / 2 - (randomIndex + 0.5) * sliceAngle;
-    console.log('targetAngle', targetAngle)
-    
     
     const fullRotations = MIN_ROTATIONS + Math.floor(Math.random() * (MAX_ROTATIONS - MIN_ROTATIONS));
-    console.log('fullRotations', fullRotations)
     
     // Calculate final angle to ensure the wheel always spins with consistent momentum
     // regardless of its current position
-    const finalAngle = targetAngle - fullRotations * 2 * Math.PI;
-    console.log('finalAngle', finalAngle)
+    const finalAngle = rotationAngle.value + (fullRotations * 2 * Math.PI) + (targetAngle - rotationAngle.value % (2 * Math.PI));
     
     // Animate the wheel
     const startTime = Date.now();
@@ -452,23 +441,6 @@ export default component$(() => {
     };
     
     requestAnimationFrame(animate);
-  });
-
-  // Function to restart the draw
-  const restartDraw = $(() => {
-    // Reset all state
-    isSpinning.value = false;
-    currentPrize.value = 1;
-    winners.value = [];
-    winnerDisplayed.value = null;
-    confettiActivated.value = false;
-    rotationAngle.value = 0;
-    
-    // Recreate segments from eligible tickets
-    createSegments();
-    
-    // Redraw the wheel
-    drawWheel();
   });
 
   // Function to download winners list
@@ -555,6 +527,7 @@ export default component$(() => {
               >
                 <LuMaximize class="w-5 h-5" />
               </button>
+              <SheetSettingsWheel position="right">Right</SheetSettingsWheel>
               <button 
                 class="action-button"
                 title={enableSound.value ? _`Mute Sound` : _`Enable Sound`}
@@ -580,13 +553,6 @@ export default component$(() => {
                 onClick$={downloadWinners}
               >
                 <LuDownload class="w-5 h-5" />
-              </button>
-              <button 
-                class="action-button"
-                title={_`Restart Draw`}
-                onClick$={restartDraw}
-              >
-                <LuRefreshCw class="w-5 h-5" />
               </button>
             </div>
           </div>
@@ -628,13 +594,6 @@ export default component$(() => {
                   <LuDownload class="w-5 h-5" />
                 </button>
               )}
-              <button 
-                class="action-button fullscreen-action"
-                title={_`Restart Draw`}
-                onClick$={restartDraw}
-              >
-                <LuRefreshCw class="w-5 h-5" />
-              </button>
             </div>
           )}
           <div class="wheel-main">
@@ -649,13 +608,10 @@ export default component$(() => {
                   </div>
                 ) : (
                   <div class="all-prizes-drawn">
-                    <div>
+                    <div class="trophy-container">
                       <LuTrophy class="w-8 h-8 trophy-icon-large" />
                     </div>
                     <div>{_`All prizes have been drawn!`}</div>
-                    <button class="restart-button" onClick$={restartDraw}>
-                      {_`Restart Draw`}
-                    </button>
                   </div>
                 )}
               </div>
