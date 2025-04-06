@@ -520,32 +520,22 @@ export default component$(() => {
             </Link>
             <h1>{raffle.value.name || _`Prize Draw`}</h1>
             <div class="header-actions">
-              <button 
-                class="action-button" 
-                title={_`Fullscreen`}
-                onClick$={toggleFullscreen}
+              <SheetSettingsWheel
+                createSegments={createSegments}
+                position="right"
+                selectedColorScheme={selectedColorScheme}
+                canvasSize={canvasSize}
+                fontStyle={fontStyle}
+                textColor={textColor}
+                wheelBorderColor={wheelBorderColor}
+                wheelBorderWidth={wheelBorderWidth}
+                pointerColor={pointerColor}
+                wheelSpeed={wheelSpeed}
+                showBuyerNames={showBuyerNames}
+                showTicketNumbers={showTicketNumbers}
               >
-                <LuMaximize class="w-5 h-5" />
-              </button>
-              <SheetSettingsWheel position="right">Right</SheetSettingsWheel>
-              <button 
-                class="action-button"
-                title={enableSound.value ? _`Mute Sound` : _`Enable Sound`}
-                onClick$={() => enableSound.value = !enableSound.value}
-              >
-                {enableSound.value ? (
-                  <LuVolume2 class="w-5 h-5" />
-                ) : (
-                  <LuVolumeX class="w-5 h-5" />
-                )}
-              </button>
-              <button 
-                class="action-button"
-                title={_`Settings`}
-                onClick$={() => showSettings.value = true}
-              >
-                <LuSettings class="w-5 h-5" />
-              </button>
+                Right
+              </SheetSettingsWheel>
               <button 
                 class="action-button"
                 title={_`Download Results`}
@@ -554,6 +544,31 @@ export default component$(() => {
               >
                 <LuDownload class="w-5 h-5" />
               </button>
+              <button 
+                class="action-button"
+                title={enableSound.value ? _`Mute Sound` : _`Enable Sound`}
+                onClick$={() => enableSound.value = !enableSound.value}
+              >
+                {enableSound.value ? (
+                  <LuVolume2 class="w-5 h-5" />
+                ) : (
+                  <LuVolumeX class="w-5 h-5" />
+                )}
+              </button>
+              <button 
+                class="action-button"
+                title={_`Settings`}
+                onClick$={() => showSettings.value = true}
+              >
+                <LuSettings class="w-5 h-5" />
+              </button>
+              <button 
+                class="action-button" 
+                title={_`Fullscreen`}
+                onClick$={toggleFullscreen}
+              >
+                <LuMaximize class="w-5 h-5" />
+              </button>
             </div>
           </div>
         )}
@@ -561,11 +576,12 @@ export default component$(() => {
           {isFullscreen.value && (
             <div class="fullscreen-controls">
               <button 
-                class="action-button fullscreen-action" 
-                title={_`Exit Fullscreen`}
-                onClick$={toggleFullscreen}
+                class="action-button fullscreen-action"
+                title={_`Download Results`}
+                disabled={winners.value.length === 0}
+                onClick$={downloadWinners}
               >
-                <LuMinimize class="w-5 h-5" />
+                <LuDownload class="w-5 h-5" />
               </button>
               <button 
                 class="action-button fullscreen-action"
@@ -585,15 +601,13 @@ export default component$(() => {
               >
                 <LuSettings class="w-5 h-5" />
               </button>
-              {winners.value.length > 0 && (
-                <button 
-                  class="action-button fullscreen-action"
-                  title={_`Download Results`}
-                  onClick$={downloadWinners}
-                >
-                  <LuDownload class="w-5 h-5" />
-                </button>
-              )}
+              <button 
+                class="action-button fullscreen-action" 
+                title={_`Exit Fullscreen`}
+                onClick$={toggleFullscreen}
+              >
+                <LuMinimize class="w-5 h-5" />
+              </button>
             </div>
           )}
           <div class="wheel-main">
