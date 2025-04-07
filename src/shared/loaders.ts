@@ -41,24 +41,24 @@ export interface RaffleData {
 
 export const useServerSession = routeLoader$(async (e) => {
     const session = e.sharedMap.get("session") as Session | null;
-  
+
     let user = (await getUser(session)) || [];
     if (user.length === 0 && session) {
-      await createUser(session);
-      user = (await getUser(session)) || [];
+        await createUser(session);
+        user = (await getUser(session)) || [];
     }
-  
+
     return {
-      user,
-      session,
-      isPremium: false
+        user,
+        session,
+        isPremium: false
     };
-  });
+});
 
 export const useGetRaffle = routeLoader$(async (requestEvent) => {
     const raffleUuid = requestEvent.params["uuid"];
     const db = Drizzler();
-    
+
     // Primero obtenemos el sorteo
     const raffle = await db.query.raffles.findFirst({
         where: (raffles, { eq }) => eq(raffles.uuid, raffleUuid),
@@ -86,21 +86,21 @@ export const useGetRaffle = routeLoader$(async (requestEvent) => {
 export const useGetRaffleNumbers = routeLoader$(async (requestEvent) => {
     const raffleUuid = requestEvent.params["uuid"];
     const db = Drizzler();
-    
+
     // Primero obtenemos el ID del raffle usando el UUID
     const raffle = await db.query.raffles.findFirst({
         where: (raffles, { eq }) => eq(raffles.uuid, raffleUuid),
         columns: { id: true }
     });
-    
+
     if (!raffle) {
         return [];
     }
-    
+
     // Ahora consultamos los números asociados a ese raffle
     const numbers = await db.query.raffleNumbers.findMany({
         where: (raffleNumbers, { eq }) => eq(raffleNumbers.raffleId, raffle.id),
     });
-    
+
     return numbers as RaffleNumber[];
 });

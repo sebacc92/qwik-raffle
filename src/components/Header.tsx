@@ -37,9 +37,9 @@ export default component$(() => {
                         </Dropdown.Trigger>
                         <Dropdown.Popover gutter={8}>
                             <Dropdown.Item class="px-4 py-2 whitespace-nowrap">
-                                <Link href="/profile" class="flex items-center gap-2 w-full flex-nowrap">
+                                <Link href="/users/me" class="flex items-center gap-2 w-full flex-nowrap">
                                     <LuUser class="h-4 w-4" />
-                                    <span>{_`My Profile`}</span>
+                                    <span>{_`My Raffles`}</span>
                                 </Link>
                             </Dropdown.Item>
                             <Dropdown.Separator />

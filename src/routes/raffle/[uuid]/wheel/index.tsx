@@ -1,7 +1,7 @@
 import { component$, useSignal, useStylesScoped$, useVisibleTask$, $ } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
 import { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
-import { LuVolume2, LuVolumeX, LuTrophy, LuChevronLeft, LuSettings, LuDownload, LuX, LuLoader2, LuMaximize, LuMinimize } from "@qwikest/icons/lucide";
+import { LuVolume2, LuVolumeX, LuTrophy, LuChevronLeft, LuSettings, LuDownload, LuLoader2, LuMaximize, LuMinimize } from "@qwikest/icons/lucide";
 import type { Ticket } from "~/routes/raffle/[uuid]/index";
 import styles from "./wheel.css?inline";
 import WinnerDisplay from "~/components/modals/WinnerDisplay";
@@ -505,7 +505,7 @@ export default component$(() => {
     );
   }
 
-  const prizeCount = raffle.value.prizes?.length || 0;
+  const prizeCount = raffle.value.prizes.length;
 
   return (
     <div class={`wheel-page ${isFullscreen.value ? 'fullscreen-mode' : ''}`}>
