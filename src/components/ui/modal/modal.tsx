@@ -1,7 +1,7 @@
 import { type PropsOf, Slot, component$ } from "@builder.io/qwik";
 import { Modal as HeadlessModal } from "@qwik-ui/headless";
-import { cn } from "@qwik-ui/utils";
 import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@qwik-ui/utils";
 
 const Root = HeadlessModal.Root;
 
@@ -11,7 +11,7 @@ const Close = HeadlessModal.Close;
 
 export const panelVariants = cva(
   [
-    "fixed w-full bg-background p-6 text-foreground transition-all backdrop:brightness-50 backdrop:backdrop-blur-sm",
+    "fixed w-full bg-background p-6 text-foreground transition-all",
     "data-[closing]:duration-300 data-[open]:duration-300 data-[open]:animate-in data-[closing]:animate-out",
     "backdrop:data-[closing]:duration-300 backdrop:data-[open]:duration-300 backdrop:data-[open]:animate-in backdrop:data-[closing]:animate-out backdrop:data-[closing]:fade-out backdrop:data-[open]:fade-in",
   ],
@@ -27,9 +27,14 @@ export const panelVariants = cva(
         right:
           "inset-y-0 right-0 mr-0 h-full max-w-sm rounded-l-base border-l data-[closing]:slide-out-to-right data-[open]:slide-in-from-right",
       },
+      transparent: {
+        true: "",
+        false: "backdrop:brightness-50 backdrop:backdrop-blur-sm",
+      },
     },
     defaultVariants: {
       position: "center",
+      transparent: false,
     },
   },
 );
@@ -37,11 +42,11 @@ export const panelVariants = cva(
 type PanelProps = PropsOf<typeof HeadlessModal.Panel> &
   VariantProps<typeof panelVariants>;
 
-const Panel = component$<PanelProps>(({ position, ...props }) => {
+const Panel = component$<PanelProps>(({ position, transparent, ...props }) => {
   return (
     <HeadlessModal.Panel
       {...props}
-      class={cn(panelVariants({ position }), props.class)}
+      class={cn(panelVariants({ position, transparent }), props.class)}
     >
       <Slot />
     </HeadlessModal.Panel>

@@ -1,4 +1,4 @@
-import { type QRL, type Signal, Slot, component$, useSignal, useStylesScoped$ } from '@builder.io/qwik';
+import { type QRL, type Signal, Slot, component$, useStylesScoped$ } from '@builder.io/qwik';
 import { LuX } from '@qwikest/icons/lucide';
 import { cn } from '@qwik-ui/utils';
 import { Button, Modal, buttonVariants } from '~/components/ui';
@@ -52,7 +52,7 @@ export default component$<SheetProps>(({
             <Modal.Trigger class={[buttonVariants({ look: 'ghost' }), 'w-20']}>
                 <Slot />
             </Modal.Trigger>
-            <Modal.Panel position={position}>
+            <Modal.Panel position={position} transparent={true}>
                 <Modal.Title>{_`Wheel Settings`}</Modal.Title>
                 <Modal.Description>
                     {_("Here you can customize the appearance of the wheel")}
@@ -174,8 +174,8 @@ export default component$<SheetProps>(({
                     </div>
                 </div>
                 <footer class="mt-6">
-                    <Button look="primary" onClick$={() => (show.value = false)}>
-                        Save
+                    <Button look="primary" onClick$={() => (showSettings.value = false)}>
+                        {_`Save`}
                     </Button>
                 </footer>
                 <Modal.Close
