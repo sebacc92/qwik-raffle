@@ -1,7 +1,7 @@
 import { component$, useSignal } from '@builder.io/qwik';
 import { useSignIn } from '~/routes/plugin@auth';
-import ImgGoogleLogo from '~/icons/google-logo.svg?jsx';
-import ImgGithub from '~/icons/github.svg?jsx';
+import ImgGoogleLogo from '~/media/icons/google-logo.svg?jsx';
+import ImgGithub from '~/media/icons/github.svg?jsx';
 import { LuLoader2 } from '@qwikest/icons/lucide';
 
 export default component$(() => {

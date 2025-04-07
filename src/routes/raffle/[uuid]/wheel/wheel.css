@@ -80,23 +80,8 @@ body.wheel-fullscreen-mode {
 /* Estilos para el pin indicador */
 .wheel-pin-indicator {
   position: absolute;
-  top: -25px; /* Ajustado para que aparezca en el borde superior */
+  top: -30px; /* Ajustado para que aparezca en el borde superior */
   z-index: 10;
-}
-
-.wheel-pin-indicator img {
-  width: 40px;
-  height: 56px;
-  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.4));
-}
-
-.wheel-page.fullscreen-mode .wheel-pin-indicator {
-  top: -35px;
-}
-
-.wheel-page.fullscreen-mode .wheel-pin-indicator img {
-  width: 50px;
-  height: 70px;
 }
 
 .wheel-page.fullscreen-mode .wheel-main {

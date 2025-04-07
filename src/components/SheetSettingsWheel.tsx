@@ -18,6 +18,7 @@ export interface SheetProps {
     wheelSpeed: Signal<number>;
     showBuyerNames: Signal<boolean>;
     showTicketNumbers: Signal<boolean>;
+    showSettings: Signal<boolean>;
 }
 
 export default component$<SheetProps>(({
@@ -32,7 +33,8 @@ export default component$<SheetProps>(({
     pointerColor,
     wheelSpeed,
     showBuyerNames,
-    showTicketNumbers
+    showTicketNumbers,
+    showSettings
 }) => {
     // Color schemes
     const colorSchemes = {
@@ -44,10 +46,9 @@ export default component$<SheetProps>(({
         ocean: ["#CFFAFE", "#A5F3FC", "#67E8F9", "#22D3EE", "#06B6D4", "#0891B2"]
     };
     useStylesScoped$(styles);
-    const show = useSignal(false);
 
     return (
-        <Modal.Root bind:show={show}>
+        <Modal.Root bind:show={showSettings}>
             <Modal.Trigger class={[buttonVariants({ look: 'ghost' }), 'w-20']}>
                 <Slot />
             </Modal.Trigger>

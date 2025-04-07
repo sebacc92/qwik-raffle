@@ -4,10 +4,11 @@ import { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 import { LuVolume2, LuVolumeX, LuTrophy, LuChevronLeft, LuSettings, LuDownload, LuX, LuLoader2, LuMaximize, LuMinimize } from "@qwikest/icons/lucide";
 import type { Ticket } from "~/routes/raffle/[uuid]/index";
 import styles from "./wheel.css?inline";
-import { toast } from "qwik-sonner";
-import { _ } from "compiled-i18n";
 import WinnerDisplay from "~/components/modals/WinnerDisplay";
 import SheetSettingsWheel from "~/components/SheetSettingsWheel";
+import ImgPinIcon from '~/media/icons/pin-icon.svg?jsx';
+import { toast } from "qwik-sonner";
+import { _ } from "compiled-i18n";
 
 export { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 
@@ -35,7 +36,7 @@ export default component$(() => {
   const winners = useSignal<Array<{ ticket: Ticket; prizeIndex: number }>>([]);
   const eligibleTickets = useSignal<Ticket[]>([]);
   const segments = useSignal<WheelSegment[]>([]);
-  const canvasSize = useSignal(600); // Default size, will be updated in browser
+  const canvasSize = useSignal(600);
   const showBuyerNames = useSignal(true);
   const enableSound = useSignal(true);
   const selectedColorScheme = useSignal<"rainbow" | "purple" | "blue" | "green" | "sunset" | "ocean">("purple");
@@ -43,8 +44,8 @@ export default component$(() => {
   const winnerDisplayed = useSignal<Ticket | null>(null);
   const confettiActivated = useSignal(false);
   const showSettings = useSignal(false);
-  const wheelSpeed = useSignal(5); // 1-10 speed scale
-  const textColor = useSignal("#4B5563"); // Default text color
+  const wheelSpeed = useSignal(5);
+  const textColor = useSignal("#4B5563");
   const fontStyle = useSignal<"default" | "bold" | "retro" | "elegant">("default");
   const confettiColors = useSignal<string[]>(["#7C3AED", "#A855F7", "#D8B4FE", "#F3E8FF", "#EDE9FE"]);
   const wheelBorderColor = useSignal("#FFFFFF");
@@ -533,9 +534,8 @@ export default component$(() => {
                 wheelSpeed={wheelSpeed}
                 showBuyerNames={showBuyerNames}
                 showTicketNumbers={showTicketNumbers}
-              >
-                Right
-              </SheetSettingsWheel>
+                showSettings={showSettings}
+              />
               <button 
                 class="action-button"
                 title={_`Download Results`}
@@ -556,18 +556,18 @@ export default component$(() => {
                 )}
               </button>
               <button 
-                class="action-button"
-                title={_`Settings`}
-                onClick$={() => showSettings.value = true}
-              >
-                <LuSettings class="w-5 h-5" />
-              </button>
-              <button 
                 class="action-button" 
                 title={_`Fullscreen`}
                 onClick$={toggleFullscreen}
               >
                 <LuMaximize class="w-5 h-5" />
+              </button>
+              <button 
+                class="action-button"
+                title={_`Settings`}
+                onClick$={() => showSettings.value = true}
+              >
+                <LuSettings class="w-5 h-5" />
               </button>
             </div>
           </div>
@@ -595,18 +595,18 @@ export default component$(() => {
                 )}
               </button>
               <button 
-                class="action-button fullscreen-action"
-                title={_`Settings`}
-                onClick$={() => showSettings.value = true}
-              >
-                <LuSettings class="w-5 h-5" />
-              </button>
-              <button 
                 class="action-button fullscreen-action" 
                 title={_`Exit Fullscreen`}
                 onClick$={toggleFullscreen}
               >
                 <LuMinimize class="w-5 h-5" />
+              </button>
+              <button 
+                class="action-button fullscreen-action"
+                title={_`Settings`}
+                onClick$={() => showSettings.value = true}
+              >
+                <LuSettings class="w-5 h-5" />
               </button>
             </div>
           )}
@@ -650,7 +650,7 @@ export default component$(() => {
             <div class="wheel-canvas-container">
               {/* Pin indicator above the wheel */}
               <div class="wheel-pin-indicator">
-                <img src="/icons/pin-icon.svg" alt="Pin indicator" />
+                <ImgPinIcon style={{ height: '65px', width: '80px' }} />
               </div>
               
               <canvas 
@@ -660,142 +660,6 @@ export default component$(() => {
               ></canvas>
             </div>
           </div>
-
-          {showSettings.value && (
-            <div class="settings-panel">
-              <div class="settings-header">
-                <h3>{_`Wheel Settings`}</h3>
-                <button onClick$={() => showSettings.value = false} class="close-settings">
-                  <LuX class="w-4 h-4" />
-                </button>
-              </div>
-              
-              <div class="settings-content">
-                <div class="settings-section">
-                  <h4>{_`Appearance`}</h4>
-                  
-                  <div class="setting-group">
-                    <label>{_`Color Scheme`}</label>
-                    <div class="color-schemes">
-                      {Object.keys(colorSchemes).map((scheme) => (
-                        <button
-                          key={scheme}
-                          onClick$={() => {
-                            selectedColorScheme.value = scheme as any;
-                            createSegments();
-                          }}
-                          class={`color-scheme-btn ${scheme} ${selectedColorScheme.value === scheme ? 'selected' : ''}`}
-                          title={scheme}
-                        ></button>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div class="setting-group">
-                    <label for="wheel-size">{_`Wheel Size: ${canvasSize.value}px`}</label>
-                    <input
-                      id="wheel-size"
-                      type="range"
-                      min="300"
-                      max="800"
-                      step="50"
-                      value={canvasSize.value}
-                      onChange$={(e: any) => canvasSize.value = parseInt(e.target.value)}
-                    />
-                  </div>
-                  
-                  <div class="setting-group">
-                    <label>{_`Font Style`}</label>
-                    <select
-                      value={fontStyle.value}
-                      onChange$={(e: any) => fontStyle.value = e.target.value}
-                    >
-                      <option value="default">{_`Default`}</option>
-                      <option value="bold">{_`Bold`}</option>
-                      <option value="retro">{_`Retro`}</option>
-                      <option value="elegant">{_`Elegant`}</option>
-                    </select>
-                  </div>
-                  
-                  <div class="setting-group">
-                    <label>{_`Text Color`}</label>
-                    <input
-                      type="color"
-                      value={textColor.value}
-                      onChange$={(e: any) => textColor.value = e.target.value}
-                    />
-                  </div>
-                  
-                  <div class="setting-group">
-                    <label>{_`Wheel Border Color`}</label>
-                    <input
-                      type="color"
-                      value={wheelBorderColor.value}
-                      onChange$={(e: any) => wheelBorderColor.value = e.target.value}
-                    />
-                  </div>
-                  
-                  <div class="setting-group">
-                    <label>{_`Wheel Border Width: ${wheelBorderWidth.value}px`}</label>
-                    <input
-                      type="range"
-                      min="0"
-                      max="10"
-                      value={wheelBorderWidth.value}
-                      onChange$={(e: any) => wheelBorderWidth.value = parseInt(e.target.value)}
-                    />
-                  </div>
-                  
-                  <div class="setting-group">
-                    <label>{_`Pointer Color`}</label>
-                    <input
-                      type="color"
-                      value={pointerColor.value}
-                      onChange$={(e: any) => pointerColor.value = e.target.value}
-                    />
-                  </div>
-                </div>
-                
-                <div class="settings-section">
-                  <h4>{_`Behavior`}</h4>
-                  
-                  <div class="setting-group">
-                    <label for="wheel-speed">{_`Wheel Speed: ${wheelSpeed.value}`}</label>
-                    <input
-                      id="wheel-speed"
-                      type="range"
-                      min="1"
-                      max="10"
-                      value={wheelSpeed.value}
-                      onChange$={(e: any) => wheelSpeed.value = parseInt(e.target.value)}
-                    />
-                  </div>
-                  
-                  <div class="setting-group">
-                    <label class="checkbox-label">
-                      <input
-                        type="checkbox"
-                        checked={showBuyerNames.value}
-                        onChange$={() => showBuyerNames.value = !showBuyerNames.value}
-                      />
-                      {_`Show buyer names`}
-                    </label>
-                  </div>
-                  
-                  <div class="setting-group">
-                    <label class="checkbox-label">
-                      <input
-                        type="checkbox"
-                        checked={showTicketNumbers.value}
-                        onChange$={() => showTicketNumbers.value = !showTicketNumbers.value}
-                      />
-                      {_`Show ticket numbers`}
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         {winnerDisplayed.value && (
