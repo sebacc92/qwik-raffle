@@ -35,6 +35,7 @@ export const useUserRaffles = routeLoader$(async (requestEvent) => {
     }
 
     const now = new Date();
+    now.setHours(0, 0, 0, 0); // Establecer a las 00:00:00 del día actual
 
     // Obtener todas las rifas del usuario
     const raffles = await db
@@ -44,8 +45,19 @@ export const useUserRaffles = routeLoader$(async (requestEvent) => {
         .execute();
     
     // Separar rifas activas de cerradas
-    const active = raffles.filter(raffle => new Date(raffle.expiresAt) > now && !raffle.isTemporary);
-    const closed = raffles.filter(raffle => new Date(raffle.expiresAt) <= now || raffle.isTemporary);
+    // Consideramos una rifa como activa incluso si su fecha de expiración es hoy
+    // Esto soluciona el problema de rifas nuevas apareciendo como finalizadas
+    const active = raffles.filter(raffle => {
+        const expiresDate = new Date(raffle.expiresAt);
+        expiresDate.setHours(0, 0, 0, 0); // Normalizar a 00:00:00 del día de expiración
+        return expiresDate >= now && !raffle.isTemporary;
+    });
+    
+    const closed = raffles.filter(raffle => {
+        const expiresDate = new Date(raffle.expiresAt);
+        expiresDate.setHours(0, 0, 0, 0); // Normalizar a 00:00:00 del día de expiración
+        return expiresDate < now || raffle.isTemporary;
+    });
 
     return {
         active,
