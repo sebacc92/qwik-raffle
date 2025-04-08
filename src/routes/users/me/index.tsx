@@ -5,9 +5,9 @@ import { LuCalendar, LuChevronRight, LuCrown, LuPlusCircle, LuTicket, LuUser } f
 import Drizzler from "../../../../drizzle";
 import { schema } from "../../../../drizzle/schema";
 import { eq } from "drizzle-orm";
-import { _ } from "compiled-i18n";
 import styles from './profile.css?inline';
 import { Link } from "@builder.io/qwik-city";
+import { _ } from "compiled-i18n";
 
 // Loader to get all raffles of the current user
 export const useUserRaffles = routeLoader$(async (requestEvent) => {
