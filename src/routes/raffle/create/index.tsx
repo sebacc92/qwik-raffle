@@ -7,7 +7,7 @@ import { _ } from "compiled-i18n";
 import GuestRaffleForm from "~/components/forms/GuestRaffleForm";
 import BasicRaffleForm from "~/components/forms/BasicRaffleForm";
 import PremiumRaffleForm from "~/components/forms/PremiumRaffleForm";
-import { LuInfo } from "@qwikest/icons/lucide";
+import { LuInfo, LuAlertTriangle } from "@qwikest/icons/lucide";
 
 export { useFormRaffleLoader } from "~/shared/forms/loaders";
 export { useFormRaffleAction } from "~/shared/forms/actions";
@@ -36,6 +36,38 @@ export const BasicInfoAlert = () => (
     </ul>
   </div>
 );
+
+export const ActiveRaffleAlert = component$(() => {
+  return (
+    <div class="w-full mb-4 lg:mb-0 p-4 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 rounded-lg">
+      <div class="flex items-start">
+        <div class="flex-shrink-0 mt-0.5">
+          <LuAlertTriangle class="w-5 h-5 text-amber-500 dark:text-amber-400" />
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-amber-800 dark:text-amber-300">{_`You have an active raffle`}</h3>
+          <div class="mt-2 text-sm text-amber-700 dark:text-amber-400">
+            <p>{_`As a free user, you can only have one active raffle at a time.`}</p>
+            <p class="mt-1">{_`To create a new raffle, you can either:`}</p>
+            <ul class="mt-2 list-disc pl-5 space-y-1">
+              <li>{_`Wait for your current raffle to expire`}</li>
+              <li>{_`Manually end your current active raffle`}</li>
+              <li><strong>{_`Upgrade to Premium`}</strong> {_`for unlimited raffles`}</li>
+            </ul>
+          </div>
+          <div class="mt-4 flex gap-3">
+            <a href="/users/me" class="inline-flex items-center px-4 py-2 border border-amber-300 dark:border-amber-700 text-sm font-medium rounded-md text-amber-800 dark:text-amber-300 bg-transparent hover:bg-amber-100 dark:hover:bg-amber-800/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+              {_`View My Raffles`}
+            </a>
+            <a href="/app/premium" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+              {_`Upgrade to Premium`}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+});
 
 export const InfoAlert = component$(() => {
   return (
@@ -76,21 +108,39 @@ export default component$(() => {
             <InfoAlert />
           ) : session.value.isPremium === true ? (
             <PremiumInfoAlert />
+          ) : session.value.hasActiveRaffle ? (
+            <ActiveRaffleAlert />
           ) : (
             <BasicInfoAlert />
           )}
         </div>
         
         <Card.Root class="w-full max-w-[550px] mx-auto lg:mx-0 animate-fadeIn">
-          <Card.Header>
-            <Card.Title>{_`Create New Raffle`}</Card.Title>
-            <Card.Description>{_`Enter the information for your raffle`}</Card.Description>
-          </Card.Header>
+          {!session.value.hasActiveRaffle && (
+            <Card.Header>
+              <Card.Title>{_`Create New Raffle`}</Card.Title>
+              <Card.Description>{_`Enter the information for your raffle`}</Card.Description>
+            </Card.Header>
+)}
           <Card.Content>
             {!session.value.session ? (
               <GuestRaffleForm />
             ) : session.value.isPremium === true ? (
               <PremiumRaffleForm />
+            ) : session.value.hasActiveRaffle ? (
+              <div class="py-6 text-center">
+                <LuAlertTriangle class="w-12 h-12 mx-auto text-amber-500" />
+                <h3 class="mt-4 text-lg font-medium text-gray-900 dark:text-gray-100">{_`Unable to create a new raffle`}</h3>
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">{_`You already have an active raffle. Free users can only have one active raffle at a time.`}</p>
+                <div class="mt-6 flex justify-center gap-3">
+                  <a href="/users/me" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                    {_`Manage Raffles`}
+                  </a>
+                  <a href="/app/premium" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                    {_`Upgrade to Premium`}
+                  </a>
+                </div>
+              </div>
             ) : (
               <BasicRaffleForm />
             )}

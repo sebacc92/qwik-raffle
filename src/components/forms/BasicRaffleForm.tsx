@@ -20,6 +20,7 @@ export default component$(() => {
     })
 
     const isPubic = useSignal<boolean>(false);
+    const showEndDate = useSignal<boolean>(false);
 
     useTask$(({ track }) => {
         track(() => raffleForm.response.status)
@@ -218,25 +219,65 @@ export default component$(() => {
                 </FieldArray>
             </div>
 
-            <div>
-                <CustomToggle
-                    label={_`Public raffle`}
-                    checked={isPubic.value}
-                    onChange$={$((checked) => {
-                        isPubic.value = checked;
-                        setValue(raffleForm, 'isPublic', checked);
-                    })}
-                />
-                <Field name="isPublic" type="boolean">
-                    {(field, props) => (
-                        <input type="hidden" {...props} value={field.value ? 'true' : 'false'} />
-                    )}
-                </Field>
-                <p class="mt-2 text-sm text-muted-foreground">
-                    {raffleForm.internal.fields.isPublic?.value
-                        ? _`Any registered user can request numbers.`
-                        : _`Accessible only via direct link.`}
-                </p>
+            <div class="space-y-4">
+                <h2 class="font-medium text-foreground">{_`Additional Settings`}</h2>
+                <div>
+                    <CustomToggle
+                        label={_`Set end date`}
+                        checked={showEndDate.value}
+                        onChange$={$((checked) => {
+                            showEndDate.value = checked;
+                        })}
+                    />
+                    <Field name="ends_at">
+                        {(field, props) =>
+                            showEndDate.value && (
+                                <>
+                                    <Label for="ends_at" class="flex items-center">
+                                        <span class="inline-block mr-2 text-primary font-bold">#</span>
+                                        {_`End date`}
+                                    </Label>
+                                    <Input
+                                        {...props}
+                                        type="date"
+                                        value={field.value}
+                                    />
+                                    {field.error && (
+                                        <div class="text-alert text-sm flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                            </svg>
+                                            {field.error}
+                                        </div>
+                                    )}
+                                </>
+                            )
+                        }
+                    </Field>
+                    <p class="mt-2 text-sm text-muted-foreground">
+                        {_`Specify the date when the poll will end. Participants won't be able to vote after this date.`}
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <CustomToggle
+                        label={_`Public raffle`}
+                        checked={isPubic.value}
+                        onChange$={$((checked) => {
+                            isPubic.value = checked;
+                            setValue(raffleForm, 'isPublic', checked);
+                        })}
+                    />
+                    <Field name="isPublic" type="boolean">
+                        {(field, props) => (
+                            <input type="hidden" {...props} value={field.value ? 'true' : 'false'} />
+                        )}
+                    </Field>
+                    <p class="mt-2 text-sm text-muted-foreground">
+                        {raffleForm.internal.fields.isPublic?.value
+                            ? _`Any registered user can request numbers.`
+                            : _`Accessible only via direct link.`}
+                    </p>
+                </div>
             </div>
 
             <div class="pt-2">

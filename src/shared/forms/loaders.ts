@@ -15,6 +15,7 @@ export const useFormRaffleLoader = routeLoader$<InitialValues<RaffleForm>>(() =>
                 description: ''
             }
         ],
+        ends_at: '',
         isPublic: false,
     }
 })

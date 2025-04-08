@@ -1,7 +1,7 @@
 import { routeLoader$ } from "@builder.io/qwik-city";
 import Drizzler from "../../drizzle";
 import type { Session } from "~/types/session";
-import { createUser, getUser } from "~/server";
+import { createUser, getUser, getUserActiveRaffles } from "~/server";
 
 // Tipo para los números del sorteo
 export interface RaffleNumber {
@@ -48,10 +48,22 @@ export const useServerSession = routeLoader$(async (e) => {
         user = (await getUser(session)) || [];
     }
 
+    // Determine if the user has premium (this is just a placeholder, implement actual premium logic)
+    const isPremium = session && user.length > 0 ? user[0].isPremium === true : false;
+    
+    // For free users, check if they have any active raffles
+    let hasActiveRaffle = false;
+    
+    if (session && user.length > 0 && !isPremium) {
+        const activeRaffles = await getUserActiveRaffles(user[0].id);
+        hasActiveRaffle = activeRaffles.length > 0;
+    }
+
     return {
         user,
         session,
-        isPremium: false
+        isPremium,
+        hasActiveRaffle
     };
 });
 

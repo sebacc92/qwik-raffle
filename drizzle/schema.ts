@@ -5,6 +5,7 @@ export const users = sqliteTable("users", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   name: text("name").default("not_provided"),
   email: text("email").notNull(),
+  isPremium: integer({ mode: 'boolean' }).default(false),
 });
 
 export const raffles = sqliteTable("raffles", {

@@ -25,6 +25,7 @@ export const RaffleSchema = v.object({
         v.string("Description must be a string"),
         v.maxLength(500, "Description must be at most 500 characters")
     )),
+    ends_at: v.string(),
     numberCount: v.pipe(
         v.number("Number count must be a number"),
         v.minValue(MIN_VALUE, `Number count must be at least ${MIN_VALUE}`),
