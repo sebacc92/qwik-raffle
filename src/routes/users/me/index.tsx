@@ -48,12 +48,14 @@ export const useUserRaffles = routeLoader$(async (requestEvent) => {
     // We consider a raffle as active even if its expiration date is today
     // This solves the problem of new raffles appearing as finished
     const active = raffles.filter(raffle => {
+        if (!raffle.expiresAt) return false; // Handle null case
         const expiresDate = new Date(raffle.expiresAt);
         expiresDate.setHours(0, 0, 0, 0); // Normalize to 00:00:00 of the expiration day
         return expiresDate >= now && !raffle.isTemporary;
     });
     
     const closed = raffles.filter(raffle => {
+        if (!raffle.expiresAt) return true; // If no expiration date, consider it closed
         const expiresDate = new Date(raffle.expiresAt);
         expiresDate.setHours(0, 0, 0, 0); // Normalize to 00:00:00 of the expiration day
         return expiresDate < now || raffle.isTemporary;
@@ -201,7 +203,7 @@ export default component$(() => {
                                                         </div>
                                                     </div>
                                                     <div class="mt-2 text-sm text-gray-500">
-                                                        <span>{_`Vence`}: {new Date(raffle.expiresAt).toLocaleDateString()}</span>
+                                                        <span>{_`Vence`}: {raffle.expiresAt ? new Date(raffle.expiresAt).toLocaleDateString() : '-'}</span>
                                                     </div>
                                                 </div>
                                                 <LuChevronRight class="w-5 h-5 text-gray-400" />
@@ -240,7 +242,7 @@ export default component$(() => {
                                                         </div>
                                                     </div>
                                                     <div class="mt-2 text-sm text-gray-500">
-                                                        <span>{_`Finalizada el`}: {new Date(raffle.expiresAt).toLocaleDateString()}</span>
+                                                        <span>{_`Finalizada el`}: {raffle.expiresAt ? new Date(raffle.expiresAt).toLocaleDateString() : '-'}</span>
                                                     </div>
                                                 </div>
                                                 <LuChevronRight class="w-5 h-5 text-gray-400" />
