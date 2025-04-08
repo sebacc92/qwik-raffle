@@ -30,7 +30,7 @@ export default component$(() => {
                   </p>
                   <div class="flex flex-col sm:flex-row gap-4">
                     <Link
-                      href="/create"
+                      href="/raffle/create"
                       class="inline-flex h-12 items-center justify-center rounded-base bg-primary px-8 text-base font-medium text-white shadow-md transition-all hover:bg-primary-hover hover:shadow-lg press"
                     >
                       {_`Create a Raffle Now`}
@@ -193,7 +193,7 @@ export default component$(() => {
                   </div>
                   <div class="mt-auto p-6 pt-0">
                     <Link
-                      href="/create"
+                      href="/raffle/create"
                       class="inline-flex h-10 w-full items-center justify-center rounded-base border border-primary bg-card px-8 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary/10 hover:text-primary press"
                     >
                       {_`Get Started`}
@@ -485,7 +485,7 @@ export default component$(() => {
                 </div>
                 <div class="mx-auto flex flex-col items-center justify-center sm:flex-row gap-4 max-w-md w-full">
                   <Link
-                    href="/create"
+                    href="/raffle/create"
                     class="inline-flex h-12 items-center justify-center rounded-base bg-white px-8 text-base font-medium text-primary shadow-lg transition-all hover:bg-white/90 hover:shadow-xl press"
                   >
                     {_`Create a Free Raffle`}

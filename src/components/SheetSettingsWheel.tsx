@@ -55,7 +55,7 @@ export default component$<SheetProps>(({
             <Modal.Panel position={position} transparent={true}>
                 <Modal.Title>{_`Wheel Settings`}</Modal.Title>
                 <Modal.Description>
-                    {_("Here you can customize the appearance of the wheel")}
+                    {_`Here you can customize the appearance of the wheel`}
                 </Modal.Description>
                 <div class="settings-content">
                     <div class="settings-section">

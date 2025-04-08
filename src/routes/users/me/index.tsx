@@ -154,10 +154,12 @@ export default component$(() => {
                     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
                         <div class="flex justify-between items-center mb-4">
                             <h2 class="text-xl font-bold">{_`Mis Rifas Activas`}</h2>
-                            <Link href="/raffle/create" class="text-sm text-purple-600 hover:text-purple-800 flex items-center gap-1">
-                                <LuPlusCircle class="w-4 h-4" />
-                                {_`Crear nueva rifa`}
-                            </Link>
+                            {userRaffles.value.active.length > 0 && (
+                                <Link href="/raffle/create" class="text-sm text-purple-600 hover:text-purple-800 flex items-center gap-1">
+                                    <LuPlusCircle class="w-4 h-4" />
+                                    {_`Crear nueva rifa`}
+                                </Link>
+                            )}
                         </div>
 
                         {userRaffles.value.active.length === 0 ? (
