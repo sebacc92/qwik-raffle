@@ -15,15 +15,43 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
         const userData = await getUser(session);
         const userId = userData?.[0]?.id;
         
-        const { prizes, ...raffleData } = values;
-        const payload = {
-            ...raffleData,
+        // Destructure prizes and expiresAt from values to handle them separately
+        const { prizes, expiresAt: formExpiresAt, ...otherRaffleData } = values;
+        
+        // Create payload with DB-compatible types
+        const payload: {
+            name: string;
+            description?: string;
+            numberCount: number;
+            pricePerNumber: number;
+            isPublic: boolean;
+            expiresAt: Date | null;
+            uuid: string;
+            creatorId: number | null;
+        } = {
+            ...otherRaffleData,
+            expiresAt: null,
             uuid: v4(),
             creatorId: userId || null
         };
         
+        // Process expiresAt string to Date if it exists and is valid
+        if (formExpiresAt && formExpiresAt.trim() !== '') {
+            try {
+                const date = new Date(formExpiresAt);
+                // Check if valid date
+                if (!isNaN(date.getTime())) {
+                    payload.expiresAt = date;
+                }
+            } catch (error) {
+                console.error("Error parsing expiresAt date:", error);
+                // Keep expiresAt as null if invalid
+            }
+        }
+        
         const db = Drizzler();
         try {
+            console.log("Creating raffle with payload:", payload);
             // Create the raffle
             const raffles = await db.insert(schema.raffles).values(payload).returning({ 
                 raffleId: schema.raffles.id,

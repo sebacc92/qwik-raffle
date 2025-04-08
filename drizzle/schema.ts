@@ -21,7 +21,7 @@ export const raffles = sqliteTable("raffles", {
   updatedAt: integer("updatedAt", { mode: "timestamp" })
     .default(new Date())
     .$onUpdateFn(() => new Date()),
-  expiresAt: integer("expiresAt", { mode: "timestamp"}).notNull().default(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)), // 30 days from now
+  expiresAt: integer("expiresAt", { mode: "timestamp"}), 
   isTemporary: integer({ mode: 'boolean' }).default(false),
 });
 

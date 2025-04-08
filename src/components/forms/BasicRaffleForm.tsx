@@ -21,19 +21,31 @@ export default component$(() => {
 
     const isPubic = useSignal<boolean>(false);
     const showEndDate = useSignal<boolean>(false);
+    const isSubmitting = useSignal(false);
+
+    useTask$(() => {
+        if (!raffleForm.internal.fields.expiresAt?.value) {
+            setValue(raffleForm, 'expiresAt', '');
+        }
+    });
 
     useTask$(({ track }) => {
         track(() => raffleForm.response.status)
+        
         if (raffleForm.response.status === 'success') {
+            isSubmitting.value = false;
             const url = raffleForm.response.data?.data?.share_link
             if (url) {
                 toast.success("Raffle created successfully");
                 nav(url)
             }
+        } else if (raffleForm.response.status === 'error') {
+            isSubmitting.value = false;
         }
     })
 
     const handleSubmit = $((values: RaffleForm) => {
+        isSubmitting.value = true;
         console.log('values', values)
     })
 
@@ -51,8 +63,8 @@ export default component$(() => {
                             id="raffle-name"
                             type="text"
                             maxLength={100}
-                            value={field.value}
-                            placeholder={_`Enter a descriptive name`}
+                            value={field.value || ''}
+                            placeholder={_`Enter a descriptive name for your raffle`}
                             class="transition-all duration-200 focus:border-primary hover:border-gray-400 dark:hover:border-gray-600"
                         />
                         {field.error && <div class="text-alert text-sm flex items-center">
@@ -76,8 +88,8 @@ export default component$(() => {
                             {...props}
                             id="raffle-description"
                             maxLength={500}
-                            value={field.value}
-                            placeholder={_`Add a description or note for your raffle`}
+                            value={field.value || ''}
+                            placeholder={_`Add a description or additional details about your raffle`}
                             class="w-full px-3 py-2 border rounded-md transition-all duration-200 focus:border-primary hover:border-gray-400 dark:hover:border-gray-600 dark:bg-gray-800"
                         />
                         {field.error && <div class="text-alert text-sm flex items-center">
@@ -106,7 +118,8 @@ export default component$(() => {
                                 type="number"
                                 min={2}
                                 max={1000}
-                                value={field.value}
+                                value={field.value || ''}
+                                placeholder={_`How many numbers/tickets will be available`}
                                 class="transition-all duration-200 focus:border-primary hover:border-gray-400 dark:hover:border-gray-600"
                             />
                             {field.error && <div class="text-alert text-sm flex items-center">
@@ -133,7 +146,8 @@ export default component$(() => {
                                 min={0.01}
                                 max={10000}
                                 step="0.01"
-                                value={field.value}
+                                value={field.value || ''}
+                                placeholder={_`Set the price for each number/ticket`}
                                 class="transition-all duration-200 focus:border-primary hover:border-gray-400 dark:hover:border-gray-600"
                             />
                             {field.error && <div class="text-alert text-sm flex items-center">
@@ -170,7 +184,7 @@ export default component$(() => {
                                                         {...props}
                                                         id={`prize-${index}`}
                                                         type="text"
-                                                        value={field.value}
+                                                        value={field.value || ''}
                                                         placeholder={_`Enter prize ${index + 1} name`}
                                                         class="transition-all duration-200 focus:border-primary hover:border-gray-400 dark:hover:border-gray-600"
                                                     />
@@ -227,35 +241,45 @@ export default component$(() => {
                         checked={showEndDate.value}
                         onChange$={$((checked) => {
                             showEndDate.value = checked;
+                            // Clear date when toggle is off
+                            if (!checked) {
+                                setValue(raffleForm, 'expiresAt', '');
+                            }
                         })}
                     />
-                    <Field name="ends_at">
-                        {(field, props) =>
-                            showEndDate.value && (
-                                <>
-                                    <Label for="ends_at" class="flex items-center">
-                                        <span class="inline-block mr-2 text-primary font-bold">#</span>
-                                        {_`End date`}
-                                    </Label>
-                                    <Input
-                                        {...props}
-                                        type="date"
-                                        value={field.value}
-                                    />
-                                    {field.error && (
-                                        <div class="text-alert text-sm flex items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                                            </svg>
-                                            {field.error}
-                                        </div>
-                                    )}
-                                </>
-                            )
-                        }
+                    <Field name="expiresAt">
+                        {(field, props) => (
+                            <>
+                                {showEndDate.value ? (
+                                    <>
+                                        <Label for="expiresAt" class="flex items-center">
+                                            <span class="inline-block mr-2 text-primary font-bold">#</span>
+                                            {_`End date`}
+                                        </Label>
+                                        <Input
+                                            {...props}
+                                            id="expiresAt"
+                                            type="date"
+                                            value={field.value || ''}
+                                        />
+                                        {field.error && (
+                                            <div class="text-alert text-sm flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                                </svg>
+                                                {field.error}
+                                            </div>
+                                        )}
+                                    </>
+                                ) : (
+                                    // Always render a hidden input with empty value when toggle is off
+                                    <input type="hidden" {...props} value="" data-testid="expiresAt-hidden" />
+                                )}
+                            </>
+                        )}
                     </Field>
                     <p class="mt-2 text-sm text-muted-foreground">
-                        {_`Specify the date when the poll will end. Participants won't be able to vote after this date.`}
+                        {_`Specify the date when the raffle will end. Numbers won't be available for purchase after this date.`}
                     </p>
                 </div>
                 <div class="space-y-4">
@@ -285,9 +309,22 @@ export default component$(() => {
                     type="submit"
                     look="primary"
                     class="w-full h-12 font-medium text-white transition-all duration-200 transform hover:shadow-md active:press flex items-center justify-center"
+                    disabled={isSubmitting.value}
                 >
-                    <span class="mr-2">+</span>
-                    {_`Create Raffle`}
+                    {isSubmitting.value ? (
+                        <>
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            {_`Creating Raffle...`}
+                        </>
+                    ) : (
+                        <>
+                            <span class="mr-2">+</span>
+                            {_`Create Raffle`}
+                        </>
+                    )}
                 </Button>
             </div>
         </Form>
