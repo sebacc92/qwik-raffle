@@ -3,7 +3,7 @@ import { useNavigate } from '@builder.io/qwik-city'
 import { useForm, valiForm$, insert, remove, setValue } from '@modular-forms/qwik'
 import { toast } from 'qwik-sonner';
 import { Button, Input, Label, Textarea } from '~/components/ui'
-import { type RaffleForm, type RaffleResponseData, RaffleSchema } from '~/schemas/raffleSchema'
+import { type RaffleForm, type RaffleResponseData, BasicRaffleSchema } from '~/schemas/raffleSchema'
 import { useFormRaffleAction } from '~/shared/forms/actions'
 import { useFormRaffleLoader } from '~/shared/forms/loaders'
 import { LuTrash, LuPlus } from '@qwikest/icons/lucide'
@@ -16,7 +16,7 @@ export default component$(() => {
         loader: useFormRaffleLoader(),
         action: useFormRaffleAction(),
         fieldArrays: ['prizes'],
-        validate: valiForm$(RaffleSchema)
+        validate: valiForm$(BasicRaffleSchema)
     })
 
     const isPubic = useSignal<boolean>(false);
@@ -118,8 +118,8 @@ export default component$(() => {
                                 type="number"
                                 min={2}
                                 max={1000}
-                                value={field.value || ''}
-                                placeholder={_`How many numbers/tickets will be available`}
+                                value={field.value || 0}
+                                placeholder={_`Set the quantity of numbers/tickets`}
                                 class="transition-all duration-200 focus:border-primary hover:border-gray-400 dark:hover:border-gray-600"
                             />
                             {field.error && <div class="text-alert text-sm flex items-center">
@@ -128,6 +128,14 @@ export default component$(() => {
                                 </svg>
                                 {field.error}
                             </div>}
+                            <div class="text-xs text-muted-foreground mt-1">
+                                <span class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    {_`Basic accounts limited to 1,000 max`}
+                                </span>
+                            </div>
                         </div>
                     )}
                 </Field>

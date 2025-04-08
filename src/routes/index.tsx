@@ -146,10 +146,10 @@ export default component$(() => {
                 </div>
               </div>
 
-              <div class="mx-auto grid max-w-5xl gap-6 py-12 lg:grid-cols-3">
+              <div class="mx-auto grid max-w-4xl gap-6 py-12 lg:grid-cols-3">
                 {/* Plan Básico */}
-                <div id="plan-basico" class="flex flex-col rounded-xl border bg-card shadow-sm hover:shadow-md transition-all">
-                  <div class="p-6">
+                <div id="plan-basico" class="flex flex-col rounded-xl border bg-card shadow-sm hover:shadow-md transition-all h-full">
+                  <div class="p-6 flex flex-col h-full">
                     <div class="flex justify-between items-center mb-4">
                       <h3 class="text-2xl font-bold">{_`Basic`}</h3>
                       <span class="inline-flex items-center rounded-full border border-muted-foreground/30 bg-muted-foreground/10 px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
@@ -160,38 +160,38 @@ export default component$(() => {
                       <div class="text-4xl font-bold">{_`Free`}</div>
                       <p class="text-sm text-muted-foreground mt-1">{_`Ideal for quick tests and small raffles`}</p>
                     </div>
-                    <ul class="mt-6 space-y-3">
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Storage`}: {_`Local (Browser)`}</span>
+                    <ul class="mt-6 space-y-3 flex-grow">
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{_`Storage`}: <span class="font-medium">{_`Local (Browser)`}</span></span>
                       </li>
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Ticket limit`}: {_`Up to 100`}</span>
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{_`Ticket limit`}: <span class="font-medium">{_`Up to 100`}</span></span>
                       </li>
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Active raffles`}: {_`1 at a time`}</span>
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{_`Active raffles`}: <span class="font-medium">{_`1 at a time`}</span></span>
                       </li>
-                      <li class="flex items-center">
-                        <LuX class="mr-2 h-5 w-5 text-muted-foreground" />
+                      <li class="flex items-start">
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
                         <span class="text-muted-foreground">{_`Customization`}</span>
                       </li>
-                      <li class="flex items-center">
-                        <LuX class="mr-2 h-5 w-5 text-muted-foreground" />
+                      <li class="flex items-start">
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
                         <span class="text-muted-foreground">{_`Detailed statistics`}</span>
                       </li>
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Support`}: {_`Community`}</span>
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{_`Support`}: <span class="font-medium">{_`Community`}</span></span>
                       </li>
-                      <li class="flex items-center">
-                        <LuX class="mr-2 h-5 w-5 text-muted-foreground" />
+                      <li class="flex items-start">
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
                         <span class="text-muted-foreground">{_`No ads`}</span>
                       </li>
                     </ul>
                   </div>
-                  <div class="mt-auto p-6 pt-0">
+                  <div class="p-6 pt-0 mt-4">
                     <Link
                       href="/raffle/create"
                       class="inline-flex h-10 w-full items-center justify-center rounded-base border border-primary bg-card px-8 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary/10 hover:text-primary press"
@@ -202,8 +202,8 @@ export default component$(() => {
                 </div>
 
                 {/* Plan Gratis */}
-                <div id="plan-gratis" class="flex flex-col rounded-xl border bg-card shadow-sm hover:shadow-md transition-all">
-                  <div class="p-6">
+                <div id="plan-gratis" class="flex flex-col rounded-xl border bg-card shadow-sm hover:shadow-md transition-all h-full">
+                  <div class="p-6 flex flex-col h-full">
                     <div class="flex justify-between items-center mb-4">
                       <h3 class="text-2xl font-bold">{_`Free`}</h3>
                       <span class="inline-flex items-center rounded-full border border-muted-foreground/30 bg-muted-foreground/10 px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
@@ -214,38 +214,38 @@ export default component$(() => {
                       <div class="text-4xl font-bold">{_`Free`}</div>
                       <p class="text-sm text-muted-foreground mt-1">{_`Perfect for registered users with standard needs`}</p>
                     </div>
-                    <ul class="mt-6 space-y-3">
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Storage`}: {_`Cloud`}</span>
+                    <ul class="mt-6 space-y-3 flex-grow">
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{_`Storage`}: <span class="font-medium">{_`Cloud`}</span></span>
                       </li>
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Ticket limit`}: {_`Up to 1000`}</span>
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{_`Ticket limit`}: <span class="font-medium">{_`Up to 1,000`}</span></span>
                       </li>
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Active raffles`}: {_`1 at a time`}</span>
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{_`Active raffles`}: <span class="font-medium">{_`1 at a time`}</span></span>
                       </li>
-                      <li class="flex items-center">
-                        <LuX class="mr-2 h-5 w-5 text-muted-foreground" />
+                      <li class="flex items-start">
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
                         <span class="text-muted-foreground">{_`Customization`}</span>
                       </li>
-                      <li class="flex items-center">
-                        <LuX class="mr-2 h-5 w-5 text-muted-foreground" />
+                      <li class="flex items-start">
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
                         <span class="text-muted-foreground">{_`Detailed statistics`}</span>
                       </li>
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Support`}: {_`Standard`}</span>
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{_`Support`}: <span class="font-medium">{_`Standard`}</span></span>
                       </li>
-                      <li class="flex items-center">
-                        <LuX class="mr-2 h-5 w-5 text-muted-foreground" />
+                      <li class="flex items-start">
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
                         <span class="text-muted-foreground">{_`No ads`}</span>
                       </li>
                     </ul>
                   </div>
-                  <div class="mt-auto p-6 pt-0">
+                  <div class="p-6 pt-0 mt-4">
                     <Link
                       class="inline-flex h-10 w-full items-center justify-center rounded-base border border-primary bg-card px-8 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary/10 press"
                       href="/signup"
@@ -256,11 +256,11 @@ export default component$(() => {
                 </div>
 
                 {/* Plan Premium */}
-                <div id="plan-premium" class="flex flex-col rounded-xl border-2 border-primary bg-card shadow-lg hover:shadow-xl scale-[1.02] transition-all">
+                <div id="plan-premium" class="flex flex-col rounded-xl border-2 border-primary bg-card shadow-lg hover:shadow-xl scale-[1.02] transition-all h-full">
                   <div class="bg-primary/10 py-2 px-6 rounded-t-xl">
                     <div class="text-center text-primary font-semibold">{_`Recommended`}</div>
                   </div>
-                  <div class="p-6">
+                  <div class="p-6 flex flex-col h-full">
                     <div class="flex justify-between items-center mb-4">
                       <h3 class="text-2xl font-bold">{_`Premium`}</h3>
                       <span class="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
@@ -271,38 +271,38 @@ export default component$(() => {
                       <div class="text-4xl font-bold">$ 4900 ARS<span class="text-base font-normal">/{_`month`}</span></div>
                       <p class="text-sm text-muted-foreground mt-1">{_`For advanced users, businesses and multiple raffles`}</p>
                     </div>
-                    <ul class="mt-6 space-y-3">
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Storage`}: {_`Cloud`}</span>
+                    <ul class="mt-6 space-y-3 flex-grow">
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{_`Storage`}: <span class="font-medium">{_`Cloud`}</span></span>
                       </li>
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Ticket limit`}: {_`Unlimited`}</span>
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{_`Ticket limit`}: <span class="font-medium">{_`Up to 10,000`}</span></span>
                       </li>
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Active raffles`}: {_`Multiple`}</span>
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{_`Active raffles`}: <span class="font-medium">{_`Unlimited`}</span></span>
                       </li>
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                         <span>{_`Advanced customization`}</span>
                       </li>
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Detailed statistics`}</span>
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{_`Detailed statistics & analytics`}</span>
                       </li>
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
-                        <span>{_`Support`}: {_`Priority`}</span>
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>{_`Support`}: <span class="font-medium">{_`Priority`}</span></span>
                       </li>
-                      <li class="flex items-center">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary" />
+                      <li class="flex items-start">
+                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                         <span>{_`No ads`}</span>
                       </li>
                     </ul>
                   </div>
-                  <div class="mt-auto p-6 pt-0">
+                  <div class="p-6 pt-0 mt-4">
                     <Link
                       href="/app/premium"
                       class="inline-flex h-10 w-full items-center justify-center rounded-base bg-primary px-8 text-sm font-medium text-white shadow transition-colors hover:bg-primary-hover press"

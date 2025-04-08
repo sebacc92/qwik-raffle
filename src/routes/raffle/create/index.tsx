@@ -13,26 +13,71 @@ export { useFormRaffleLoader } from "~/shared/forms/loaders";
 export { useFormRaffleAction } from "~/shared/forms/actions";
 
 export const PremiumInfoAlert = () => (
-  <div class="rounded-lg border bg-card p-4 text-card-foreground shadow-sm">
-    <h3 class="font-semibold mb-2">{_`Premium Benefits`}</h3>
-    <ul class="space-y-2 text-sm text-muted-foreground">
-      <li>✨ {_`Unlimited raffles`}</li>
-      <li>✨ {_`Up to 10,000 participants per raffle`}</li>
-      <li>✨ {_`Payment integration`}</li>
-      <li>✨ {_`Detailed statistics`}</li>
-      <li>✨ {_`Priority support`}</li>
+  <div class="rounded-lg border border-primary/20 bg-gradient-to-br from-card to-primary/5 p-6 text-card-foreground shadow-sm transition-all hover:shadow-md">
+    <h3 class="text-xl font-semibold mb-4 flex items-center text-primary">
+      <span class="bg-primary/10 p-2 rounded-full mr-2">✨</span>
+      {_`Premium Benefits`}
+    </h3>
+    <ul class="space-y-3 text-sm text-muted-foreground">
+      <li class="flex items-start">
+        <span class="text-primary mr-2 font-bold">•</span> 
+        <span><strong>{_`Unlimited`}</strong> {_`active raffles simultaneously`}</span>
+      </li>
+      <li class="flex items-start">
+        <span class="text-primary mr-2 font-bold">•</span> 
+        <span><strong>{_`Up to 10,000`}</strong> {_`numbers per raffle`}</span>
+      </li>
+      <li class="flex items-start">
+        <span class="text-primary mr-2 font-bold">•</span> 
+        <span>{_`Payment integration for easy collection`}</span>
+      </li>
+      <li class="flex items-start">
+        <span class="text-primary mr-2 font-bold">•</span> 
+        <span>{_`Advanced customization options`}</span>
+      </li>
+      <li class="flex items-start">
+        <span class="text-primary mr-2 font-bold">•</span> 
+        <span>{_`Detailed statistics and analytics`}</span>
+      </li>
+      <li class="flex items-start">
+        <span class="text-primary mr-2 font-bold">•</span> 
+        <span>{_`Priority customer support`}</span>
+      </li>
     </ul>
   </div>
 );
 
 export const BasicInfoAlert = () => (
-  <div class="rounded-lg border bg-card p-4 text-card-foreground shadow-sm">
-    <h3 class="font-semibold mb-2">{_`Basic Account Features`}</h3>
-    <ul class="space-y-2 text-sm text-muted-foreground">
-      <li>✨ {_`1 saved raffle`}</li>
-      <li>✨ {_`Up to 1,000 participants`}</li>
-      <li>✨ {_`Basic customization`}</li>
-      <li>✨ <a href="/app/premium" class="text-primary hover:underline">{_`Upgrade to Premium`}</a> {_`for more features!`}</li>
+  <div class="rounded-lg border bg-card p-6 text-card-foreground shadow-sm transition-all hover:shadow-md">
+    <h3 class="text-xl font-semibold mb-4 flex items-center">
+      <span class="bg-primary/10 p-2 rounded-full mr-2">✨</span>
+      {_`Basic Account Features`}
+    </h3>
+    <ul class="space-y-3 text-sm text-muted-foreground">
+      <li class="flex items-start">
+        <span class="text-primary mr-2 font-bold">•</span> 
+        <span><strong>{_`1`}</strong> {_`active raffle at a time`}</span>
+      </li>
+      <li class="flex items-start">
+        <span class="text-primary mr-2 font-bold">•</span> 
+        <span><strong>{_`Up to 1,000`}</strong> {_`numbers per raffle`}</span>
+      </li>
+      <li class="flex items-start">
+        <span class="text-primary mr-2 font-bold">•</span> 
+        <span>{_`Basic customization options`}</span>
+      </li>
+      <li class="flex items-start">
+        <span class="text-primary mr-2 font-bold">•</span> 
+        <span>{_`Standard support`}</span>
+      </li>
+      <li class="flex items-start mt-2 pt-2 border-t border-gray-100 dark:border-gray-800">
+        <a href="/app/premium" class="text-primary hover:underline font-medium flex items-center">
+          {_`Upgrade to Premium`} 
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </li>
     </ul>
   </div>
 );
@@ -102,8 +147,8 @@ export default component$(() => {
   
   return (
     <div class="flex flex-col justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900 py-6">
-      <div class="w-full max-w-[1200px] mx-auto px-4 flex flex-col lg:flex-row lg:items-start lg:gap-6">
-        <div class="w-full lg:w-[400px] lg:sticky lg:top-6">
+      <div class="w-full max-w-[1200px] mx-auto px-4 flex flex-col lg:flex-row lg:items-start lg:gap-8">
+        <div class="w-full lg:w-[350px] xl:w-[400px] mb-6 lg:mb-0 lg:sticky lg:top-6">
           {!session.value.session ? (
             <InfoAlert />
           ) : session.value.isPremium === true ? (
@@ -115,7 +160,7 @@ export default component$(() => {
           )}
         </div>
         
-        <Card.Root class="w-full max-w-[550px] mx-auto lg:mx-0 animate-fadeIn">
+        <Card.Root class="w-full flex-1 max-w-[650px] mx-auto lg:mx-0 animate-fadeIn">
           {!session.value.hasActiveRaffle && (
             <Card.Header>
               <Card.Title>{_`Create New Raffle`}</Card.Title>
