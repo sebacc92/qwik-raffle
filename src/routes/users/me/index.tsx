@@ -9,7 +9,7 @@ import { _ } from "compiled-i18n";
 import styles from './profile.css?inline';
 import { Link } from "@builder.io/qwik-city";
 
-// Loader para obtener todas las rifas del usuario actual
+// Loader to get all raffles of the current user
 export const useUserRaffles = routeLoader$(async (requestEvent) => {
     const session = requestEvent.sharedMap.get("session") as any;
 
@@ -35,27 +35,27 @@ export const useUserRaffles = routeLoader$(async (requestEvent) => {
     }
 
     const now = new Date();
-    now.setHours(0, 0, 0, 0); // Establecer a las 00:00:00 del día actual
+    now.setHours(0, 0, 0, 0); // Set to 00:00:00 of the current day
 
-    // Obtener todas las rifas del usuario
+    // Get all user's raffles
     const raffles = await db
         .select()
         .from(schema.raffles)
         .where(eq(schema.raffles.creatorId, user[0].id))
         .execute();
     
-    // Separar rifas activas de cerradas
-    // Consideramos una rifa como activa incluso si su fecha de expiración es hoy
-    // Esto soluciona el problema de rifas nuevas apareciendo como finalizadas
+    // Separate active raffles from closed ones
+    // We consider a raffle as active even if its expiration date is today
+    // This solves the problem of new raffles appearing as finished
     const active = raffles.filter(raffle => {
         const expiresDate = new Date(raffle.expiresAt);
-        expiresDate.setHours(0, 0, 0, 0); // Normalizar a 00:00:00 del día de expiración
+        expiresDate.setHours(0, 0, 0, 0); // Normalize to 00:00:00 of the expiration day
         return expiresDate >= now && !raffle.isTemporary;
     });
     
     const closed = raffles.filter(raffle => {
         const expiresDate = new Date(raffle.expiresAt);
-        expiresDate.setHours(0, 0, 0, 0); // Normalizar a 00:00:00 del día de expiración
+        expiresDate.setHours(0, 0, 0, 0); // Normalize to 00:00:00 of the expiration day
         return expiresDate < now || raffle.isTemporary;
     });
 
@@ -72,7 +72,7 @@ export default component$(() => {
     
     const isPremium = userSession.value.isPremium;
     
-    // Verificamos si el usuario está autenticado
+    // Check if the user is authenticated
     if (!userSession.value.session) {
         return (
             <div class="container mx-auto px-4 py-8">
@@ -84,7 +84,7 @@ export default component$(() => {
         );
     }
     
-    // Datos del usuario obtenidos directamente de la sesión
+    // User data obtained directly from the session
     const userName = userSession.value.session.user.name;
     const userEmail = userSession.value.session.user.email;
 
@@ -93,7 +93,7 @@ export default component$(() => {
             <h1 class="text-3xl font-bold mb-8 text-center md:text-left">{_`Mi Perfil`}</h1>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Panel izquierdo - Información del usuario */}
+                {/* Left panel - User information */}
                 <div class="lg:col-span-1">
                     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
                         <div class="flex items-center gap-4 mb-6">
@@ -160,9 +160,9 @@ export default component$(() => {
                     </div>
                 </div>
 
-                {/* Panel derecho - Listado de rifas */}
+                {/* Right panel - List of raffles */}
                 <div class="lg:col-span-2">
-                    {/* Rifas activas */}
+                    {/* Active raffles */}
                     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
                         <div class="flex justify-between items-center mb-4">
                             <h2 class="text-xl font-bold">{_`Mis Rifas Activas`}</h2>
@@ -213,7 +213,7 @@ export default component$(() => {
                         )}
                     </div>
 
-                    {/* Rifas finalizadas */}
+                    {/* Finished raffles */}
                     <div class="bg-white rounded-lg shadow-md p-6">
                         <h2 class="text-xl font-bold mb-4">{_`Rifas Finalizadas`}</h2>
 
