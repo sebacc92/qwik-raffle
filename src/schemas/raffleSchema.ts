@@ -3,6 +3,7 @@ import * as v from 'valibot'
 // Basic account limits
 const BASIC_MIN_VALUE = 2
 const BASIC_MAX_VALUE = 1000
+const BASIC_MAX_PRIZES = 5
 
 // Premium account limits
 const PREMIUM_MIN_VALUE = 2 
@@ -43,7 +44,11 @@ export const BasicRaffleSchema = v.object({
         v.minValue(MIN_PRICE, `Price must be at least ${MIN_PRICE}`),
         v.maxValue(MAX_PRICE, `Price must be at most ${MAX_PRICE}`)
     ),
-    prizes: v.array(PrizeSchema, "At least one prize is required"),
+    prizes: v.pipe(
+        v.array(PrizeSchema),
+        v.minLength(1, "At least one prize is required"),
+        v.maxLength(BASIC_MAX_PRIZES, `Free accounts are limited to ${BASIC_MAX_PRIZES} prizes maximum`)
+    ),
     isPublic: v.boolean(),
 })
 
@@ -69,7 +74,10 @@ export const PremiumRaffleSchema = v.object({
         v.minValue(MIN_PRICE, `Price must be at least ${MIN_PRICE}`),
         v.maxValue(MAX_PRICE, `Price must be at most ${MAX_PRICE}`)
     ),
-    prizes: v.array(PrizeSchema, "At least one prize is required"),
+    prizes: v.pipe(
+        v.array(PrizeSchema),
+        v.minLength(1, "At least one prize is required")
+    ),
     isPublic: v.boolean(),
 })
 

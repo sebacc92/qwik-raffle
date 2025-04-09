@@ -45,17 +45,18 @@ export const useUserRaffles = routeLoader$(async (requestEvent) => {
         .execute();
     
     // Separate active raffles from closed ones
-    // We consider a raffle as active even if its expiration date is today
-    // This solves the problem of new raffles appearing as finished
+    // We consider a raffle as active if:
+    // 1. It has an expiration date in the future
+    // 2. It has no expiration date (expiresAt is null)
     const active = raffles.filter(raffle => {
-        if (!raffle.expiresAt) return false; // Handle null case
+        if (!raffle.expiresAt) return true; // No expiration date = active
         const expiresDate = new Date(raffle.expiresAt);
         expiresDate.setHours(0, 0, 0, 0); // Normalize to 00:00:00 of the expiration day
         return expiresDate >= now && !raffle.isTemporary;
     });
     
     const closed = raffles.filter(raffle => {
-        if (!raffle.expiresAt) return true; // If no expiration date, consider it closed
+        if (!raffle.expiresAt) return false; // No expiration date = not closed
         const expiresDate = new Date(raffle.expiresAt);
         expiresDate.setHours(0, 0, 0, 0); // Normalize to 00:00:00 of the expiration day
         return expiresDate < now || raffle.isTemporary;
@@ -79,8 +80,8 @@ export default component$(() => {
         return (
             <div class="container mx-auto px-4 py-8">
                 <div class="text-center">
-                    <h1 class="text-2xl font-bold mb-4">{_`No has iniciado sesión`}</h1>
-                    <p class="mb-6">{_`Debes iniciar sesión para ver tu perfil`}</p>
+                    <h1 class="text-2xl font-bold mb-4">{_`You are not logged in`}</h1>
+                    <p class="mb-6">{_`You must log in to view your profile`}</p>
                 </div>
             </div>
         );
@@ -92,7 +93,7 @@ export default component$(() => {
 
     return (
         <div class="container mx-auto px-4 py-8">
-            <h1 class="text-3xl font-bold mb-8 text-center md:text-left">{_`Mi Perfil`}</h1>
+            <h1 class="text-3xl font-bold mb-8 text-center md:text-left">{_`My Profile`}</h1>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Left panel - User information */}
@@ -113,12 +114,12 @@ export default component$(() => {
                                 <div class="flex items-center gap-3">
                                     <LuCrown class={`w-5 h-5 ${isPremium ? 'text-amber-600' : 'text-gray-500'}`} />
                                     <span class="font-medium">
-                                        {isPremium ? _`Plan Plus` : _`Plan Free`}
+                                        {isPremium ? _`Plus Plan` : _`Free Plan`}
                                     </span>
                                 </div>
                                 {isPremium && (
                                     <div class="mt-2 text-sm text-amber-800">
-                                        {_`Tu suscripción Plus está activa. ¡Disfruta de todos los beneficios!`}
+                                        {_`Your Plus subscription is active. Enjoy all the benefits!`}
                                     </div>
                                 )}
                             </div>
@@ -126,23 +127,23 @@ export default component$(() => {
 
                         {!isPremium && (
                             <div class="upgrade-card bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-5 mb-6">
-                                <h3 class="text-lg font-bold text-purple-800 mb-2">{_`¡Mejora a Plan Plus!`}</h3>
+                                <h3 class="text-lg font-bold text-purple-800 mb-2">{_`Upgrade to Plus Plan!`}</h3>
                                 <ul class="mb-4 space-y-2">
                                     <li class="flex items-start gap-2">
                                         <LuTicket class="w-5 h-5 text-purple-600 mt-0.5" />
-                                        <span class="text-sm">{_`Crea rifas ilimitadas sin restricciones de tiempo`}</span>
+                                        <span class="text-sm">{_`Create unlimited raffles with no time restrictions`}</span>
                                     </li>
                                     <li class="flex items-start gap-2">
                                         <LuPlusCircle class="w-5 h-5 text-purple-600 mt-0.5" />
-                                        <span class="text-sm">{_`Añade hasta 10 premios por rifa`}</span>
+                                        <span class="text-sm">{_`Add up to 10 prizes per raffle`}</span>
                                     </li>
                                     <li class="flex items-start gap-2">
                                         <LuCalendar class="w-5 h-5 text-purple-600 mt-0.5" />
-                                        <span class="text-sm">{_`Rifas con fechas de vencimiento extendidas`}</span>
+                                        <span class="text-sm">{_`Raffles with extended expiration dates`}</span>
                                     </li>
                                 </ul>
                                 <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md transition-colors">
-                                    {_`Actualizar ahora`}
+                                    {_`Upgrade now`}
                                 </button>
                             </div>
                         )}
@@ -151,11 +152,11 @@ export default component$(() => {
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="stat-card bg-gray-50 p-4 rounded-lg">
                                     <div class="text-2xl font-bold text-purple-600">{userRaffles.value.active.length}</div>
-                                    <div class="text-sm text-gray-600">{_`Rifas activas`}</div>
+                                    <div class="text-sm text-gray-600">{_`Active raffles`}</div>
                                 </div>
                                 <div class="stat-card bg-gray-50 p-4 rounded-lg">
                                     <div class="text-2xl font-bold text-purple-600">{userRaffles.value.closed.length}</div>
-                                    <div class="text-sm text-gray-600">{_`Rifas finalizadas`}</div>
+                                    <div class="text-sm text-gray-600">{_`Finished raffles`}</div>
                                 </div>
                             </div>
                         </div>
@@ -167,11 +168,11 @@ export default component$(() => {
                     {/* Active raffles */}
                     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
                         <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-xl font-bold">{_`Mis Rifas Activas`}</h2>
+                            <h2 class="text-xl font-bold">{_`My Active Raffles`}</h2>
                             {userRaffles.value.active.length > 0 && (
                                 <Link href="/raffle/create" class="text-sm text-purple-600 hover:text-purple-800 flex items-center gap-1">
                                     <LuPlusCircle class="w-4 h-4" />
-                                    {_`Crear nueva rifa`}
+                                    {_`Create new raffle`}
                                 </Link>
                             )}
                         </div>
@@ -179,9 +180,9 @@ export default component$(() => {
                         {userRaffles.value.active.length === 0 ? (
                             <div class="text-center py-8 text-gray-500">
                                 <LuTicket class="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                                <p>{_`No tienes rifas activas actualmente`}</p>
+                                <p>{_`You don't have any active raffles currently`}</p>
                                 <Link href="/raffle/create" class="mt-4 inline-block text-purple-600 hover:text-purple-800">
-                                    {_`Crear mi primera rifa`}
+                                    {_`Create my first raffle`}
                                 </Link>
                             </div>
                         ) : (
@@ -195,15 +196,15 @@ export default component$(() => {
                                                     <div class="flex gap-6 mt-2 text-sm text-gray-600">
                                                         <div class="flex items-center gap-1">
                                                             <LuTicket class="w-4 h-4" />
-                                                            <span>{raffle.numberCount} {_`números`}</span>
+                                                            <span>{raffle.numberCount} {_`numbers`}</span>
                                                         </div>
                                                         <div class="flex items-center gap-1">
                                                             <span>${raffle.pricePerNumber}</span>
-                                                            <span>{_`por número`}</span>
+                                                            <span>{_`per number`}</span>
                                                         </div>
                                                     </div>
                                                     <div class="mt-2 text-sm text-gray-500">
-                                                        <span>{_`Vence`}: {raffle.expiresAt ? new Date(raffle.expiresAt).toLocaleDateString() : '-'}</span>
+                                                        <span>{_`Expires`}: {raffle.expiresAt ? new Date(raffle.expiresAt).toLocaleDateString() : '-'}</span>
                                                     </div>
                                                 </div>
                                                 <LuChevronRight class="w-5 h-5 text-gray-400" />
@@ -217,11 +218,11 @@ export default component$(() => {
 
                     {/* Finished raffles */}
                     <div class="bg-white rounded-lg shadow-md p-6">
-                        <h2 class="text-xl font-bold mb-4">{_`Rifas Finalizadas`}</h2>
+                        <h2 class="text-xl font-bold mb-4">{_`Finished Raffles`}</h2>
 
                         {userRaffles.value.closed.length === 0 ? (
                             <div class="text-center py-8 text-gray-500">
-                                <p>{_`No tienes rifas finalizadas`}</p>
+                                <p>{_`You don't have any finished raffles`}</p>
                             </div>
                         ) : (
                             <div class="space-y-4">
@@ -234,15 +235,15 @@ export default component$(() => {
                                                     <div class="flex gap-6 mt-2 text-sm text-gray-600">
                                                         <div class="flex items-center gap-1">
                                                             <LuTicket class="w-4 h-4" />
-                                                            <span>{raffle.numberCount} {_`números`}</span>
+                                                            <span>{raffle.numberCount} {_`numbers`}</span>
                                                         </div>
                                                         <div class="flex items-center gap-1">
                                                             <span>${raffle.pricePerNumber}</span>
-                                                            <span>{_`por número`}</span>
+                                                            <span>{_`per number`}</span>
                                                         </div>
                                                     </div>
                                                     <div class="mt-2 text-sm text-gray-500">
-                                                        <span>{_`Finalizada el`}: {raffle.expiresAt ? new Date(raffle.expiresAt).toLocaleDateString() : '-'}</span>
+                                                        <span>{_`Finished on`}: {raffle.expiresAt ? new Date(raffle.expiresAt).toLocaleDateString() : '-'}</span>
                                                     </div>
                                                 </div>
                                                 <LuChevronRight class="w-5 h-5 text-gray-400" />
@@ -261,11 +262,11 @@ export default component$(() => {
 
 export const head: DocumentHead = () => {
     return {
-        title: _`Mi Perfil | Qwik Raffle`,
+        title: _`My Profile | Qwik Raffle`,
         meta: [
             {
                 name: "description",
-                content: _`Administra tus rifas, revisa tu perfil y gestiona tu suscripción`,
+                content: _`Manage your raffles, check your profile and manage your subscription`,
             },
         ],
     };

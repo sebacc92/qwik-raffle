@@ -7,8 +7,8 @@ import { type RaffleForm, type RaffleResponseData, BasicRaffleSchema } from '~/s
 import { useFormRaffleAction } from '~/shared/forms/actions'
 import { useFormRaffleLoader } from '~/shared/forms/loaders'
 import { LuTrash, LuPlus } from '@qwikest/icons/lucide'
-import { _ } from 'compiled-i18n';
 import { CustomToggle } from '~/components/CustomToggle';
+import { _ } from 'compiled-i18n';
 
 export default component$(() => {
     const nav = useNavigate();
@@ -176,6 +176,14 @@ export default component$(() => {
                         <span class="inline-block mr-2 text-primary font-bold">🎁</span>
                         {_`Prizes`}
                     </Label>
+                    <div class="text-xs text-muted-foreground">
+                        <span class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            {_`Free accounts limited to 5 prizes`}
+                        </span>
+                    </div>
                 </div>
 
                 <FieldArray name="prizes">
@@ -223,13 +231,19 @@ export default component$(() => {
                                     )}
                                 </div>
                             ))}
-
-                            {fieldArray.items.length < 10 && (
+                            {fieldArray.items.length < 5 && (
                                 <button
                                     type="button"
-                                    onClick$={() => insert(raffleForm, 'prizes', {
-                                        value: { name: '', position: fieldArray.items.length + 1 }
-                                    })}
+                                    onClick$={() => {
+                                        const numberCount = raffleForm.internal.fields.numberCount?.value;
+                                        if (numberCount && fieldArray.items.length >= numberCount) {
+                                            toast.error(_`Number of prizes must be less than the number count (${numberCount})`);
+                                            return;
+                                        }
+                                        insert(raffleForm, 'prizes', {
+                                            value: { name: '', position: fieldArray.items.length + 1 }
+                                        });
+                                    }}
                                     class="inline-flex items-center text-sm text-primary hover:text-primary/80"
                                 >
                                     <LuPlus class="w-4 h-4 mr-1" />
