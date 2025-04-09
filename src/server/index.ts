@@ -1,7 +1,7 @@
 import { Session } from "~/types/session";
 import Drizzler from "../../drizzle";
 import { schema } from "../../drizzle/schema";
-import { eq, and, gte } from "drizzle-orm";
+import { eq, and, gte, or, isNull } from "drizzle-orm";
 
 export const getUser = async (ctx: Session | null) => {
     if (ctx) {
@@ -47,7 +47,9 @@ export const getUserActiveRaffles = async (userId: number) => {
     
     try {
         // Get active raffles for this user
-        // An active raffle is one that hasn't expired yet
+        // An active raffle is one that either:
+        // 1. Hasn't expired yet (expiresAt > now)
+        // 2. Has no expiration date (expiresAt is null)
         const now = new Date();
         
         return await db
@@ -56,7 +58,10 @@ export const getUserActiveRaffles = async (userId: number) => {
             .where(
                 and(
                     eq(schema.raffles.creatorId, userId),
-                    gte(schema.raffles.expiresAt, now)
+                    or(
+                        gte(schema.raffles.expiresAt, now),
+                        isNull(schema.raffles.expiresAt)
+                    )
                 )
             )
             .execute();
