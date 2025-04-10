@@ -490,6 +490,25 @@
     background-color: #059669;
 }
 
+.action-button.secondary {
+    background-color: #9CA3AF;
+    color: white;
+    border: 1px solid #6B7280;
+}
+
+.action-button.secondary:hover {
+    background-color: #6B7280;
+}
+
+:global(.dark) .action-button.secondary {
+    background-color: #4B5563;
+    border-color: #6B7280;
+}
+
+:global(.dark) .action-button.secondary:hover {
+    background-color: #374151;
+}
+
 /* Estilos para la lista de premios */
 .prizes-grid {
     display: grid;

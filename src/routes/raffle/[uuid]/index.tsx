@@ -52,6 +52,7 @@ export default component$(() => {
 
     // Signals for draw functionality
     const showDrawConfirmation = useSignal(false);
+    const showResetConfirmation = useSignal(false);
 
     const generateClientLink = $(() => {
         if(raffle.value?.failed) return;
@@ -104,9 +105,9 @@ export default component$(() => {
 
     // Function to start the draw process
     const startDrawProcess = $(() => {
-        if (raffle.value?.failed) return;
+        if (raffle.value.failed) return;
         
-        if (!raffle.value?.prizes || raffle.value?.prizes.length === 0) {
+        if (!raffle.value.prizes || raffle.value.prizes.length === 0) {
             toast.error(_`This raffle has no registered prizes`, {
                 duration: 3000,
                 position: 'top-center'
@@ -120,13 +121,13 @@ export default component$(() => {
 
     // Function to confirm and proceed with the draw
     const confirmDraw = $(() => {
-        if (raffle.value?.failed) return;
+        if (raffle.value.failed) return;
 
         // Filter tickets to only include paid tickets
         const paid = raffleNumbers.value.filter(t => t.status === "sold-paid");
 
         // Check if there are enough tickets
-        const numberOfPrizes = raffle.value?.prizes?.length || 0;
+        const numberOfPrizes = raffle.value.prizes.length;
         if (paid.length < numberOfPrizes) {
             toast.error(_`There are not enough paid tickets to draw all the prizes`, {
                 duration: 3000,
@@ -138,7 +139,15 @@ export default component$(() => {
 
         // Hide confirmation and navigate to wheel page
         showDrawConfirmation.value = false;
-        navigate(`/raffle/${raffle.value?.uuid}/wheel`);
+        navigate(`/raffle/${raffle.value.uuid}/wheel`);
+    });
+
+    const confirmReset = $(() => {
+        if (raffle.value.failed) return;
+
+        // Aquí iría la lógica para resetear el sorteo
+        alert(_`Raffle reset`);
+        showResetConfirmation.value = false;
     });
 
     if(raffle.value?.failed){
@@ -152,15 +161,15 @@ export default component$(() => {
 
     const soldCount = raffleNumbers.value.filter(t => t.status !== "unsold").length;
     const paidCount = raffleNumbers.value.filter(t => t.status === "sold-paid").length;
-    const totalCollected = paidCount * raffle.value?.pricePerNumber;
+    const totalCollected = paidCount * raffle.value.pricePerNumber;
 
     return (
         <div class="p-4 max-w-7xl mx-auto space-y-6">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <h1 class="text-2xl font-bold text-purple-800">{raffle.value?.name}</h1>
+                <h1 class="text-2xl font-bold text-purple-800">{raffle.value.name}</h1>
                 
                 {/* Raffle info section with expiration date - only show if it exists */}
-                {raffle.value?.expiresAt && (
+                {raffle.value.expiresAt && (
                     <div class="expiration-date">
                         <p class="text-amber-600 dark:text-amber-400">
                             <span class="font-medium">{_`Raffle ends on:`}</span> {formatDate(raffle.value.expiresAt)}
@@ -192,7 +201,7 @@ export default component$(() => {
                         <LuUsers class="w-6 h-6 text-purple-600" />
                         <div>
                             <div class="text-sm text-purple-600">{_`Sold Tickets`}</div>
-                            <div class="text-xl sm:text-2xl font-bold">{soldCount}/{raffle.value?.numberCount}</div>
+                            <div class="text-xl sm:text-2xl font-bold">{soldCount}/{raffle.value.numberCount}</div>
                         </div>
                     </div>
                 </div>
@@ -202,7 +211,7 @@ export default component$(() => {
                         <LuCreditCard class="w-6 h-6 text-purple-600" />
                         <div>
                             <div class="text-sm text-purple-600">{_`Paid Tickets`}</div>
-                            <div class="text-xl sm:text-2xl font-bold">{paidCount}/{raffle.value?.numberCount}</div>
+                            <div class="text-xl sm:text-2xl font-bold">{paidCount}/{raffle.value.numberCount}</div>
                         </div>
                     </div>
                 </div>
@@ -213,7 +222,7 @@ export default component$(() => {
                         <div>
                             <div class="text-sm text-purple-600">{_`Total Collected`}</div>
                             <div class="text-xl sm:text-2xl font-bold">${totalCollected.toFixed(2)}</div>
-                            <div class="text-xs text-purple-400">{_`Price per ticket: `}${raffle.value?.pricePerNumber.toFixed(2)}</div>
+                            <div class="text-xs text-purple-400">{_`Price per ticket: `}${raffle.value.pricePerNumber.toFixed(2)}</div>
                         </div>
                     </div>
                 </div>
@@ -256,7 +265,7 @@ export default component$(() => {
                             <Ticket
                                 key={ticket.number}
                                 ticket={ticket}
-                                raffleId={raffle.value?.id || 0}
+                                raffleId={raffle.value.id || 0}
                             />
                         ))
                     }
@@ -282,14 +291,14 @@ export default component$(() => {
             </div>
 
             {/* Prizes list */}
-            {raffle.value?.prizes && raffle.value?.prizes.length > 0 && (
+            {raffle.value.prizes && raffle.value.prizes.length > 0 && (
                 <div class="border rounded-lg p-4">
                     <div class="flex items-center gap-2 mb-3">
                         <LuGift class="w-5 h-5 text-purple-600" />
                         <h3 class="font-semibold text-purple-800">{_`Prizes`}</h3>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                        {raffle.value?.prizes.sort((a, b) => a.position - b.position).map((prize) => (
+                        {raffle.value.prizes.sort((a, b) => a.position - b.position).map((prize) => (
                             <div 
                                 key={prize.id}
                                 class="flex items-center gap-2 bg-purple-50 rounded-md p-3"
@@ -313,13 +322,8 @@ export default component$(() => {
                     {_`Finalize and Draw`}
                 </button>
                 <button
-                    onClick$={() => {
-                        if (confirm(_`Are you sure you want to reset the raffle? This will delete all data.`)) {
-                            // Aquí iría la lógica para resetear el sorteo
-                            alert(_`Raffle reset`);
-                        }
-                    }}
-                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2"
+                    onClick$={() => showResetConfirmation.value = true}
+                    class="action-button secondary px-4 py-2 rounded-md transition-colors flex items-center gap-2"
                 >
                     <LuTrash2 class="w-4 h-4" />
                     {_`Reset Raffle`}
@@ -340,7 +344,7 @@ export default component$(() => {
                             </button>
                         </div>
                         <p class="mb-4">
-                            {_`Are you sure you want to finalize the raffle and draw ${raffle.value?.prizes?.length || 0} prize(s)?`}
+                            {_`Are you sure you want to finalize the raffle and draw ${raffle.value.prizes.length} prize(s)?`}
                         </p>
                         {!!raffleNumbers.value.filter(t => t.status === "sold-unpaid").length && (
                             <p class="mb-4 text-amber-600">
@@ -359,6 +363,40 @@ export default component$(() => {
                                 class="action-button success px-4 py-2 rounded-md transition-colors"
                             >
                                 {_`Continue with the draw`}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Confirmation modal for reset */}
+            {showResetConfirmation.value && (
+                <div class="confirmation-dialog">
+                    <div class="confirmation-content">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="confirmation-title text-red-600">{_`Confirm Reset`}</h2>
+                            <button
+                                onClick$={() => showResetConfirmation.value = false}
+                                class="text-gray-500 hover:text-gray-700"
+                            >
+                                <LuX class="w-5 h-5" />
+                            </button>
+                        </div>
+                        <p class="mb-4">
+                            {_`Are you sure you want to reset the raffle? This will delete all data.`}
+                        </p>
+                        <div class="confirmation-actions">
+                            <button
+                                onClick$={() => showResetConfirmation.value = false}
+                                class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                            >
+                                {_`Cancel`}
+                            </button>
+                            <button
+                                onClick$={confirmReset}
+                                class="action-button danger px-4 py-2 rounded-md transition-colors"
+                            >
+                                {_`Reset Raffle`}
                             </button>
                         </div>
                     </div>
