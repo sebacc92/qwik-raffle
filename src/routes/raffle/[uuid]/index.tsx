@@ -7,6 +7,7 @@ import Ticket from "~/components/raffle/ticket";
 import { LuUsers, LuCreditCard, LuDollarSign, LuGift, LuSearch, LuLink, LuDownload, LuTrash2, LuTrophy, LuX } from '@qwikest/icons/lucide';
 import { useNavigate } from "@builder.io/qwik-city";
 import { _ } from "compiled-i18n";
+import { Button } from "~/components/ui";
 
 export { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 
@@ -314,20 +315,21 @@ export default component$(() => {
             )}
 
             <div class="flex justify-center gap-4">
-                <button
+                <Button
                     onClick$={startDrawProcess}
                     class="action-button success px-4 py-2 rounded-md transition-colors flex items-center gap-2"
                 >
                     <LuTrophy class="w-4 h-4" />
                     {_`Finalize and Draw`}
-                </button>
-                <button
+                </Button>
+                <Button
+                    look="outline"
                     onClick$={() => showResetConfirmation.value = true}
-                    class="action-button secondary px-4 py-2 rounded-md transition-colors flex items-center gap-2"
+                    class="gap-2 text-danger border-base border-danger"
                 >
                     <LuTrash2 class="w-4 h-4" />
                     {_`Reset Raffle`}
-                </button>
+                </Button>
             </div>
 
             {/* Confirmation modal for draw */}
@@ -386,18 +388,19 @@ export default component$(() => {
                             {_`Are you sure you want to reset the raffle? This will delete all data.`}
                         </p>
                         <div class="confirmation-actions">
-                            <button
+                            <Button
                                 onClick$={() => showResetConfirmation.value = false}
                                 class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
                             >
                                 {_`Cancel`}
-                            </button>
-                            <button
+                            </Button>
+                            <Button
+                                look="danger"
                                 onClick$={confirmReset}
                                 class="action-button danger px-4 py-2 rounded-md transition-colors"
                             >
                                 {_`Reset Raffle`}
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>

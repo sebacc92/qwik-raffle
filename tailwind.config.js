@@ -42,6 +42,10 @@ export default {
                     DEFAULT: "hsl(var(--alert))",
                     foreground: "hsl(var(--alert-foreground))",
                 },
+                danger: {
+                    DEFAULT: "hsl(var(--danger))",
+                    foreground: "hsl(var(--danger-foreground))",
+                },
                 'poll-option-hover': 'rgba(var(--color-primary-rgb), 0.05)',
             },
             borderRadius: {

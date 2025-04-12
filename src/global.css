@@ -47,6 +47,8 @@
         --accent-foreground: 218 44% 19.6%;
         --alert: 25 100% 50%;
         --alert-foreground: 240 20% 99%;
+        --danger: 0 84.2% 60.2;
+        --danger-foreground: 240 20% 99%;
         --ring: 218 44% 19.6%;
         --border-width: 0px;
         --border-radius: 0;
@@ -132,6 +134,8 @@
         --accent-foreground: 240 20% 99%;
         --alert: 25 100% 50%;
         --alert-foreground: 240 20% 99%;
+        --danger: 0 84.2% 60.2%;
+        --danger-foreground: 240 20% 99%;
         --ring: 192 91.4% 36.5%;
         --border-width: 0px;
         --border-radius: 0;

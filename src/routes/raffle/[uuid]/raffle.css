@@ -463,15 +463,6 @@
     box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
 }
 
-.action-button.danger {
-    background-color: #EF4444;
-    color: white;
-}
-
-.action-button.danger:hover {
-    background-color: #DC2626;
-}
-
 .action-button.warning {
     background-color: #F59E0B;
     color: white;

@@ -13,6 +13,8 @@ export const buttonVariants = cva(
           "border-base bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/90 active:shadow-base active:press",
         alert:
           "border-base bg-alert text-alert-foreground shadow-sm hover:bg-alert/90 active:shadow-base active:press",
+        danger:
+          "border-base bg-danger text-danger-foreground shadow-sm hover:bg-danger/90 active:shadow-base active:press",
         outline:
           "border bg-background text-foreground shadow-sm hover:bg-accent active:shadow-base active:press",
         ghost: "text-accent-foreground hover:bg-accent",
