@@ -14,7 +14,7 @@ export default component$(() => {
     const show = useSignal(false);
 
     return (
-        <header class="w-full py-2 px-4 md:px-6 flex items-center justify-between border-b border-border shadow-sm sticky top-0 z-30 bg-background/95 backdrop-blur-sm">
+        <header class="w-full py-2 px-4 md:px-6 flex items-center justify-between border-b border-border shadow-xs sticky top-0 z-30 bg-background/95 backdrop-blur-sm">
             <div class="flex items-center">
                 <Link href="/" class="flex items-center">
                     <LuGift class="h-8 w-8 text-primary dark:text-purple-400 animate-pulse" />
@@ -54,13 +54,13 @@ export default component$(() => {
                 ) : (
                     <>
                         <Modal.Root bind:show={show}>
-                            <Modal.Trigger class="transition-all duration-200 hover:font-semibold">
+                            <Modal.Trigger class="transition-all duration-200 hover:font-medium">
                                 {_`Sign In`}
                             </Modal.Trigger>
                             <Modal.Panel>
                                 <div class="flex items-center justify-between">
                                     <Modal.Title>{_`Login`}</Modal.Title>
-                                    <Modal.Close class="hover:scale-110 transition-transform duration-200">
+                                    <Modal.Close class="transition-transform duration-200">
                                         <LuX class="h-5 w-5" />
                                     </Modal.Close>
                                 </div>
@@ -68,9 +68,9 @@ export default component$(() => {
                                 <SocialLoginButtons />
                             </Modal.Panel>
                         </Modal.Root>
-                        <Link href="/signup" class="text-primary dark:text-purple-400">
+                        <Link href="/signup">
                             <Button
-                                class="bg-primary hover:bg-primary-hover text-white rounded-lg px-4 py-2"
+                                look="primary"
                             >
                                 {_`Sign Up`}
                             </Button>

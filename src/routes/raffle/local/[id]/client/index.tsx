@@ -123,7 +123,7 @@ export default component$(() => {
             </div>
 
             {/* Contact information */}
-            <div class="text-center text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="text-center text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-xs border border-gray-200 dark:border-gray-700">
                 <p>{_`Contact the raffle organizer to reserve your numbers`}</p>
             </div>
         </div>

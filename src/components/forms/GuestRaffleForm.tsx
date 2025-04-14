@@ -287,7 +287,7 @@ export default component$(() => {
                     <input
                         id="raffle-name"
                         type="text"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-white"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-xs focus:outline-hidden focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-white"
                         value={formData.name}
                         onInput$={(e) => formData.name = (e.target as HTMLInputElement).value}
                         maxLength={100}
@@ -304,7 +304,7 @@ export default component$(() => {
                     </label>
                     <textarea
                         id="raffle-description"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-white"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-xs focus:outline-hidden focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-white"
                         rows={3}
                         value={formData.description}
                         onInput$={(e) => formData.description = (e.target as HTMLTextAreaElement).value}
@@ -323,7 +323,7 @@ export default component$(() => {
                         <input
                             id="ticket-count"
                             type="number"
-                            class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-white"
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-xs focus:outline-hidden focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-white"
                             value={formData.ticketCount}
                             onInput$={(e) => formData.ticketCount = parseInt((e.target as HTMLInputElement).value) || 0}
                             min={1}
@@ -339,14 +339,14 @@ export default component$(() => {
                         <label for="ticket-price" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             {_`Ticket price`} <span class="text-red-500">*</span>
                         </label>
-                        <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="mt-1 relative rounded-md shadow-xs">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <span class="text-gray-500 dark:text-gray-400 sm:text-sm">$</span>
                             </div>
                             <input
                                 id="ticket-price"
                                 type="number"
-                                class="pl-7 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-white"
+                                class="pl-7 block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-xs focus:outline-hidden focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-white"
                                 value={formData.ticketPrice}
                                 onInput$={(e) => formData.ticketPrice = parseFloat((e.target as HTMLInputElement).value) || 0}
                                 min={0.01}
@@ -369,7 +369,7 @@ export default component$(() => {
                             <button
                                 type="button"
                                 onClick$={addPrize}
-                                class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                                class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-hover focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                             >
                                 <LuPlus class="mr-1" /> {_`Add Prize`}
                             </button>
@@ -382,7 +382,7 @@ export default component$(() => {
                                 <div class="flex-grow">
                                     <input
                                         type="text"
-                                        class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-white"
+                                        class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-xs focus:outline-hidden focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-white"
                                         value={prize.name}
                                         onInput$={(e) => formData.prizes[index].name = (e.target as HTMLInputElement).value}
                                         placeholder={_`Prize name`+" "+(index + 1)}
@@ -395,7 +395,7 @@ export default component$(() => {
                                     <button
                                         type="button"
                                         onClick$={() => removePrize(index)}
-                                        class="inline-flex items-center p-2 border border-transparent text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mt-1"
+                                        class="inline-flex items-center p-2 border border-transparent text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mt-1"
                                         aria-label={_`Delete prize`}
                                     >
                                         <LuTrash />
@@ -418,7 +418,7 @@ export default component$(() => {
                 <div class="flex justify-end">
                     <button
                         type="submit"
-                        class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-xs text-white bg-primary hover:bg-primary-hover focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={isSaving.value || !isIndexedDBAvailable.value}
                     >
                         {isSaving.value ? (

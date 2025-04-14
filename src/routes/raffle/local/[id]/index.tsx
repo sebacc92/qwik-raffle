@@ -706,7 +706,7 @@ export default component$(() => {
                     <input
                         type="text"
                         placeholder={_`Search by number or name`}
-                        class="pl-10 w-full border border-purple-200 rounded-md p-2 transition-all focus:border-purple-400 focus:ring-2 focus:ring-purple-200 outline-none"
+                        class="pl-10 w-full border border-purple-200 rounded-md p-2 transition-all focus:border-purple-400 focus:ring-2 focus:ring-purple-200 outline-hidden"
                         value={search.value}
                         onInput$={(e: any) => search.value = e.target.value}
                     />

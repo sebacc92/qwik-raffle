@@ -10,8 +10,8 @@ export default component$(() => {
     return (
         <div class="flex flex-row gap-4 w-full">
             <button
-                class="flex-1 w-full flex items-center justify-center px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm 
-                    text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none 
+                class="flex-1 w-full flex items-center justify-center px-4 py-2.5 border border-gray-300 rounded-lg shadow-xs 
+                    text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-hidden 
                     focus:ring-2 focus:ring-offset-2 focus:ring-[#713fc2] transition-colors duration-200 disabled:opacity-50"
                 onClick$={async () => {
                     loading.value = 'google'
@@ -26,8 +26,8 @@ export default component$(() => {
                 {loading.value === 'google' && <LuLoader2 class="ml-2 h-5 w-5 animate-spin" />}
             </button>
             <button
-                class="flex-1 w-full flex items-center justify-center px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm 
-                    text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none 
+                class="flex-1 w-full flex items-center justify-center px-4 py-2.5 border border-gray-300 rounded-lg shadow-xs 
+                    text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-hidden 
                     focus:ring-2 focus:ring-offset-2 focus:ring-[#713fc2] transition-colors duration-200"
                 onClick$={async () => {
                     loading.value = 'github'

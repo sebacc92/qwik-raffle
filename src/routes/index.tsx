@@ -18,7 +18,7 @@ export default component$(() => {
             <div class="container mx-auto px-4 md:px-6 relative">
               <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
                 <div class="space-y-6">
-                  <div class="inline-flex items-center rounded-full border-2 border-primary/30 bg-primary/10 px-4 py-2 text-sm font-medium text-primary shadow-sm animate-fadeIn">
+                  <div class="inline-flex items-center rounded-full border-2 border-primary/30 bg-primary/10 px-4 py-2 text-sm font-medium text-primary shadow-xs animate-fadeIn">
                     <LuStar class="mr-2 h-4 w-4 text-primary text-yellow-500 fill-current" />
                     <span>{_`The easiest way to organize online raffles`}</span>
                   </div>
@@ -37,7 +37,7 @@ export default component$(() => {
                     </Link>
                     <Link
                       href="#features"
-                      class="inline-flex h-12 items-center justify-center rounded-base border border-primary px-8 text-base font-medium text-primary shadow-sm transition-all hover:bg-primary/10 press"
+                      class="inline-flex h-12 items-center justify-center rounded-base border border-primary px-8 text-base font-medium text-primary shadow-xs transition-all hover:bg-primary/10 press"
                     >
                       {_`Discover Features`}
                     </Link>
@@ -81,7 +81,7 @@ export default component$(() => {
               </div>
               <div class="mx-auto grid max-w-5xl items-center gap-8 py-12 md:grid-cols-2 lg:grid-cols-4 text-center">
                 {/* Feature 1 */}
-                <div class="flex flex-col items-center space-y-4 rounded-xl border p-6 shadow-sm transition-all hover:shadow-md hover:border-primary/50 bg-card">
+                <div class="flex flex-col items-center space-y-4 rounded-xl border p-6 shadow-xs transition-all hover:shadow-md hover:border-primary/50 bg-card">
                   <div class="rounded-full bg-primary/10 p-4">
                     <LuClock class="h-10 w-10 text-primary" />
                   </div>
@@ -92,7 +92,7 @@ export default component$(() => {
                 </div>
 
                 {/* Feature 2 */}
-                <div class="flex flex-col items-center space-y-4 rounded-xl border p-6 shadow-sm transition-all hover:shadow-md hover:border-primary/50 bg-card">
+                <div class="flex flex-col items-center space-y-4 rounded-xl border p-6 shadow-xs transition-all hover:shadow-md hover:border-primary/50 bg-card">
                   <div class="rounded-full bg-primary/10 p-4">
                     <LuShare class="h-10 w-10 text-primary" />
                   </div>
@@ -103,7 +103,7 @@ export default component$(() => {
                 </div>
 
                 {/* Feature 3 */}
-                <div class="flex flex-col items-center space-y-4 rounded-xl border p-6 shadow-sm transition-all hover:shadow-md hover:border-primary/50 bg-card">
+                <div class="flex flex-col items-center space-y-4 rounded-xl border p-6 shadow-xs transition-all hover:shadow-md hover:border-primary/50 bg-card">
                   <div class="rounded-full bg-primary/10 p-4">
                     <LuTrophy class="h-10 w-10 text-primary" />
                   </div>
@@ -114,7 +114,7 @@ export default component$(() => {
                 </div>
 
                 {/* Feature 4 */}
-                <div class="flex flex-col items-center space-y-4 rounded-xl border p-6 shadow-sm transition-all hover:shadow-md hover:border-primary/50 bg-card">
+                <div class="flex flex-col items-center space-y-4 rounded-xl border p-6 shadow-xs transition-all hover:shadow-md hover:border-primary/50 bg-card">
                   <div class="rounded-full bg-primary/10 p-4">
                     <LuSettings class="h-10 w-10 text-primary" />
                   </div>
@@ -148,7 +148,7 @@ export default component$(() => {
 
               <div class="mx-auto grid max-w-4xl gap-6 py-12 lg:grid-cols-3">
                 {/* Plan Básico */}
-                <div id="plan-basico" class="flex flex-col rounded-xl border bg-card shadow-sm hover:shadow-md transition-all h-full">
+                <div id="plan-basico" class="flex flex-col rounded-xl border bg-card shadow-xs hover:shadow-md transition-all h-full">
                   <div class="p-6 flex flex-col h-full">
                     <div class="flex justify-between items-center mb-4">
                       <h3 class="text-2xl font-bold">{_`Basic`}</h3>
@@ -162,31 +162,31 @@ export default component$(() => {
                     </div>
                     <ul class="mt-6 space-y-3 flex-grow">
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Storage`}: <span class="font-medium">{_`Local (Browser)`}</span></span>
                       </li>
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Ticket limit`}: <span class="font-medium">{_`Up to 100`}</span></span>
                       </li>
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Active raffles`}: <span class="font-medium">{_`1 at a time`}</span></span>
                       </li>
                       <li class="flex items-start">
-                        <LuX class="mr-2 h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
                         <span class="text-muted-foreground">{_`Customization`}</span>
                       </li>
                       <li class="flex items-start">
-                        <LuX class="mr-2 h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
                         <span class="text-muted-foreground">{_`Detailed statistics`}</span>
                       </li>
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Support`}: <span class="font-medium">{_`Community`}</span></span>
                       </li>
                       <li class="flex items-start">
-                        <LuX class="mr-2 h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
                         <span class="text-muted-foreground">{_`No ads`}</span>
                       </li>
                     </ul>
@@ -194,7 +194,7 @@ export default component$(() => {
                   <div class="p-6 pt-0 mt-4">
                     <Link
                       href="/raffle/create"
-                      class="inline-flex h-10 w-full items-center justify-center rounded-base border border-primary bg-card px-8 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary/10 hover:text-primary press"
+                      class="inline-flex h-10 w-full items-center justify-center rounded-base border border-primary bg-card px-8 text-sm font-medium text-primary shadow-xs transition-colors hover:bg-primary/10 hover:text-primary press"
                     >
                       {_`Get Started`}
                     </Link>
@@ -202,7 +202,7 @@ export default component$(() => {
                 </div>
 
                 {/* Plan Gratis */}
-                <div id="plan-gratis" class="flex flex-col rounded-xl border bg-card shadow-sm hover:shadow-md transition-all h-full">
+                <div id="plan-gratis" class="flex flex-col rounded-xl border bg-card shadow-xs hover:shadow-md transition-all h-full">
                   <div class="p-6 flex flex-col h-full">
                     <div class="flex justify-between items-center mb-4">
                       <h3 class="text-2xl font-bold">{_`Free`}</h3>
@@ -216,38 +216,38 @@ export default component$(() => {
                     </div>
                     <ul class="mt-6 space-y-3 flex-grow">
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Storage`}: <span class="font-medium">{_`Cloud`}</span></span>
                       </li>
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Ticket limit`}: <span class="font-medium">{_`Up to 1,000`}</span></span>
                       </li>
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Active raffles`}: <span class="font-medium">{_`1 at a time`}</span></span>
                       </li>
                       <li class="flex items-start">
-                        <LuX class="mr-2 h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
                         <span class="text-muted-foreground">{_`Customization`}</span>
                       </li>
                       <li class="flex items-start">
-                        <LuX class="mr-2 h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
                         <span class="text-muted-foreground">{_`Detailed statistics`}</span>
                       </li>
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Support`}: <span class="font-medium">{_`Standard`}</span></span>
                       </li>
                       <li class="flex items-start">
-                        <LuX class="mr-2 h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                        <LuX class="mr-2 h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
                         <span class="text-muted-foreground">{_`No ads`}</span>
                       </li>
                     </ul>
                   </div>
                   <div class="p-6 pt-0 mt-4">
                     <Link
-                      class="inline-flex h-10 w-full items-center justify-center rounded-base border border-primary bg-card px-8 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary/10 press"
+                      class="inline-flex h-10 w-full items-center justify-center rounded-base border border-primary bg-card px-8 text-sm font-medium text-primary shadow-xs transition-colors hover:bg-primary/10 press"
                       href="/signup"
                     >
                       {_`Register for Free`}
@@ -273,31 +273,31 @@ export default component$(() => {
                     </div>
                     <ul class="mt-6 space-y-3 flex-grow">
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Storage`}: <span class="font-medium">{_`Cloud`}</span></span>
                       </li>
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Ticket limit`}: <span class="font-medium">{_`Up to 10,000`}</span></span>
                       </li>
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Active raffles`}: <span class="font-medium">{_`Unlimited`}</span></span>
                       </li>
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Advanced customization`}</span>
                       </li>
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Detailed statistics & analytics`}</span>
                       </li>
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Support`}: <span class="font-medium">{_`Priority`}</span></span>
                       </li>
                       <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`No ads`}</span>
                       </li>
                     </ul>
@@ -334,7 +334,7 @@ export default component$(() => {
               </div>
               <div class="mx-auto grid max-w-5xl gap-6 py-12 md:grid-cols-2 lg:grid-cols-3">
                 {/* Testimonial 1 */}
-                <div class="flex flex-col rounded-xl border p-6 shadow-sm hover:shadow-md transition-all bg-card">
+                <div class="flex flex-col rounded-xl border p-6 shadow-xs hover:shadow-md transition-all bg-card">
                   <div class="flex-1">
                     <div class="flex items-center mb-4">
                       {[1, 2, 3, 4, 5].map((star) => (
@@ -357,7 +357,7 @@ export default component$(() => {
                 </div>
 
                 {/* Testimonial 2 */}
-                <div class="flex flex-col rounded-xl border p-6 shadow-sm hover:shadow-md transition-all bg-card">
+                <div class="flex flex-col rounded-xl border p-6 shadow-xs hover:shadow-md transition-all bg-card">
                   <div class="flex-1">
                     <div class="flex items-center mb-4">
                       {[1, 2, 3, 4, 5].map((star) => (
@@ -380,7 +380,7 @@ export default component$(() => {
                 </div>
 
                 {/* Testimonial 3 */}
-                <div class="flex flex-col rounded-xl border p-6 shadow-sm hover:shadow-md transition-all bg-card">
+                <div class="flex flex-col rounded-xl border p-6 shadow-xs hover:shadow-md transition-all bg-card">
                   <div class="flex-1">
                     <div class="flex items-center mb-4">
                       {[1, 2, 3, 4, 5].map((star) => (

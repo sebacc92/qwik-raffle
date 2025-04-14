@@ -13,7 +13,7 @@ export { useFormRaffleLoader } from "~/shared/forms/loaders";
 export { useFormRaffleAction } from "~/shared/forms/actions";
 
 export const PremiumInfoAlert = () => (
-  <div class="rounded-lg border border-primary/20 bg-gradient-to-br from-card to-primary/5 p-6 text-card-foreground shadow-sm transition-all hover:shadow-md">
+  <div class="rounded-lg border border-primary/20 bg-gradient-to-br from-card to-primary/5 p-6 text-card-foreground shadow-xs transition-all hover:shadow-md">
     <h3 class="text-xl font-semibold mb-4 flex items-center text-primary">
       <span class="bg-primary/10 p-2 rounded-full mr-2">✨</span>
       {_`Premium Benefits`}
@@ -48,7 +48,7 @@ export const PremiumInfoAlert = () => (
 );
 
 export const BasicInfoAlert = () => (
-  <div class="rounded-lg border bg-card p-6 text-card-foreground shadow-sm transition-all hover:shadow-md">
+  <div class="rounded-lg border bg-card p-6 text-card-foreground shadow-xs transition-all hover:shadow-md">
     <h3 class="text-xl font-semibold mb-4 flex items-center">
       <span class="bg-primary/10 p-2 rounded-full mr-2">✨</span>
       {_`Basic Account Features`}
@@ -86,7 +86,7 @@ export const ActiveRaffleAlert = component$(() => {
   return (
     <div class="w-full mb-4 lg:mb-0 p-4 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 rounded-lg">
       <div class="flex items-start">
-        <div class="flex-shrink-0 mt-0.5">
+        <div class="shrink-0 mt-0.5">
           <LuAlertTriangle class="w-5 h-5 text-amber-500 dark:text-amber-400" />
         </div>
         <div class="ml-3">
@@ -101,10 +101,10 @@ export const ActiveRaffleAlert = component$(() => {
             </ul>
           </div>
           <div class="mt-4 flex gap-3">
-            <a href="/users/me" class="inline-flex items-center px-4 py-2 border border-amber-300 dark:border-amber-700 text-sm font-medium rounded-md text-amber-800 dark:text-amber-300 bg-transparent hover:bg-amber-100 dark:hover:bg-amber-800/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+            <a href="/users/me" class="inline-flex items-center px-4 py-2 border border-amber-300 dark:border-amber-700 text-sm font-medium rounded-md text-amber-800 dark:text-amber-300 bg-transparent hover:bg-amber-100 dark:hover:bg-amber-800/30 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
               {_`View My Raffles`}
             </a>
-            <a href="/app/premium" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+            <a href="/app/premium" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-xs text-white bg-primary hover:bg-primary-hover focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary">
               {_`Upgrade to Premium`}
             </a>
           </div>
@@ -118,7 +118,7 @@ export const InfoAlert = component$(() => {
   return (
       <div class="w-full mb-4 lg:mb-0 p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg">
           <div class="flex items-start">
-              <div class="flex-shrink-0 mt-0.5">
+              <div class="shrink-0 mt-0.5">
                   <LuInfo class="w-5 h-5 text-blue-500 dark:text-blue-400" />
               </div>
               <div class="ml-3">
@@ -132,7 +132,7 @@ export const InfoAlert = component$(() => {
                       <li>{_`The application is not responsible for any loss of locally saved raffle data.`}</li>
                   </ul>
                   <div class="mt-4">
-                      <a href="/register" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                      <a href="/register" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-xs text-white bg-primary hover:bg-primary-hover focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                           {_`Register for Free`}
                       </a>
                   </div>
@@ -178,10 +178,10 @@ export default component$(() => {
                 <h3 class="mt-4 text-lg font-medium text-gray-900 dark:text-gray-100">{_`Unable to create a new raffle`}</h3>
                 <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">{_`You already have an active raffle. Free users can only have one active raffle at a time.`}</p>
                 <div class="mt-6 flex justify-center gap-3">
-                  <a href="/users/me" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                  <a href="/users/me" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                     {_`Manage Raffles`}
                   </a>
-                  <a href="/app/premium" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                  <a href="/app/premium" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-xs text-white bg-primary hover:bg-primary-hover focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                     {_`Upgrade to Premium`}
                   </a>
                 </div>

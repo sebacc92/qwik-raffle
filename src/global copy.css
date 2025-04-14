@@ -1,0 +1,705 @@
+@import "tailwindcss";
+
+@layer base {
+    :root {
+        --primary: 192 91.4% 36.5%;
+        --primary-hover: 193 82.3% 31%;
+
+        --bg-primary: 210 20% 98%;
+        --bg-secondary: 220 14.3% 95.9%;
+        --bg-tertiary: 210 40% 96.1%;
+
+        --text-primary: 217 32.6% 17.5%;
+        --text-secondary: 215 16.3% 46.9%;
+        --text-tertiary: 215 20.2% 65.1%;
+
+        --border-color: 214 31.8% 91.4%;
+        --card-bg: 0 0% 100%;
+        --card-hover: #f8fafc;
+
+        --poll-option-bg: 210 40% 96.1%;
+        --poll-option-hover: 214 31.8% 91.4%;
+        --poll-progress-bg: 214 31.8% 91.4%;
+
+        /* Buttons */
+        --button-success: 142 76.2% 36.3%;
+        --button-success-foreground: 0 0% 100%;
+        --button-cancel: 0 72.2% 50.6%;
+        --button-cancel-foreground: 0 0% 100%;
+
+        /* Estados */
+        --like-color: #3b82f6;
+        --dislike-color: #ef4444;
+        --comment-color: #8b5cf6;
+        --share-color: #10b981;
+
+        --background: 0 0% 100%; 
+        --foreground: 218 44% 19.6%;
+        --muted: 210 57.1% 97.3%;
+        --muted-foreground: 210 14.3% 53.3%;
+        --popover: 0 0% 100%; 
+        --popover-foreground: 218 44% 19.6%;
+        --card: 0 0% 100%; 
+        --card-foreground: 218 44% 19.6%;
+        --border: #e9eff8;
+        --input: #e9eff8;
+        --primary-foreground: 0 0% 100%; 
+        --secondary: 218 44% 19.6%;
+        --secondary-foreground: 0 0% 100%;
+        --accent: 210 57.1% 97.3%;
+        --accent-foreground: 218 44% 19.6%;
+        --alert: 25 100% 50%;
+        --alert-foreground: 240 20% 99%;
+        --danger: 0 84.2% 60.2;
+        --danger-foreground: 240 20% 99%;
+        --ring: 218 44% 19.6%;
+        --border-width: 0px;
+        --border-radius: 0;
+        --shadow-base: 0 1px 2px 0 rgba(0, 0, 0, 0.01);
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+            0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+            0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 1);
+        --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.01);
+        --transform-press: scale(0.95);
+
+        /* Sidebar y Header */
+        --sidebar-bg: #f8fafc;
+        --sidebar-hover: 210 40% 96.1%;
+        --sidebar-active: 214 31.8% 91.4%;
+        --sidebar-text: #64748b;
+        --sidebar-text-active: #0f172a;
+        --sidebar-border: 214 31.8% 91.4%;
+
+        --header-bg: linear-gradient(to right, var(--qwik-dark-purple), var(--qwik-purple));
+        --header-border: 214 31.8% 91.4%;
+        --header-text: 0 0% 100%;
+        --header-input-bg: #f8fafc;
+        --header-input-text: #0f172a;
+        --header-input-placeholder: 215 20.2% 65.1%;
+
+        --qwik-light-purple: #ac7ff4;
+        --qwik-purple: #9b60ed;
+        --qwik-dark-purple: #713fc2;
+        --qwik-darker-purple: #4e2d99;
+
+        /* Variables para odales */
+        --modal-border: #e9d5ff;
+        --modal-shadow: 0 10px 25px -5px rgba(107, 33, 168, 0.2), 0 8px 10px -6px rgba(107, 33, 168, 0.1);
+        --modal-bg: 0 0% 100%;
+        --modal-radius: 1rem;
+        --modal-header-color: #6b21a8;
+        --modal-text-color: #7e22ce;
+    }
+
+    .dark {
+        --bg-primary: 221 39.3% 11%;
+        --bg-secondary: 215 27.9% 16.9%;
+        --bg-tertiary: 215 25% 26.7%;
+
+        --text-primary: 210 40% 96.1%;
+        --text-secondary: 213 26.8% 83.9%;
+        --text-tertiary: 215 20.2% 65.1%;
+
+        --border-color: 215 25% 26.7%;
+        --card-bg: 217 32.6% 17.5%;
+        --card-hover: 215 25% 26.7%;
+
+        --poll-option-bg: 215 25% 26.7%;
+        --poll-option-hover: #475569;
+        --poll-progress-bg: #475569;
+
+        /* Buttons */
+        --button-success: 160 84.1% 39.4%;
+
+        /* Estados en modo oscuro */
+        --like-color: #60a5fa;
+        --dislike-color: #f87171;
+        --comment-color: #a78bfa;
+        --share-color: #34d399;
+
+        --background: #0a0f1a;
+        --foreground: 240 20% 99%;
+        --muted: 214 26.2% 23.9%;
+        --muted-foreground: #a6b1c0;
+        --popover: #0a0f1a;
+        --popover-foreground: 240 20% 99%;
+        --card: #0a0f1a;
+        --card-foreground: 240 20% 99%;
+        --border: 214 26.2% 23.9%;
+        --input: 214 26.2% 23.9%;
+        --primary: 192 91.4% 36.5%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 210 57.1% 97.3%;
+        --secondary-foreground: #000000;
+        --accent: 214 26.2% 23.9%;
+        --accent-foreground: 240 20% 99%;
+        --alert: 25 100% 50%;
+        --alert-foreground: 240 20% 99%;
+        --danger: 0 84.2% 60.2%;
+        --danger-foreground: 240 20% 99%;
+        --ring: 192 91.4% 36.5%;
+        --border-width: 0px;
+        --border-radius: 0;
+        --shadow-base: 0 1px 2px 0 rgba(0, 0, 0, 0.01);
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 0px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+            0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+            0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 1);
+        --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.01);
+        --transform-press: scale(0.95);
+
+        /* Sidebar y Header en modo oscuro */
+        --sidebar-bg: 217 32.6% 17.5%;
+        --sidebar-hover: 215 25% 26.7%;
+        --sidebar-active: #475569;
+        --sidebar-text: 215 20.2% 65.1%;
+        --sidebar-text-active: #f8fafc;
+        --sidebar-border: 215 25% 26.7%;
+
+        --header-bg: linear-gradient(to right, var(--qwik-darker-purple), var(--qwik-dark-purple));
+        --header-border: 217 32.6% 17.5%;
+        --header-text: 0 0% 100%;
+        --header-input-bg: 217 32.6% 17.5%;
+        --header-input-text: #f8fafc;
+        --header-input-placeholder: #64748b;
+
+        --modal-border: #4a044e;
+        --modal-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+        --modal-bg: #1e1b4b;
+        --modal-radius: 1rem;
+        --modal-header-color: #d8b4fe;
+        --modal-text-color: #c084fc;
+    }
+}
+
+@keyframes spin-fast {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin-fast {
+    animation: spin-fast 7s linear infinite;
+}
+
+/* Estilos generales */
+body {
+    @apply bg-gray-50 dark:bg-gray-900;
+    color: hsl(var(--text-primary));
+}
+
+textarea {
+    field-sizing: content;
+}
+
+.poll-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+    transition: all 0.2s ease-in-out;
+}
+
+.poll-card:hover {
+    background-color: var(--card-hover);
+    box-shadow: var(--shadow-md);
+}
+
+.poll-option {
+    background-color: var(--poll-option-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 0.75rem 0;
+    transition: all 0.2s ease;
+}
+
+.poll-option:hover {
+    background-color: var(--poll-option-hover);
+    transform: translateY(-1px);
+}
+
+.poll-progress {
+    background-color: var(--poll-progress-bg);
+    border-radius: 9999px;
+    height: 0.5rem;
+    overflow: hidden;
+}
+
+.poll-progress-bar {
+    background-color: var(--primary);
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.btn-interaction {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+}
+
+.btn-like:hover {
+    color: var(--like-color);
+}
+
+.btn-dislike:hover {
+    color: var(--dislike-color);
+}
+
+.btn-comment:hover {
+    color: var(--comment-color);
+}
+
+.btn-share:hover {
+    color: var(--share-color);
+}
+
+.sidebar {
+    @apply bg-gray-100 dark:bg-gray-800;
+    /* Color del sidebar */
+    border-right: 1px solid var(--border-color);
+}
+
+.sidebar-item {
+    color: var(--sidebar-text);
+    transition: all 0.2s ease;
+}
+
+.sidebar-item:hover {
+    background-color: var(--sidebar-hover);
+}
+
+.sidebar-item.active {
+    background-color: var(--sidebar-active);
+    color: var(--sidebar-text-active);
+}
+
+/* Estilos para el Header */
+.header {
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--header-border);
+}
+
+.header-search {
+    background-color: var(--header-input-bg);
+    color: var(--header-input-text);
+}
+
+.header-search::placeholder {
+    color: var(--header-input-placeholder);
+}
+
+.cursor-col-resize {
+    cursor: col-resize;
+}
+
+.user-select-none {
+    user-select: none;
+}
+
+.community-item-container {
+    position: relative;
+}
+
+.level-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: var(--border-color);
+    opacity: 0.5;
+}
+
+.sticky-header {
+    position: sticky;
+    background-color: var(--bg-secondary);
+    z-index: 10;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.sticky-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to bottom,
+            transparent,
+            var(--border-color));
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.sticky-header.is-sticky::after {
+    opacity: 1;
+}
+
+.sticky-header-level-0 {
+    z-index: 30;
+}
+
+.sticky-header-level-1 {
+    z-index: 29;
+}
+
+.sticky-header-level-2 {
+    z-index: 28;
+}
+
+.sticky-header-level-3 {
+    z-index: 27;
+}
+
+.sticky-header-level-4 {
+    z-index: 26;
+}
+
+.sticky-community-header {
+    position: sticky;
+    background-color: var(--bg-secondary);
+    transition: box-shadow 0.2s ease-in-out;
+    margin-bottom: 1px;
+}
+
+.sticky-community-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to bottom,
+            var(--border-color) 0%,
+            transparent 100%);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.sticky-community-header.is-open::after {
+    opacity: 1;
+}
+
+.community-content {
+    position: relative;
+    transition: padding-top 0.2s ease-in-out;
+}
+
+.community-content::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: var(--border-color);
+    opacity: 0.5;
+}
+
+.community-item {
+    position: relative;
+    transition: all 0.2s ease-in-out;
+}
+
+.community-item:hover .community-icon {
+    transform: scale(1.1);
+}
+
+.community-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 2px;
+    height: 0;
+    background-color: var(--primary);
+    transition: height 0.2s ease-in-out, transform 0.2s ease-in-out;
+    transform: translateY(-50%);
+    opacity: 0;
+}
+
+.community-item:hover::before {
+    height: 70%;
+    opacity: 1;
+}
+
+.community-item.active::before {
+    height: 100%;
+    opacity: 1;
+}
+
+.community-icon {
+    transition: transform 0.2s ease-in-out;
+}
+
+.community-divider {
+    height: 1px;
+    background: linear-gradient(to right,
+            transparent,
+            var(--border-color),
+            transparent);
+    margin: 0.25rem 0;
+    opacity: 0.5;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.collapsible-content {
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+}
+
+.collapsible-content[data-state="open"] {
+    animation: slideDown 0.2s ease-out;
+}
+
+.collapsible-content[data-state="closed"] {
+    animation: slideUp 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+
+    to {
+        height: var(--radix-collapsible-content-height);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        height: var(--radix-collapsible-content-height);
+        opacity: 1;
+    }
+
+    to {
+        height: 0;
+        opacity: 0;
+    }
+}
+
+
+.error-message {
+    @apply text-red-500 text-sm mt-1 flex items-center;
+}
+
+.status-options {
+    @apply space-y-3 mt-2;
+}
+
+.status-radio {
+    @apply h-5 w-5 mr-3;
+}
+
+.status-label {
+    @apply flex-1 font-medium;
+}
+
+.status-icon {
+    @apply ml-2;
+}
+
+.form-footer {
+    @apply flex justify-end space-x-3 mt-8;
+}
+
+.input-with-icon {
+    @apply relative;
+}
+
+.input-icon {
+    @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400;
+}
+
+.input-with-icon .input-field {
+    @apply pl-10;
+}
+
+@media (max-width: 640px) {
+    .form-footer {
+        @apply flex-col space-y-3 space-x-0;
+    }
+
+    .cancel-btn,
+    .submit-btn {
+        @apply w-full;
+    }
+}
+
+/* Añadir estilos específicos para textos en modo oscuro */
+.dark input, 
+.dark textarea, 
+.dark select,
+.dark label,
+.dark button,
+.dark .card-foreground,
+.dark h1, 
+.dark h2, 
+.dark h3, 
+.dark h4, 
+.dark h5, 
+.dark h6, 
+.dark p, 
+.dark span, 
+.dark div {
+    color: hsl(var(--text-primary));
+}
+
+.dark .text-muted-foreground {
+    color: hsl(var(--text-secondary));
+}
+
+.dark ::placeholder {
+    color: var(--muted-foreground);
+}
+
+/* Mejorar la visualización de errores en modo oscuro */
+.dark .text-alert {
+    color: hsl(var(--alert));
+}
+
+/* Mejorar estilos de formularios en modo oscuro */
+.dark .form-footer {
+    border-top-color: hsl(var(--border));
+}
+
+.dark .error-message svg {
+    color: hsl(var(--alert));
+}
+
+/* Estilos mejorados para tarjetas en modo oscuro */
+.dark .card-header {
+    border-bottom-color: hsl(var(--border));
+}
+
+.dark .card-footer {
+    border-top-color: hsl(var(--border));
+}
+
+/* Mejoras de accesibilidad para contrastes en modo oscuro */
+.dark .text-primary {
+    color: hsl(var(--primary));
+}
+
+.dark .bg-primary {
+    background-color: hsl(var(--primary));
+}
+
+.dark .border-primary {
+    border-color: hsl(var(--primary));
+}
+
+/* Estilos específicos para formularios en modo oscuro */
+.dark .card input,
+.dark .card textarea {
+    background-color: rgba(15, 23, 42, 0.6);
+    border-color: hsl(var(--border));
+}
+
+.dark .card input:focus,
+.dark .card textarea:focus {
+    border-color: hsl(var(--primary));
+    background-color: rgba(15, 23, 42, 0.8);
+}
+
+.dark .card input:hover,
+.dark .card textarea:hover {
+    border-color: rgba(148, 163, 184, 0.5);
+}
+
+/* Mejorar la visibilidad de los elementos interactivos */
+.dark button[type="submit"],
+.dark button[look="primary"] {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+}
+
+.dark button[type="submit"]:hover,
+.dark button[look="primary"]:hover {
+    background-color: hsl(var(--primary-hover, var(--primary)));
+    filter: brightness(110%);
+}
+
+/* Mejorar la visualización de etiquetas y textos de ayuda */
+.dark label {
+    color: hsl(var(--text-secondary));
+    font-weight: 500;
+}
+
+.dark .text-sm.text-gray-500 {
+    color: hsl(var(--text-tertiary));
+}
+
+/* Asegurar que el modo oscuro se aplique correctamente a toda la aplicación */
+html.dark {
+    background-color: hsl(var(--bg-primary));
+    color: hsl(var(--text-primary));
+}
+
+/* Asegurar que los componentes Card apliquen correctamente el tema oscuro */
+.dark .rounded-lg.border {
+    background-color: hsl(var(--card-bg));
+    border-color: hsl(var(--border));
+    color: hsl(var(--card-foreground));
+}
+
+/* Mejorar el contraste de los textos en el modo oscuro */
+.dark .text-muted-foreground {
+    color: hsl(var(--muted-foreground, var(--text-secondary)));
+}
+
+/* Estilos específicos para las tarjetas en modo oscuro */
+.dark .card-bg, 
+.dark [class*="bg-card"] {
+    background-color: hsl(var(--card-bg)) !important;
+}
+
+.dark .card-content {
+    background-color: hsl(var(--card-bg));
+}
+
+.dark .card-header {
+    background-color: hsl(var(--card-bg));
+    border-bottom-color: hsl(var(--border));
+}
+
+/* Asegurar consistencia en todo el documento en modo oscuro */
+body.dark {
+    color-scheme: dark;
+}

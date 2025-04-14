@@ -21,7 +21,7 @@ export const CustomToggle = component$<CustomToggleProps>(({ label, checked, onC
             <button
                 type="button"
                 onClick$={handleToggle}
-                class={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                class={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                     isChecked.value ? 'bg-blue-600' : 'bg-gray-200'
                 }`}
             >

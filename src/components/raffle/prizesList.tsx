@@ -8,7 +8,7 @@ interface PrizesListProps {
 
 export default component$<PrizesListProps>(({ prizes }) => {
     return (
-        <div class="prizes-container bg-white rounded-lg shadow-sm border border-purple-100 p-4">
+        <div class="prizes-container bg-white rounded-lg shadow-xs border border-purple-100 p-4">
             <div class="flex items-center gap-2 mb-3">
                 <LuGift class="w-5 h-5 text-purple-600" />
                 <h2 class="text-lg font-semibold text-purple-800">Prizes</h2>

@@ -73,16 +73,6 @@ export default {
                 4: "calc(var(--border-width) + 4px)",
                 8: "calc(var(--border-width) + 8px)",
             },
-            boxShadow: {
-                base: "var(--shadow-base)",
-                sm: "var(--shadow-sm)",
-                DEFAULT: "var(--shadow)",
-                md: "var(--shadow-md)",
-                lg: "var(--shadow-lg)",
-                xl: "var(--shadow-xl)",
-                "2xl": "var(--shadow-2xl)",
-                inner: "var(--shadow-inner)",
-            },
             strokeWidth: {
                 0: "0",
                 base: "var(--stroke-width)",

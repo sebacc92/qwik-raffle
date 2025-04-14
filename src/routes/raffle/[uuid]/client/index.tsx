@@ -72,7 +72,7 @@ export default component$(() => {
                     <input
                         type="text"
                         placeholder="Search number"
-                        class="search-input pl-10 w-full border rounded-lg p-2 focus:outline-none focus:ring-2"
+                        class="search-input pl-10 w-full border rounded-lg p-2 focus:outline-hidden focus:ring-2"
                         value={search.value}
                         onInput$={(e: any) => search.value = e.target.value}
                     />
@@ -113,7 +113,7 @@ export default component$(() => {
             </div>
 
             {/* Contact information */}
-            <div class="text-center text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="text-center text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-xs border border-gray-200 dark:border-gray-700">
                 <p>{_`Contact the raffle organizer to reserve your numbers`}</p>
             </div>
         </div>
