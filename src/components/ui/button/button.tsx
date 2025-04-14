@@ -15,6 +15,10 @@ export const buttonVariants = cva(
           "border-base bg-alert text-alert-foreground shadow-sm hover:bg-alert/90 active:shadow-base active:press",
         danger:
           "border-base bg-danger text-danger-foreground shadow-sm hover:bg-danger/90 active:shadow-base active:press",
+        success:
+          "border-base bg-success text-success-foreground shadow-sm hover:bg-success/90 active:shadow-base active:press",
+        cancel:
+          "border-base bg-background text-cancel-foreground shadow-sm hover:text-cancel-foreground/90 active:shadow-base active:press",
         outline:
           "border bg-background text-foreground shadow-sm hover:bg-accent active:shadow-base active:press",
         ghost: "text-accent-foreground hover:bg-accent",

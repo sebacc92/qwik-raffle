@@ -1,6 +1,6 @@
 import { type QRL, $, component$, useSignal, useStylesScoped$ } from "@builder.io/qwik"
 import { useForm, valiForm$ } from "@modular-forms/qwik"
-import { Input, Label, Textarea } from "~/components/ui"
+import { Button, Input, Label, Textarea } from "~/components/ui"
 import { type TicketForm, type TicketResponseData, TicketSchema } from "~/schemas/ticketSchema"
 import { useFormTicketAction } from "~/shared/forms/actions"
 import { LuUser, LuPhone, LuTicket, LuAlertCircle, LuCheckCircle, LuClock, LuStickyNote } from "@qwikest/icons/lucide";
@@ -228,21 +228,20 @@ export default component$<TicketFormProps>(
 
                     {/* Form Footer */}
                     <div class="form-footer">
-                        <button
-                            type="button"
+                        <Button
+                            look="cancel"
                             onClick$={onCancel$}
-                            class="cancel-btn"
                             disabled={ticketForm.submitting}
                         >
                             {_`Cancel`}
-                        </button>
-                        <button
+                        </Button>
+                        <Button
+                            look="success"
                             type="submit"
-                            class="submit-btn"
                             disabled={ticketForm.submitting}
                         >
                             {ticketForm.submitting ? _`Saving...` : _`Save Changes`}
-                        </button>
+                        </Button>
                     </div>
                 </Form>
             </div>

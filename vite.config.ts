@@ -5,10 +5,10 @@
 import { defineConfig, type UserConfig } from "vite";
 import { qwikVite } from "@builder.io/qwik/optimizer";
 import { qwikCity } from "@builder.io/qwik-city/vite";
-import { i18nPlugin } from 'compiled-i18n/vite'
+import { i18nPlugin } from "compiled-i18n/vite";
+import tailwindcss from "@tailwindcss/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import pkg from "./package.json";
-
 type PkgDep = Record<string, string>;
 const { dependencies = {}, devDependencies = {} } = pkg as any as {
   dependencies: PkgDep;
@@ -16,21 +16,19 @@ const { dependencies = {}, devDependencies = {} } = pkg as any as {
   [key: string]: unknown;
 };
 errorOnDuplicatesPkgDeps(devDependencies, dependencies);
-
 /**
  * Note that Vite normally starts from `index.html` but the qwikCity plugin makes start at `src/entry.ssr.tsx` instead.
  */
+
 export default defineConfig(({ command, mode }): UserConfig => {
   return {
     plugins: [
       qwikCity(),
       qwikVite(),
       tsconfigPaths(),
+      tailwindcss(),
       i18nPlugin({
-        locales: [
-          'en_US',
-          'es_AR',
-        ],
+        locales: ["en_US", "es_AR"],
       }),
     ],
     // This tells Vite which dependencies to pre-build in dev mode.

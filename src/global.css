@@ -1,7 +1,4 @@
-/**
- * Tailwind CSS imports
- * View the full documentation at https://tailwindcss.com
- */
+@import "tailwindcss";
 
 @layer base {
     :root {
@@ -24,6 +21,12 @@
         --poll-option-hover: 214 31.8% 91.4%;
         --poll-progress-bg: 214 31.8% 91.4%;
 
+        /* Buttons */
+        --button-success: 142 76.2% 36.3%;
+        --button-success-foreground: 0 0% 100%;
+        --button-cancel: 0 72.2% 50.6%;
+        --button-cancel-foreground: 0 0% 100%;
+
         /* Estados */
         --like-color: #3b82f6;
         --dislike-color: #ef4444;
@@ -42,7 +45,7 @@
         --input: #e9eff8;
         --primary-foreground: 0 0% 100%; 
         --secondary: 218 44% 19.6%;
-        --secondary-foreground: 0 0% 100%; 
+        --secondary-foreground: 0 0% 100%;
         --accent: 210 57.1% 97.3%;
         --accent-foreground: 218 44% 19.6%;
         --alert: 25 100% 50%;
@@ -110,6 +113,9 @@
         --poll-option-hover: #475569;
         --poll-progress-bg: #475569;
 
+        /* Buttons */
+        --button-success: 160 84.1% 39.4%;
+
         /* Estados en modo oscuro */
         --like-color: #60a5fa;
         --dislike-color: #f87171;
@@ -175,14 +181,6 @@
         --modal-text-color: #c084fc;
     }
 }
-
-/**
-  * Tailwind CSS imports
-  * View the full documentation at https://tailwindcss.com
-  */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @keyframes spin-fast {
     from {

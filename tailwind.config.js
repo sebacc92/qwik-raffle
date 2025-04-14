@@ -46,6 +46,14 @@ export default {
                     DEFAULT: "hsl(var(--danger))",
                     foreground: "hsl(var(--danger-foreground))",
                 },
+                success: {
+                    DEFAULT: "hsl(var(--button-success))",
+                    foreground: "hsl(var(--button-success-foreground))",
+                },
+                cancel: {
+                    DEFAULT: "hsl(var(--button-cancel))",
+                    foreground: "hsl(var(--button-cancel-foreground))",
+                },
                 'poll-option-hover': 'rgba(var(--color-primary-rgb), 0.05)',
             },
             borderRadius: {
