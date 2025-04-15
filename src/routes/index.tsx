@@ -12,49 +12,51 @@ export default component$(() => {
     <>
       <div class="min-h-screen flex flex-col bg-background text-foreground">
         <main class="flex-grow">
-          {/* Hero Section */}
-          <section class="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted relative overflow-hidden">
+          {/* Hero Section - Mejorado con gradientes y animaciones */}
+          <section class="w-full py-16 md:py-24 lg:py-32 relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-indigo-50">
             <div class="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,rgba(255,255,255,0.5),rgba(255,255,255,0.8))] dark:[mask-image:linear-gradient(0deg,rgba(0,0,0,0.2),rgba(0,0,0,0.4))]"></div>
             <div class="container mx-auto px-4 md:px-6 relative">
-              <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-                <div class="space-y-6">
-                  <div class="inline-flex items-center rounded-full border-2 border-primary/30 bg-primary/10 px-4 py-2 text-sm font-medium text-primary shadow-xs animate-fadeIn">
-                    <LuStar class="mr-2 h-4 w-4 text-primary text-yellow-500 fill-current" />
+              <div class="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+                <div class="space-y-8">
+                  <div class="inline-flex items-center rounded-full border-2 border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary shadow-lg animate-float">
+                    <LuStar class="mr-2 h-4 w-4 text-yellow-500 fill-current" />
                     <span>{_`The easiest way to organize online raffles`}</span>
                   </div>
-                  <h1 class="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent animate-fadeIn">
+                  <h1 class="text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl bg-gradient-to-r from-primary via-blue-600 to-indigo-600 bg-clip-text text-transparent animate-fadeIn">
                     {_`Create Online Raffles in Seconds`}
                   </h1>
-                  <p class="max-w-[600px] text-muted-foreground md:text-xl leading-relaxed">
+                  <p class="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
                     {_`Easy, fast, and customizable. Ideal for events, promotions, and much more.`}
                   </p>
-                  <div class="flex flex-col sm:flex-row gap-4">
+                  <div class="flex flex-col sm:flex-row gap-6">
                     <Link
                       href="/raffle/create"
-                      class="inline-flex h-12 items-center justify-center rounded-base bg-primary px-8 text-base font-medium text-white shadow-md transition-all hover:bg-primary-hover hover:shadow-lg press"
+                      class="inline-flex h-14 items-center justify-center rounded-xl bg-primary px-8 text-lg font-medium text-white shadow-lg transition-all hover:bg-primary-hover hover:scale-105 hover:shadow-xl press"
                     >
                       {_`Create a Raffle Now`}
                     </Link>
                     <Link
                       href="#features"
-                      class="inline-flex h-12 items-center justify-center rounded-base border border-primary px-8 text-base font-medium text-primary shadow-xs transition-all hover:bg-primary/10 press"
+                      class="inline-flex h-14 items-center justify-center rounded-xl border-2 border-primary px-8 text-lg font-medium text-primary shadow-md transition-all hover:bg-primary/10 hover:scale-105 press"
                     >
                       {_`Discover Features`}
                     </Link>
                   </div>
                 </div>
                 <div class="flex justify-center">
-                  <div class="relative w-full max-w-md overflow-hidden rounded-xl border bg-card shadow-xl transition-all hover:shadow-2xl">
-                    <div class="aspect-video w-full bg-muted relative">
-                      {/* Placeholder for video or image */}
-                      <div class="flex h-full items-center justify-center bg-gradient-to-br from-primary/20 to-secondary/20">
-                        <div class="h-16 w-16 rounded-full bg-primary/90 flex items-center justify-center shadow-lg hover:bg-primary transition-colors cursor-pointer">
-                          <LuPlay class="h-6 w-6 text-white ml-1" />
+                  <div class="relative w-full max-w-lg">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-indigo-600 rounded-2xl blur opacity-30 animate-pulse"></div>
+                    <div class="relative overflow-hidden rounded-xl border-2 border-primary/20 bg-card shadow-2xl transition-all hover:shadow-3xl group">
+                      <div class="aspect-video w-full bg-gradient-to-br from-primary/5 to-indigo-500/5 relative">
+                        <div class="flex h-full items-center justify-center">
+                          <div class="h-20 w-20 rounded-full bg-primary/90 flex items-center justify-center shadow-2xl transition-transform group-hover:scale-110 cursor-pointer">
+                            <LuPlay class="h-8 w-8 text-white ml-1" />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="p-6 text-center bg-card">
-                      <p class="text-sm font-medium text-primary">{_`See how it works`}</p>
+                      <div class="p-6 text-center bg-white/50 backdrop-blur-sm">
+                        <p class="text-lg font-medium text-primary">{_`See how it works`}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -62,94 +64,107 @@ export default component$(() => {
             </div>
           </section>
 
-          {/* Features Section */}
-          <section id="features" class="w-full py-16 md:py-24 lg:py-32 bg-card">
+          {/* Features Section - Mejorado con efectos y gradientes */}
+          <section id="features" class="w-full py-24 md:py-32 bg-gradient-to-b from-white to-sky-50">
             <div class="container mx-auto px-4 md:px-6">
-              <div class="flex flex-col items-center justify-center space-y-4 text-center">
-                <div class="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm text-primary">
-                  <LuStar class="mr-2 h-4 w-4 text-primary text-yellow-500 fill-current" />
+              <div class="flex flex-col items-center justify-center space-y-4 text-center mb-16">
+                <div class="inline-flex items-center rounded-full border-2 border-primary/20 bg-primary/10 px-4 py-2 text-base font-medium text-primary shadow-lg">
+                  <LuStar class="mr-2 h-5 w-5 text-yellow-500 fill-current" />
                   <span>{_`Loaded with features`}</span>
                 </div>
-                <div class="space-y-3 max-w-3xl">
-                  <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent">
+                <div class="space-y-4 max-w-3xl">
+                  <h2 class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent">
                     {_`Featured Features`}
                   </h2>
-                  <p class="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  <p class="text-xl text-muted-foreground md:text-2xl/relaxed">
                     {_`Everything you need to create and manage your online raffles`}
                   </p>
                 </div>
               </div>
-              <div class="mx-auto grid max-w-5xl items-center gap-8 py-12 md:grid-cols-2 lg:grid-cols-4 text-center">
-                {/* Feature 1 */}
-                <div class="flex flex-col items-center space-y-4 rounded-xl border p-6 shadow-xs transition-all hover:shadow-md hover:border-primary/50 bg-card">
-                  <div class="rounded-full bg-primary/10 p-4">
-                    <LuClock class="h-10 w-10 text-primary" />
+
+              <div class="mx-auto grid max-w-6xl gap-8 py-12 md:grid-cols-2 lg:grid-cols-4">
+                {/* Feature 1 - Rapidez */}
+                <div class="group relative">
+                  <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-300"></div>
+                  <div class="relative flex flex-col items-center space-y-4 rounded-xl border border-primary/10 bg-white p-8 shadow-lg transition-all hover:shadow-xl">
+                    <div class="rounded-full bg-gradient-to-br from-primary/20 to-indigo-600/20 p-4 group-hover:scale-110 transition-transform duration-300">
+                      <LuClock class="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 class="text-xl font-bold">{_`Create raffles in seconds`}</h3>
+                    <p class="text-muted-foreground text-center">
+                      {_`Set up your raffle quickly with our intuitive interface`}
+                    </p>
                   </div>
-                  <h3 class="text-xl font-bold">{_`Create raffles in seconds`}</h3>
-                  <p class="text-sm text-muted-foreground text-center">
-                    {_`Set up your raffle quickly with our intuitive interface`}
-                  </p>
                 </div>
 
-                {/* Feature 2 */}
-                <div class="flex flex-col items-center space-y-4 rounded-xl border p-6 shadow-xs transition-all hover:shadow-md hover:border-primary/50 bg-card">
-                  <div class="rounded-full bg-primary/10 p-4">
-                    <LuShare class="h-10 w-10 text-primary" />
+                {/* Feature 2 - Compartir */}
+                <div class="group relative">
+                  <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-300"></div>
+                  <div class="relative flex flex-col items-center space-y-4 rounded-xl border border-primary/10 bg-white p-8 shadow-lg transition-all hover:shadow-xl">
+                    <div class="rounded-full bg-gradient-to-br from-primary/20 to-indigo-600/20 p-4 group-hover:scale-110 transition-transform duration-300">
+                      <LuShare class="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 class="text-xl font-bold">{_`Share with a unique link`}</h3>
+                    <p class="text-muted-foreground text-center">
+                      {_`Easily distribute your raffle on social networks or by email`}
+                    </p>
                   </div>
-                  <h3 class="text-xl font-bold">{_`Share with a unique link`}</h3>
-                  <p class="text-sm text-muted-foreground text-center">
-                    {_`Easily distribute your raffle on social networks or by email`}
-                  </p>
                 </div>
 
-                {/* Feature 3 */}
-                <div class="flex flex-col items-center space-y-4 rounded-xl border p-6 shadow-xs transition-all hover:shadow-md hover:border-primary/50 bg-card">
-                  <div class="rounded-full bg-primary/10 p-4">
-                    <LuTrophy class="h-10 w-10 text-primary" />
+                {/* Feature 3 - Resultados */}
+                <div class="group relative">
+                  <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-300"></div>
+                  <div class="relative flex flex-col items-center space-y-4 rounded-xl border border-primary/10 bg-white p-8 shadow-lg transition-all hover:shadow-xl">
+                    <div class="rounded-full bg-gradient-to-br from-primary/20 to-indigo-600/20 p-4 group-hover:scale-110 transition-transform duration-300">
+                      <LuTrophy class="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 class="text-xl font-bold">{_`Automatic results`}</h3>
+                    <p class="text-muted-foreground text-center">
+                      {_`Get random winners with total transparency and confidence`}
+                    </p>
                   </div>
-                  <h3 class="text-xl font-bold">{_`Automatic results`}</h3>
-                  <p class="text-sm text-muted-foreground text-center">
-                    {_`Get random winners with total transparency and confidence`}
-                  </p>
                 </div>
 
-                {/* Feature 4 */}
-                <div class="flex flex-col items-center space-y-4 rounded-xl border p-6 shadow-xs transition-all hover:shadow-md hover:border-primary/50 bg-card">
-                  <div class="rounded-full bg-primary/10 p-4">
-                    <LuSettings class="h-10 w-10 text-primary" />
+                {/* Feature 4 - Personalización */}
+                <div class="group relative">
+                  <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-300"></div>
+                  <div class="relative flex flex-col items-center space-y-4 rounded-xl border border-primary/10 bg-white p-8 shadow-lg transition-all hover:shadow-xl">
+                    <div class="rounded-full bg-gradient-to-br from-primary/20 to-indigo-600/20 p-4 group-hover:scale-110 transition-transform duration-300">
+                      <LuSettings class="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 class="text-xl font-bold">{_`Customize your rules`}</h3>
+                    <p class="text-muted-foreground text-center">
+                      {_`Adapt each raffle to your specific needs`}
+                    </p>
                   </div>
-                  <h3 class="text-xl font-bold">{_`Customize your rules`}</h3>
-                  <p class="text-sm text-muted-foreground text-center">
-                    {_`Adapt each raffle to your specific needs`}
-                  </p>
                 </div>
               </div>
-
             </div>
           </section>
 
-          {/* Pricing Comparison Table */}
-          <section id="pricing" class="w-full py-16 md:py-24 lg:py-32 bg-muted">
+          {/* Pricing Section - Mejorado con efectos visuales */}
+          <section id="pricing" class="w-full py-24 md:py-32 bg-gradient-to-b from-sky-50 to-white">
             <div class="container mx-auto px-4 md:px-6">
-              <div class="flex flex-col items-center justify-center space-y-4 text-center">
-                <div class="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm text-primary">
-                  <LuShield class="mr-1 h-3.5 w-3.5" />
+              <div class="flex flex-col items-center justify-center space-y-4 text-center mb-16">
+                <div class="inline-flex items-center rounded-full border-2 border-primary/20 bg-primary/10 px-4 py-2 text-base font-medium text-primary shadow-lg">
+                  <LuShield class="mr-2 h-5 w-5" />
                   <span>{_`Flexible plans`}</span>
                 </div>
-                <div class="space-y-3 max-w-3xl">
-                  <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent">
+                <div class="space-y-4 max-w-3xl">
+                  <h2 class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent">
                     {_`Plans for every need`}
                   </h2>
-                  <p class="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  <p class="text-xl text-muted-foreground md:text-2xl/relaxed">
                     {_`Choose the plan that best suits your needs`}
                   </p>
                 </div>
               </div>
 
-              <div class="mx-auto grid max-w-4xl gap-6 py-12 lg:grid-cols-3">
-                {/* Plan Básico */}
-                <div id="plan-basico" class="flex flex-col rounded-xl border bg-card shadow-xs hover:shadow-md transition-all h-full">
-                  <div class="p-6 flex flex-col h-full">
+              <div class="mx-auto grid max-w-5xl gap-8 py-12 lg:grid-cols-3">
+                {/* Basic Plan */}
+                <div class="relative group">
+                  <div class="absolute -inset-0.5 bg-gradient-to-r from-gray-400 to-gray-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-300"></div>
+                  <div class="relative flex flex-col rounded-xl border border-primary/10 bg-white p-8 shadow-lg transition-all hover:shadow-xl">
                     <div class="flex justify-between items-center mb-4">
                       <h3 class="text-2xl font-bold">{_`Basic`}</h3>
                       <span class="inline-flex items-center rounded-full border border-muted-foreground/30 bg-muted-foreground/10 px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
@@ -158,9 +173,9 @@ export default component$(() => {
                     </div>
                     <div class="mt-4 text-center">
                       <div class="text-4xl font-bold">{_`Free`}</div>
-                      <p class="text-sm text-muted-foreground mt-1">{_`Ideal for quick tests and small raffles`}</p>
+                      <p class="text-muted-foreground mt-2">{_`Ideal for quick tests and small raffles`}</p>
                     </div>
-                    <ul class="mt-6 space-y-3 flex-grow">
+                    <ul class="mt-8 space-y-4 flex-grow">
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Storage`}: <span class="font-medium">{_`Local (Browser)`}</span></span>
@@ -185,36 +200,33 @@ export default component$(() => {
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Support`}: <span class="font-medium">{_`Community`}</span></span>
                       </li>
-                      <li class="flex items-start">
-                        <LuX class="mr-2 h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
-                        <span class="text-muted-foreground">{_`No ads`}</span>
-                      </li>
                     </ul>
-                  </div>
-                  <div class="p-6 pt-0 mt-4">
-                    <Link
-                      href="/raffle/create"
-                      class="inline-flex h-10 w-full items-center justify-center rounded-base border border-primary bg-card px-8 text-sm font-medium text-primary shadow-xs transition-colors hover:bg-primary/10 hover:text-primary press"
-                    >
-                      {_`Get Started`}
-                    </Link>
+                    <div class="mt-8">
+                      <Link
+                        href="/raffle/create"
+                        class="inline-flex h-12 w-full items-center justify-center rounded-xl border-2 border-primary bg-white px-8 text-base font-medium text-primary shadow-md transition-all hover:bg-primary/10 hover:shadow-lg press"
+                      >
+                        {_`Get Started`}
+                      </Link>
+                    </div>
                   </div>
                 </div>
 
-                {/* Plan Gratis */}
-                <div id="plan-gratis" class="flex flex-col rounded-xl border bg-card shadow-xs hover:shadow-md transition-all h-full">
-                  <div class="p-6 flex flex-col h-full">
+                {/* Free Plan */}
+                <div class="relative group">
+                  <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-blue-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-300"></div>
+                  <div class="relative flex flex-col rounded-xl border border-primary/10 bg-white p-8 shadow-lg transition-all hover:shadow-xl">
                     <div class="flex justify-between items-center mb-4">
                       <h3 class="text-2xl font-bold">{_`Free`}</h3>
-                      <span class="inline-flex items-center rounded-full border border-muted-foreground/30 bg-muted-foreground/10 px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
+                      <span class="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
                         {_`Popular`}
                       </span>
                     </div>
                     <div class="mt-4 text-center">
                       <div class="text-4xl font-bold">{_`Free`}</div>
-                      <p class="text-sm text-muted-foreground mt-1">{_`Perfect for registered users with standard needs`}</p>
+                      <p class="text-muted-foreground mt-2">{_`Perfect for registered users with standard needs`}</p>
                     </div>
-                    <ul class="mt-6 space-y-3 flex-grow">
+                    <ul class="mt-8 space-y-4 flex-grow">
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Storage`}: <span class="font-medium">{_`Cloud`}</span></span>
@@ -239,39 +251,38 @@ export default component$(() => {
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Support`}: <span class="font-medium">{_`Standard`}</span></span>
                       </li>
-                      <li class="flex items-start">
-                        <LuX class="mr-2 h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
-                        <span class="text-muted-foreground">{_`No ads`}</span>
-                      </li>
                     </ul>
-                  </div>
-                  <div class="p-6 pt-0 mt-4">
-                    <Link
-                      class="inline-flex h-10 w-full items-center justify-center rounded-base border border-primary bg-card px-8 text-sm font-medium text-primary shadow-xs transition-colors hover:bg-primary/10 press"
-                      href="/signup"
-                    >
-                      {_`Register for Free`}
-                    </Link>
+                    <div class="mt-8">
+                      <Link
+                        href="/signup"
+                        class="inline-flex h-12 w-full items-center justify-center rounded-xl border-2 border-primary bg-white px-8 text-base font-medium text-primary shadow-md transition-all hover:bg-primary/10 hover:shadow-lg press"
+                      >
+                        {_`Register for Free`}
+                      </Link>
+                    </div>
                   </div>
                 </div>
 
-                {/* Plan Premium */}
-                <div id="plan-premium" class="flex flex-col rounded-xl border-2 border-primary bg-card shadow-lg hover:shadow-xl scale-[1.02] transition-all h-full">
-                  <div class="bg-primary/10 py-2 px-6 rounded-t-xl">
-                    <div class="text-center text-primary font-semibold">{_`Recommended`}</div>
-                  </div>
-                  <div class="p-6 flex flex-col h-full">
-                    <div class="flex justify-between items-center mb-4">
+                {/* Premium Plan */}
+                <div class="relative group scale-105">
+                  <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-40 transition duration-300"></div>
+                  <div class="relative flex flex-col rounded-xl border-2 border-primary bg-white p-8 shadow-xl transition-all hover:shadow-2xl">
+                    <div class="absolute -top-4 left-0 right-0">
+                      <div class="mx-auto w-fit rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-1 text-sm font-medium text-white shadow-lg">
+                        {_`Recommended`}
+                      </div>
+                    </div>
+                    <div class="flex justify-between items-center mb-4 mt-2">
                       <h3 class="text-2xl font-bold">{_`Premium`}</h3>
                       <span class="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
                         {_`Complete`}
                       </span>
                     </div>
                     <div class="mt-4 text-center">
-                      <div class="text-4xl font-bold">$ 4900 ARS<span class="text-base font-normal">/{_`month`}</span></div>
-                      <p class="text-sm text-muted-foreground mt-1">{_`For advanced users, businesses and multiple raffles`}</p>
+                      <div class="text-4xl font-bold">$ 4900 ARS<span class="text-base font-normal ml-1">/{_`month`}</span></div>
+                      <p class="text-muted-foreground mt-2">{_`For advanced users, businesses and multiple raffles`}</p>
                     </div>
-                    <ul class="mt-6 space-y-3 flex-grow">
+                    <ul class="mt-8 space-y-4 flex-grow">
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Storage`}: <span class="font-medium">{_`Cloud`}</span></span>
@@ -296,19 +307,15 @@ export default component$(() => {
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span>{_`Support`}: <span class="font-medium">{_`Priority`}</span></span>
                       </li>
-                      <li class="flex items-start">
-                        <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`No ads`}</span>
-                      </li>
                     </ul>
-                  </div>
-                  <div class="p-6 pt-0 mt-4">
-                    <Link
-                      href="/app/premium"
-                      class="inline-flex h-10 w-full items-center justify-center rounded-base bg-primary px-8 text-sm font-medium text-white shadow transition-colors hover:bg-primary-hover press"
-                    >
-                      {_`Get Premium`}
-                    </Link>
+                    <div class="mt-8">
+                      <Link
+                        href="/app/premium"
+                        class="inline-flex h-12 w-full items-center justify-center rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-8 text-base font-medium text-white shadow-lg transition-all hover:shadow-xl hover:opacity-90 press"
+                      >
+                        {_`Get Premium`}
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
