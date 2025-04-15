@@ -13,8 +13,8 @@ export default component$(() => {
       <div class="min-h-screen flex flex-col bg-background text-foreground">
         <main class="flex-grow">
           {/* Hero Section - Mejorado con gradientes y animaciones */}
-          <section class="w-full py-16 md:py-24 lg:py-32 relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-indigo-50">
-            <div class="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,rgba(255,255,255,0.5),rgba(255,255,255,0.8))] dark:[mask-image:linear-gradient(0deg,rgba(0,0,0,0.2),rgba(0,0,0,0.4))]"></div>
+          <section class="w-full py-16 md:py-24 lg:py-32 relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+            <div class="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,rgba(255,255,255,0.5),rgba(255,255,255,0.8))] dark:bg-grid-slate-700 dark:[mask-image:linear-gradient(0deg,rgba(0,0,0,0.2),rgba(0,0,0,0.4))]"></div>
             <div class="container mx-auto px-4 md:px-6 relative">
               <div class="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
                 <div class="space-y-8">
@@ -65,7 +65,7 @@ export default component$(() => {
           </section>
 
           {/* Features Section - Mejorado con efectos y gradientes */}
-          <section id="features" class="w-full py-24 md:py-32 bg-gradient-to-b from-white to-sky-50">
+          <section id="features" class="w-full py-24 md:py-32 bg-gradient-to-b from-white to-sky-50 dark:from-gray-900 dark:to-gray-800">
             <div class="container mx-auto px-4 md:px-6">
               <div class="flex flex-col items-center justify-center space-y-4 text-center mb-16">
                 <div class="inline-flex items-center rounded-full border-2 border-primary/20 bg-primary/10 px-4 py-2 text-base font-medium text-primary shadow-lg">
@@ -143,7 +143,7 @@ export default component$(() => {
           </section>
 
           {/* Pricing Section - Mejorado con efectos visuales */}
-          <section id="pricing" class="w-full py-24 md:py-32 bg-gradient-to-b from-sky-50 to-white">
+          <section id="pricing" class="w-full py-24 md:py-32 bg-gradient-to-b from-sky-50 to-white dark:from-gray-800 dark:to-gray-900">
             <div class="container mx-auto px-4 md:px-6">
               <div class="flex flex-col items-center justify-center space-y-4 text-center mb-16">
                 <div class="inline-flex items-center rounded-full border-2 border-primary/20 bg-primary/10 px-4 py-2 text-base font-medium text-primary shadow-lg">
@@ -164,41 +164,41 @@ export default component$(() => {
                 {/* Basic Plan */}
                 <div class="relative group">
                   <div class="absolute -inset-0.5 bg-gradient-to-r from-gray-400 to-gray-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-300"></div>
-                  <div class="relative flex flex-col rounded-xl border border-primary/10 bg-white p-8 shadow-lg transition-all hover:shadow-xl">
+                  <div class="relative flex flex-col rounded-xl border border-primary/10 bg-white dark:bg-gray-800 p-8 shadow-lg transition-all hover:shadow-xl">
                     <div class="flex justify-between items-center mb-4">
-                      <h3 class="text-2xl font-bold">{_`Basic`}</h3>
-                      <span class="inline-flex items-center rounded-full border border-muted-foreground/30 bg-muted-foreground/10 px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
+                      <h3 class="text-2xl font-bold dark:text-white">{_`Basic`}</h3>
+                      <span class="inline-flex items-center rounded-full border border-muted-foreground/30 bg-muted-foreground/10 px-2.5 py-0.5 text-xs font-semibold text-muted-foreground dark:text-gray-300">
                         {_`Basic`}
                       </span>
                     </div>
                     <div class="mt-4 text-center">
-                      <div class="text-4xl font-bold">{_`Free`}</div>
-                      <p class="text-muted-foreground mt-2">{_`Ideal for quick tests and small raffles`}</p>
+                      <div class="text-4xl font-bold dark:text-white">{_`Free`}</div>
+                      <p class="text-muted-foreground dark:text-gray-300 mt-2">{_`Ideal for quick tests and small raffles`}</p>
                     </div>
                     <ul class="mt-8 space-y-4 flex-grow">
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`Storage`}: <span class="font-medium">{_`Local (Browser)`}</span></span>
+                        <span class="dark:text-gray-300">{_`Storage`}: <span class="font-medium dark:text-white">{_`Local (Browser)`}</span></span>
                       </li>
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`Ticket limit`}: <span class="font-medium">{_`Up to 100`}</span></span>
+                        <span class="dark:text-gray-300">{_`Ticket limit`}: <span class="font-medium dark:text-white">{_`Up to 100`}</span></span>
                       </li>
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`Active raffles`}: <span class="font-medium">{_`1 at a time`}</span></span>
+                        <span class="dark:text-gray-300">{_`Active raffles`}: <span class="font-medium dark:text-white">{_`1 at a time`}</span></span>
                       </li>
                       <li class="flex items-start">
                         <LuX class="mr-2 h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
-                        <span class="text-muted-foreground">{_`Customization`}</span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Customization`}</span>
                       </li>
                       <li class="flex items-start">
                         <LuX class="mr-2 h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
-                        <span class="text-muted-foreground">{_`Detailed statistics`}</span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Detailed statistics`}</span>
                       </li>
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`Support`}: <span class="font-medium">{_`Community`}</span></span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Support`}: <span class="font-medium dark:text-white">{_`Community`}</span></span>
                       </li>
                     </ul>
                     <div class="mt-8">
@@ -215,41 +215,41 @@ export default component$(() => {
                 {/* Free Plan */}
                 <div class="relative group">
                   <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-blue-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-300"></div>
-                  <div class="relative flex flex-col rounded-xl border border-primary/10 bg-white p-8 shadow-lg transition-all hover:shadow-xl">
+                  <div class="relative flex flex-col rounded-xl border border-primary/10 bg-white dark:bg-gray-800 p-8 shadow-lg transition-all hover:shadow-xl">
                     <div class="flex justify-between items-center mb-4">
-                      <h3 class="text-2xl font-bold">{_`Free`}</h3>
-                      <span class="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                      <h3 class="text-2xl font-bold dark:text-white">{_`Free`}</h3>
+                      <span class="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary dark:text-primary-foreground">
                         {_`Popular`}
                       </span>
                     </div>
                     <div class="mt-4 text-center">
-                      <div class="text-4xl font-bold">{_`Free`}</div>
-                      <p class="text-muted-foreground mt-2">{_`Perfect for registered users with standard needs`}</p>
+                      <div class="text-4xl font-bold dark:text-white">{_`Free`}</div>
+                      <p class="text-muted-foreground dark:text-gray-300 mt-2">{_`Perfect for registered users with standard needs`}</p>
                     </div>
                     <ul class="mt-8 space-y-4 flex-grow">
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`Storage`}: <span class="font-medium">{_`Cloud`}</span></span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Storage`}: <span class="font-medium dark:text-white">{_`Cloud`}</span></span>
                       </li>
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`Ticket limit`}: <span class="font-medium">{_`Up to 1,000`}</span></span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Ticket limit`}: <span class="font-medium dark:text-white">{_`Up to 1,000`}</span></span>
                       </li>
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`Active raffles`}: <span class="font-medium">{_`1 at a time`}</span></span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Active raffles`}: <span class="font-medium dark:text-white">{_`1 at a time`}</span></span>
                       </li>
                       <li class="flex items-start">
                         <LuX class="mr-2 h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
-                        <span class="text-muted-foreground">{_`Customization`}</span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Customization`}</span>
                       </li>
                       <li class="flex items-start">
                         <LuX class="mr-2 h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
-                        <span class="text-muted-foreground">{_`Detailed statistics`}</span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Detailed statistics`}</span>
                       </li>
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`Support`}: <span class="font-medium">{_`Standard`}</span></span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Support`}: <span class="font-medium dark:text-white">{_`Standard`}</span></span>
                       </li>
                     </ul>
                     <div class="mt-8">
@@ -266,46 +266,46 @@ export default component$(() => {
                 {/* Premium Plan */}
                 <div class="relative group scale-105">
                   <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-40 transition duration-300"></div>
-                  <div class="relative flex flex-col rounded-xl border-2 border-primary bg-white p-8 shadow-xl transition-all hover:shadow-2xl">
+                  <div class="relative flex flex-col rounded-xl border-2 border-primary bg-white dark:bg-gray-800 p-8 shadow-xl transition-all hover:shadow-2xl">
                     <div class="absolute -top-4 left-0 right-0">
                       <div class="mx-auto w-fit rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-1 text-sm font-medium text-white shadow-lg">
                         {_`Recommended`}
                       </div>
                     </div>
                     <div class="flex justify-between items-center mb-4 mt-2">
-                      <h3 class="text-2xl font-bold">{_`Premium`}</h3>
-                      <span class="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                      <h3 class="text-2xl font-bold dark:text-white">{_`Premium`}</h3>
+                      <span class="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary dark:text-primary-foreground">
                         {_`Complete`}
                       </span>
                     </div>
                     <div class="mt-4 text-center">
-                      <div class="text-4xl font-bold">$ 4900 ARS<span class="text-base font-normal ml-1">/{_`month`}</span></div>
-                      <p class="text-muted-foreground mt-2">{_`For advanced users, businesses and multiple raffles`}</p>
+                      <div class="text-4xl font-bold dark:text-white">$ 4900 ARS<span class="text-base font-normal ml-1 dark:text-gray-300">/{_`month`}</span></div>
+                      <p class="text-muted-foreground dark:text-gray-300 mt-2">{_`For advanced users, businesses and multiple raffles`}</p>
                     </div>
                     <ul class="mt-8 space-y-4 flex-grow">
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`Storage`}: <span class="font-medium">{_`Cloud`}</span></span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Storage`}: <span class="font-medium dark:text-white">{_`Cloud`}</span></span>
                       </li>
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`Ticket limit`}: <span class="font-medium">{_`Up to 10,000`}</span></span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Ticket limit`}: <span class="font-medium dark:text-white">{_`Up to 10,000`}</span></span>
                       </li>
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`Active raffles`}: <span class="font-medium">{_`Unlimited`}</span></span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Active raffles`}: <span class="font-medium dark:text-white">{_`Unlimited`}</span></span>
                       </li>
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`Advanced customization`}</span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Advanced customization`}</span>
                       </li>
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`Detailed statistics & analytics`}</span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Detailed statistics & analytics`}</span>
                       </li>
                       <li class="flex items-start">
                         <LuCheck class="mr-2 h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>{_`Support`}: <span class="font-medium">{_`Priority`}</span></span>
+                        <span class="dark:text-gray-300 text-muted-foreground">{_`Support`}: <span class="font-medium dark:text-white">{_`Priority`}</span></span>
                       </li>
                     </ul>
                     <div class="mt-8">

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
     :root {
         --primary: 199 84% 55.3%;    /* Un azul más vibrante */

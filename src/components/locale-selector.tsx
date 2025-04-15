@@ -17,7 +17,7 @@ export const LocaleSelector = component$(() => {
         <div class="relative">
             <button 
                 onClick$={() => showLanguageDropdown.value = !showLanguageDropdown.value}
-                class="flex items-center justify-center p-2 text-black hover:bg-white/10 dark:text-white dark:hover:bg-black/10 rounded-lg transition-colors"
+                class="flex items-center justify-center p-2 text-foreground hover:bg-foreground/10 rounded-lg transition-colors"
                 aria-label={_`Change language`}
             >
                 <LuLanguages class="w-5 h-5" />
@@ -28,14 +28,14 @@ export const LocaleSelector = component$(() => {
             </button>
             
             {showLanguageDropdown.value && (
-                <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 animate-fadeIn">
+                <div class="absolute right-0 mt-2 py-2 w-48 bg-card border border-border rounded-md shadow-xl z-20 animate-fadeIn">
                     {locales.map((locale) => (
                         <a
                             key={locale}
                             href={`?locale=${locale}`}
                             class={`block px-4 py-2 text-sm ${locale === currentLocale ? 
-                                'bg-[#713fc2]/10 text-[#713fc2] font-medium' : 
-                                'text-gray-700 hover:bg-gray-100'}`}
+                                'bg-primary/10 text-primary font-medium' : 
+                                'text-foreground hover:bg-foreground/5'}`}
                         >
                             {languageNames[locale] || locale}
                             {locale === currentLocale && (
