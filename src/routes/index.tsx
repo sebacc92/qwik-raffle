@@ -86,12 +86,12 @@ export default component$(() => {
                 {/* Feature 1 - Rapidez */}
                 <div class="group relative">
                   <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-300"></div>
-                  <div class="relative flex flex-col items-center space-y-4 rounded-xl border border-primary/10 bg-white p-8 shadow-lg transition-all hover:shadow-xl">
+                  <div class="relative flex flex-col items-center space-y-4 rounded-xl border border-primary/10 bg-white dark:bg-gray-800 p-8 shadow-lg transition-all hover:shadow-xl">
                     <div class="rounded-full bg-gradient-to-br from-primary/20 to-indigo-600/20 p-4 group-hover:scale-110 transition-transform duration-300">
                       <LuClock class="h-8 w-8 text-primary" />
                     </div>
-                    <h3 class="text-xl font-bold">{_`Create raffles in seconds`}</h3>
-                    <p class="text-muted-foreground text-center">
+                    <h3 class="text-xl font-bold dark:text-white">{_`Create raffles in seconds`}</h3>
+                    <p class="text-muted-foreground text-center dark:text-gray-300">
                       {_`Set up your raffle quickly with our intuitive interface`}
                     </p>
                   </div>
@@ -100,12 +100,12 @@ export default component$(() => {
                 {/* Feature 2 - Compartir */}
                 <div class="group relative">
                   <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-300"></div>
-                  <div class="relative flex flex-col items-center space-y-4 rounded-xl border border-primary/10 bg-white p-8 shadow-lg transition-all hover:shadow-xl">
+                  <div class="relative flex flex-col items-center space-y-4 rounded-xl border border-primary/10 bg-white dark:bg-gray-800 p-8 shadow-lg transition-all hover:shadow-xl">
                     <div class="rounded-full bg-gradient-to-br from-primary/20 to-indigo-600/20 p-4 group-hover:scale-110 transition-transform duration-300">
                       <LuShare class="h-8 w-8 text-primary" />
                     </div>
-                    <h3 class="text-xl font-bold">{_`Share with a unique link`}</h3>
-                    <p class="text-muted-foreground text-center">
+                    <h3 class="text-xl font-bold dark:text-white">{_`Share with a unique link`}</h3>
+                    <p class="text-muted-foreground text-center dark:text-gray-300">
                       {_`Easily distribute your raffle on social networks or by email`}
                     </p>
                   </div>
@@ -114,12 +114,12 @@ export default component$(() => {
                 {/* Feature 3 - Resultados */}
                 <div class="group relative">
                   <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-300"></div>
-                  <div class="relative flex flex-col items-center space-y-4 rounded-xl border border-primary/10 bg-white p-8 shadow-lg transition-all hover:shadow-xl">
+                  <div class="relative flex flex-col items-center space-y-4 rounded-xl border border-primary/10 bg-white dark:bg-gray-800 p-8 shadow-lg transition-all hover:shadow-xl">
                     <div class="rounded-full bg-gradient-to-br from-primary/20 to-indigo-600/20 p-4 group-hover:scale-110 transition-transform duration-300">
                       <LuTrophy class="h-8 w-8 text-primary" />
                     </div>
-                    <h3 class="text-xl font-bold">{_`Automatic results`}</h3>
-                    <p class="text-muted-foreground text-center">
+                    <h3 class="text-xl font-bold dark:text-white">{_`Automatic results`}</h3>
+                    <p class="text-muted-foreground text-center dark:text-gray-300">
                       {_`Get random winners with total transparency and confidence`}
                     </p>
                   </div>
@@ -128,12 +128,12 @@ export default component$(() => {
                 {/* Feature 4 - Personalización */}
                 <div class="group relative">
                   <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-300"></div>
-                  <div class="relative flex flex-col items-center space-y-4 rounded-xl border border-primary/10 bg-white p-8 shadow-lg transition-all hover:shadow-xl">
+                  <div class="relative flex flex-col items-center space-y-4 rounded-xl border border-primary/10 bg-white dark:bg-gray-800 p-8 shadow-lg transition-all hover:shadow-xl">
                     <div class="rounded-full bg-gradient-to-br from-primary/20 to-indigo-600/20 p-4 group-hover:scale-110 transition-transform duration-300">
                       <LuSettings class="h-8 w-8 text-primary" />
                     </div>
-                    <h3 class="text-xl font-bold">{_`Customize your rules`}</h3>
-                    <p class="text-muted-foreground text-center">
+                    <h3 class="text-xl font-bold dark:text-white">{_`Customize your rules`}</h3>
+                    <p class="text-muted-foreground text-center dark:text-gray-300">
                       {_`Adapt each raffle to your specific needs`}
                     </p>
                   </div>

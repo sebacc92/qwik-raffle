@@ -4,17 +4,17 @@
 
 @layer base {
     :root {
-        --primary: 199 84% 55.3%;    /* Un azul más vibrante */
-        --primary-hover: 200 95% 50%; /* Variante hover más intensa */
-        --secondary: 215 25% 27%;     /* Un gris azulado más sofisticado */
-        --background: 0 0% 100%;      /* Blanco puro */
-        --foreground: 215 25% 27%;    /* Color de texto principal */
-        --muted: 210 40% 96.1%;       /* Gris muy claro para fondos secundarios */
-        --muted-foreground: 215 25% 40%; /* Texto secundario */
-        --card: 0 0% 100%;            /* Fondo de tarjetas */
-        --card-foreground: 215 25% 27%; /* Texto en tarjetas */
-        --border: 214.3 31.8% 91.4%;  /* Color de bordes */
-        --ring: 199 84% 55.3%;        /* Color para focus rings */
+        --primary: 199 84% 55.3%;
+        --primary-hover: 200 95% 50%;
+        --secondary: 215 25% 27%;
+        --background: 0 0% 100%;
+        --foreground: 215 25% 27%;
+        --muted: 210 40% 96.1%;
+        --muted-foreground: 215 25% 40%;
+        --card: 0 0% 100%;
+        --card-foreground: 215 25% 27%;
+        --border: 214.3 31.8% 91.4%;
+        --ring: 199 84% 55.3%;
     }
 
     .dark {
