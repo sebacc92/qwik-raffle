@@ -17,7 +17,7 @@ export const LocaleSelector = component$(() => {
         <div class="relative">
             <button 
                 onClick$={() => showLanguageDropdown.value = !showLanguageDropdown.value}
-                class="flex items-center justify-center p-2 text-foreground hover:bg-foreground/10 rounded-lg transition-colors"
+                class="flex items-center justify-center p-2 text-foreground hover:bg-foreground/10 rounded-lg transition-colors cursor-pointer"
                 aria-label={_`Change language`}
             >
                 <LuLanguages class="w-5 h-5" />

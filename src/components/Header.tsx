@@ -26,7 +26,7 @@ export default component$(() => {
             <div class="flex items-center space-x-4">
                 {session.value ? (
                     <Dropdown.Root>
-                        <Dropdown.Trigger class="p-0">
+                        <Dropdown.Trigger class="p-0 cursor-pointer">
                             <Avatar.Root>
                                 <Avatar.Image
                                     src={session.value.user?.image || undefined}

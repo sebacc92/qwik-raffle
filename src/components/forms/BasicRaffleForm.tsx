@@ -82,7 +82,7 @@ export default component$(() => {
                 {(field, props) => (
                     <div class="space-y-1.5">
                         <Label for="raffle-description" class="flex items-center">
-                            {_`Description (optional)`}
+                            {_`Description/Note (optional)`}
                         </Label>
                         <Textarea
                             {...props}
@@ -259,6 +259,7 @@ export default component$(() => {
                 <h2 class="font-medium text-foreground">{_`Additional Settings`}</h2>
                 <div>
                     <CustomToggle
+                        id="expiresAt"
                         label={_`Set end date`}
                         checked={showEndDate.value}
                         onChange$={$((checked) => {
@@ -306,6 +307,7 @@ export default component$(() => {
                 </div>
                 <div class="space-y-4">
                     <CustomToggle
+                        id="isPublic"
                         label={_`Public raffle`}
                         checked={isPubic.value}
                         onChange$={$((checked) => {

@@ -1,12 +1,14 @@
 import { $, component$, useSignal } from '@builder.io/qwik';
+import { Label } from '~/components/ui'
 
 interface CustomToggleProps {
+    id: string;
     label: string;
     checked: boolean;
     onChange$: (checked: boolean) => void;
 }
 
-export const CustomToggle = component$<CustomToggleProps>(({ label, checked, onChange$ }) => {
+export const CustomToggle = component$<CustomToggleProps>(({ id, label, checked, onChange$ }) => {
     const isChecked = useSignal(checked);
 
     const handleToggle = $(() => {
@@ -17,11 +19,13 @@ export const CustomToggle = component$<CustomToggleProps>(({ label, checked, onC
 
     return (
         <div class="flex items-center space-x-3 py-2">
-            <span class="text-sm font-medium text-gray-700">{label}</span>
+            <Label for={id} class="flex items-center cursor-pointer" onClick$={handleToggle}>
+                {label}
+            </Label>
             <button
                 type="button"
                 onClick$={handleToggle}
-                class={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                class={`relative inline-flex h-6 w-11 items-center rounded-full cursor-pointer transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                     isChecked.value ? 'bg-blue-600' : 'bg-gray-200'
                 }`}
             >
