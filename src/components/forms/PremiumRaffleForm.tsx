@@ -57,6 +57,7 @@ export default component$(() => {
                         <Label for="raffle-name" class="flex items-center">
                             <span class="inline-block mr-2 text-primary font-bold">#</span>
                             {_`Raffle Name`}
+                            <span class="text-red-500">*</span>
                         </Label>
                         <Input
                             {...props}

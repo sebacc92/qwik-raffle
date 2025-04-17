@@ -56,10 +56,12 @@ export default component$(() => {
                     <div class="space-y-1.5">
                         <Label for="raffle-name" class="flex items-center">
                             <span class="inline-block mr-2 text-primary font-bold">#</span>
-                            {_`Raffle Name`}
+                            <span>{_`Raffle Name`}</span>
+                            <span class="ml-1 text-red-500">*</span>
                         </Label>
                         <Input
                             {...props}
+                            autoFocus
                             id="raffle-name"
                             type="text"
                             maxLength={100}
@@ -110,7 +112,8 @@ export default component$(() => {
                         <div class="space-y-1.5 flex-1">
                             <Label for="number-quantity" class="flex items-center whitespace-nowrap">
                                 <span class="inline-block mr-2 text-primary font-bold">+</span>
-                                {_`Number Quantity`}
+                                <span>{_`Number Quantity`}</span>
+                                <span class="ml-1 text-red-500">*</span>
                             </Label>
                             <Input
                                 {...props}
@@ -145,7 +148,8 @@ export default component$(() => {
                         <div class="space-y-1.5 flex-1">
                             <Label for="price-per-number" class="flex items-center whitespace-nowrap">
                                 <span class="inline-block mr-2 text-primary font-bold">$</span>
-                                {_`Price per number`}
+                                <span>{_`Price per number`}</span>
+                                <span class="ml-1 text-red-500">*</span>
                             </Label>
                             <Input
                                 {...props}
@@ -171,7 +175,7 @@ export default component$(() => {
 
             {/* Prizes section */}
             <div class="space-y-4">
-                <div class="flex justify-between items-center">
+                <div>
                     <Label class="flex items-center">
                         <span class="inline-block mr-2 text-primary font-bold">🎁</span>
                         {_`Prizes`}
@@ -195,7 +199,9 @@ export default component$(() => {
                                         <Field name={`prizes.${index}.name`}>
                                             {(field, props) => (
                                                 <div class="space-y-1.5">
-                                                    <Label for={`prize-${index}`}>{_`Prize`} {index + 1}</Label>
+                                                    <Label for={`prize-${index}`} class="flex items-center">
+                                                        {_`Prize`} {index + 1
+                                                    }</Label>
                                                     <Input
                                                         {...props}
                                                         id={`prize-${index}`}
@@ -232,7 +238,9 @@ export default component$(() => {
                                 </div>
                             ))}
                             {fieldArray.items.length < 5 && (
-                                <button
+                                <Button
+                                    size="sm"
+                                    look="outline"
                                     type="button"
                                     onClick$={() => {
                                         const numberCount = raffleForm.internal.fields.numberCount?.value;
@@ -248,7 +256,7 @@ export default component$(() => {
                                 >
                                     <LuPlus class="w-4 h-4 mr-1" />
                                     {_`Add Prize`}
-                                </button>
+                                </Button>
                             )}
                         </div>
                     )}
@@ -256,7 +264,9 @@ export default component$(() => {
             </div>
 
             <div class="space-y-4">
-                <h2 class="font-medium text-foreground">{_`Additional Settings`}</h2>
+                <h2 class="font-bold text-foreground">
+                    {_`Additional Settings`}
+                </h2>
                 <div>
                     <CustomToggle
                         id="expiresAt"
@@ -277,7 +287,7 @@ export default component$(() => {
                                     <>
                                         <Label for="expiresAt" class="flex items-center">
                                             <span class="inline-block mr-2 text-primary font-bold">#</span>
-                                            {_`End date`}
+                                            <span>{_`End date`}</span>
                                         </Label>
                                         <Input
                                             {...props}
