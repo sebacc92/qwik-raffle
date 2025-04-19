@@ -148,7 +148,7 @@ export default component$(() => {
   return (
     <div class="flex flex-col justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900 py-6">
       <div class="w-full max-w-[1200px] mx-auto px-4 flex flex-col lg:flex-row lg:items-start lg:gap-8">
-        <div class="w-full lg:w-[350px] xl:w-[400px] mb-6 lg:mb-0 lg:sticky lg:top-6">
+        <div class="w-full lg:w-[350px] xl:w-[400px] mb-6 lg:mb-0 lg:sticky lg:top-20">
           {!session.value.session ? (
             <InfoAlert />
           ) : session.value.isPremium === true ? (
@@ -166,7 +166,7 @@ export default component$(() => {
               <Card.Title>{_`Create New Raffle`}</Card.Title>
               <Card.Description>{_`Enter the information for your raffle`}</Card.Description>
             </Card.Header>
-)}
+          )}
           <Card.Content>
             {!session.value.session ? (
               <GuestRaffleForm />
