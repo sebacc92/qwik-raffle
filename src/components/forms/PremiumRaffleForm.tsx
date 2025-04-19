@@ -172,7 +172,7 @@ export default component$(() => {
 
             {/* Prizes section */}
             <div class="space-y-4">
-                <div class="flex justify-between items-center">
+                <div>
                     <Label class="flex items-center">
                         <span class="inline-block mr-2 text-primary font-bold">🎁</span>
                         {_`Prizes`}
@@ -232,7 +232,9 @@ export default component$(() => {
                                     )}
                                 </div>
                             ))}
-                            <button
+                            <Button
+                                size="sm"
+                                look="outline"
                                 type="button"
                                 onClick$={() => {
                                     const numberCount = raffleForm.internal.fields.numberCount?.value;
@@ -248,7 +250,7 @@ export default component$(() => {
                             >
                                 <LuPlus class="w-4 h-4 mr-1" />
                                 {_`Add Prize`}
-                            </button>
+                            </Button>
                         </div>
                     )}
                 </FieldArray>
@@ -258,6 +260,7 @@ export default component$(() => {
                 <h2 class="font-medium text-foreground">{_`Additional Settings`}</h2>
                 <div>
                     <CustomToggle
+                        id="expiresAt"
                         label={_`Set end date`}
                         checked={showEndDate.value}
                         onChange$={$((checked) => {
@@ -305,6 +308,7 @@ export default component$(() => {
                 </div>
                 <div class="space-y-4">
                     <CustomToggle
+                        id="isPublic"
                         label={_`Public raffle`}
                         checked={isPubic.value}
                         onChange$={$((checked) => {
