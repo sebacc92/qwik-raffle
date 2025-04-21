@@ -6,7 +6,6 @@ import { defineConfig, type UserConfig } from "vite";
 import { qwikVite } from "@builder.io/qwik/optimizer";
 import { qwikCity } from "@builder.io/qwik-city/vite";
 import { i18nPlugin } from "compiled-i18n/vite";
-import tailwindcss from "@tailwindcss/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import pkg from "./package.json";
 type PkgDep = Record<string, string>;
@@ -26,7 +25,6 @@ export default defineConfig(({ command, mode }): UserConfig => {
       qwikCity(),
       qwikVite(),
       tsconfigPaths(),
-      tailwindcss(),
       i18nPlugin({
         locales: ["en_US", "es_AR"],
       }),

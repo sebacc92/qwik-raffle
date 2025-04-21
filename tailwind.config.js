@@ -8,19 +8,26 @@ export default {
     theme: {
         extend: {
             colors: {
-                border: "hsl(var(--border-color))",
+                border: "hsl(var(--border))",
                 input: "hsl(var(--input))",
                 ring: "hsl(var(--ring))",
-                background: "hsl(var(--bg-primary))",
-                foreground: "hsl(var(--text-primary))",
+                background: "hsl(var(--background))",
+                foreground: "hsl(var(--foreground))",
                 primary: {
                     DEFAULT: "hsl(var(--primary))",
                     foreground: "hsl(var(--primary-foreground))",
-                    hover: "hsl(var(--primary-hover))"
                 },
                 secondary: {
                     DEFAULT: "hsl(var(--secondary))",
                     foreground: "hsl(var(--secondary-foreground))",
+                },
+                success: {
+                    DEFAULT: "hsl(var(--success))",
+                    foreground: "hsl(var(--success-foreground))",
+                },
+                alert: {
+                    DEFAULT: "hsl(var(--alert))",
+                    foreground: "hsl(var(--alert-foreground))",
                 },
                 muted: {
                     DEFAULT: "hsl(var(--muted))",
@@ -31,30 +38,13 @@ export default {
                     foreground: "hsl(var(--accent-foreground))",
                 },
                 card: {
-                    DEFAULT: "hsl(var(--card-bg))",
+                    DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
                 popover: {
                     DEFAULT: "hsl(var(--popover))",
                     foreground: "hsl(var(--popover-foreground))",
                 },
-                alert: {
-                    DEFAULT: "hsl(var(--alert))",
-                    foreground: "hsl(var(--alert-foreground))",
-                },
-                danger: {
-                    DEFAULT: "hsl(var(--danger))",
-                    foreground: "hsl(var(--danger-foreground))",
-                },
-                success: {
-                    DEFAULT: "hsl(var(--button-success))",
-                    foreground: "hsl(var(--button-success-foreground))",
-                },
-                cancel: {
-                    DEFAULT: "hsl(var(--button-cancel))",
-                    foreground: "hsl(var(--button-cancel-foreground))",
-                },
-                'poll-option-hover': 'rgba(var(--color-primary-rgb), 0.05)',
             },
             borderRadius: {
                 base: "var(--border-radius)",
@@ -73,6 +63,16 @@ export default {
                 4: "calc(var(--border-width) + 4px)",
                 8: "calc(var(--border-width) + 8px)",
             },
+            boxShadow: {
+                base: "var(--shadow-base)",
+                sm: "var(--shadow-sm)",
+                DEFAULT: "var(--shadow)",
+                md: "var(--shadow-md)",
+                lg: "var(--shadow-lg)",
+                xl: "var(--shadow-xl)",
+                "2xl": "var(--shadow-2xl)",
+                inner: "var(--shadow-inner)",
+            },
             strokeWidth: {
                 0: "0",
                 base: "var(--stroke-width)",
@@ -82,7 +82,7 @@ export default {
             animation: {
                 "accordion-up": "collapsible-up 0.2s ease-out 0s 1 normal forwards",
                 "accordion-down": "collapsible-down 0.2s ease-out 0s 1 normal forwards",
-                'fadeIn': 'fadeIn 0.3s ease-in-out',
+                fadeIn: "fadeIn 0.3s ease-in-out",
             },
             keyframes: {
                 "collapsible-down": {
@@ -94,9 +94,9 @@ export default {
                     to: { height: "0" },
                 },
                 fadeIn: {
-                    '0%': { opacity: 0, transform: 'translateY(-5px)' },
-                    '100%': { opacity: 1, transform: 'translateY(0)' },
-                }
+                    "0%": { opacity: 0, transform: "translateY(-5px)" },
+                    "100%": { opacity: 1, transform: "translateY(0)" },
+                },
             },
         },
     },
@@ -109,6 +109,6 @@ export default {
                 },
             });
         }),
-        require('tailwind-scrollbar'),
+        require("tailwind-scrollbar"),
     ],
 };

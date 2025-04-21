@@ -26,12 +26,12 @@ export const Textarea = component$<TextareaProps>(
             valueSig ? $((__, el) => (valueSig.value = el.value)) : onInput$
           }
           class={cn(
-            "[&::-webkit-scrollbar-track]:bg-blue flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+            "[&::-webkit-scrollbar-track]:bg-blue border-input placeholder:text-muted-foreground focus-visible:ring-ring flex min-h-[60px] w-full rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm focus-visible:ring-1 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
             props.class,
           )}
           id={textareaId}
         />
-        {error && <div id={`${textareaId}-error`} class="text-alert mt-1 text-sm">{error}</div>}
+        {error && <div id={`${textareaId}-error`}>{error}</div>}
       </>
     );
   },

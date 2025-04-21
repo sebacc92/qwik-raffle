@@ -6,6 +6,7 @@ export const useFormRaffleLoader = routeLoader$<InitialValues<RaffleForm>>(() =>
     return {
         name: '',
         description: '',
+        expiresAt: '',
         numberCount: 2,
         pricePerNumber: 1.00,
         prizes: [

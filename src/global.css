@@ -1,61 +1,78 @@
-@custom-variant dark (&:where(.dark, .dark *));
-
 @layer base {
     :root {
-        --primary: 199 84% 55.3%;
-        --primary-hover: 200 95% 50%;
-        --secondary: 215 25% 27%;
         --background: 0 0% 100%;
         --foreground: 215 25% 27%;
         --muted: 210 40% 96.1%;
         --muted-foreground: 215 25% 40%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 222.2 47.4% 11.2%;
         --card: 0 0% 100%;
         --card-foreground: 215 25% 27%;
         --border: 214.3 31.8% 91.4%;
-        --ring: 199 84% 55.3%;
-    }
-
-    .dark {
+        --input: 214.3 31.8% 91.4%;
         --primary: 199 84% 55.3%;
         --primary-hover: 200 95% 50%;
         --secondary: 215 25% 27%;
+        --secondary-foreground: 0 0% 100%;
+        --success: 120 100% 25%;
+        --success-foreground: 0 0% 100%;
+        --accent: 210 40% 96.1%;
+        --accent-foreground: 222.2 47.4% 11.2%;
+        --alert: 0 84.2% 60.2%;
+        --alert-foreground: 0 0% 100%;
+        --ring: 199 84% 55.3%;
+        --border-width: 0px;
+        --border-radius: 0.15em;
+        --shadow-base: 0 1px 2px 0 rgba(0, 0, 0, 0.01);
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 0px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 1);
+        --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.01);
+        --transform-press: scale(0.95);
+    }
+    .dark {
         --background: 215 28% 17%;
         --foreground: 210 40% 98%;
         --muted: 215 25% 27%;
         --muted-foreground: 217.9 10.6% 64.9%;
+        --popover: 222.2 84% 4.9%;
+        --popover-foreground: 210 40% 98%;
         --card: 215 28% 17%;
         --card-foreground: 210 40% 98%;
         --border: 215 28% 17%;
+        --input: 217.2 32.6% 17.5%;
+        --primary: 199 84% 55.3%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 210 40% 96.1%;
+        --secondary-foreground: 0 0% 0%;
+        --success: 120 100% 25%;
+        --success-foreground: 0 0% 100%;
+        --accent: 217.2 32.6% 17.5%;
+        --accent-foreground: 210 40% 98%;
+        --alert: 0 84.2% 60.2%;
+        --alert-foreground: 0 0% 0%;
         --ring: 199 84% 55.3%;
+        --border-width: 0px;
+        --border-radius: 0.15em;
+        --shadow-base: 0 1px 2px 0 rgba(0, 0, 0, 0.01);
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 0px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 1);
+        --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.01);
+        --transform-press: scale(0.95);
     }
 }
 
-@theme {
-    --color-primary: hsl(var(--primary));
-    --color-primary-hover: hsl(var(--primary-hover));
-    --color-secondary: hsl(var(--secondary));
-    --color-background: hsl(var(--background));
-    --color-foreground: hsl(var(--foreground));
-    --color-muted: hsl(var(--muted));
-    --color-muted-foreground: hsl(var(--muted-foreground));
-    --color-card: hsl(var(--card));
-    --color-card-foreground: hsl(var(--card-foreground));
-    --color-border: hsl(var(--border));
-    --color-ring: hsl(var(--ring));
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Mejoras adicionales */
-@layer base {
-    html {
-        @apply antialiased;
-    }
-
-    body {
-        @apply bg-background text-foreground;
-    }
-}
-
-/* Animaciones personalizadas */
 @keyframes float {
     0%, 100% {
         transform: translateY(0);
@@ -76,5 +93,3 @@
 textarea {
     field-sizing: content;
 }
-
-@import "tailwindcss";

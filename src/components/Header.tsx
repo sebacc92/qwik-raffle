@@ -77,8 +77,8 @@ export default component$(() => {
                         </Link>
                     </>
                 )}
-                <LocaleSelector />
                 <ThemeToggle />
+                <LocaleSelector />
             </div>
         </header>
     );

@@ -27,10 +27,14 @@
     align-items: center;
     justify-content: center;
     max-width: 100px;
-    height: 60px; /* Altura fija para consistencia */
+    height: 60px;
     animation: fadeInUp 0.3s ease forwards;
     opacity: 0;
-    transform: translateY(10px);
+}
+
+.ticket:active {
+    transform: scale(1.25);
+    /* transform: translateY(10px); */
 }
 
 /* Aplica el efecto stagger a los tickets */
@@ -41,7 +45,7 @@
 .ticket:nth-child(5n) { animation-delay: 0.25s; }
 
 .ticket:hover {
-    transform: scale(1.05);
+    transform: scale(1.25);
     z-index: 1;
     box-shadow: 0 4px 8px rgba(139, 92, 246, 0.15);
 }

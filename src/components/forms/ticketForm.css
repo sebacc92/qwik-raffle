@@ -6,14 +6,6 @@
   margin-right: auto;
 }
 
-.form-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #6b21a8;
-  margin-bottom: 0.5rem;
-  text-align: center;
-}
-
 .form-subtitle {
   font-size: 0.875rem;
   color: #9333ea;
@@ -252,18 +244,6 @@
 
 .input-with-icon {
   position: relative;
-}
-
-.input-icon {
-  position: absolute;
-  left: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #a855f7;
-}
-
-:global(.dark) .input-icon {
-  color: #c084fc;
 }
 
 .input-with-icon .input-field {

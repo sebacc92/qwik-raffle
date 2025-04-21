@@ -56,8 +56,8 @@ export default component$<TicketFormProps>(
 
         return (
             <div class="form-container">
-                <h2 class="form-title">{_`Edit Ticket #${ticketNumber}`}</h2>
-                <p class="form-subtitle">{_`Update ticket information`}</p>
+                <h2 class="text-3xl text-center font-medium">{_`Edit Ticket #`}<span class="font-bold">{ticketNumber}</span></h2>
+                <p class="text-lg text-gray-500 text-center">{_`Update ticket information`}</p>
                 
                 <Form onSubmit$={handleSubmit} class="space-y-5">
                     {/* Hidden fields */}
@@ -74,11 +74,11 @@ export default component$<TicketFormProps>(
                         <Field name="buyerName">
                             {(field, props) => (
                                 <>
-                                    <Label for="buyerName" class="field-label">
-                                        {_`Buyer Name`}
+                                    <Label for="buyerName" class="flex items-center">
+                                        <LuUser class="text-primary h-5 w-5 mr-1" />
+                                        <span>{_`Buyer Name`}</span>
                                     </Label>
-                                    <div class="input-with-icon">
-                                        <LuUser class="input-icon h-5 w-5" />
+                                    <div class="input-with-icon mt-1">
                                         <Input
                                             {...props}
                                             autofocus
@@ -106,11 +106,11 @@ export default component$<TicketFormProps>(
                         <Field name="buyerPhone">
                             {(field, props) => (
                                 <>
-                                    <Label for="buyerPhone" class="field-label">
-                                        {_`Phone Number (optional)`}
+                                    <Label for="buyerPhone" class="flex items-center">
+                                        <LuPhone class="text-primary h-5 w-5 mr-1" />
+                                        <span>{_`Phone Number (optional)`}</span>
                                     </Label>
-                                    <div class="input-with-icon">
-                                        <LuPhone class="input-icon h-5 w-5" />
+                                    <div class="input-with-icon mt-1">
                                         <Input
                                             {...props}
                                             id="buyerPhone"
@@ -137,11 +137,9 @@ export default component$<TicketFormProps>(
                         <Field name="notes">
                             {(field, props) => (
                                 <>
-                                    <Label for="notes" class="field-label">
-                                        <div class="flex items-center">
-                                            <LuStickyNote class="h-5 w-5 mr-2" />
-                                            {_`Notes (optional)`}
-                                        </div>
+                                    <Label for="notes" class="flex items-center mb-1">
+                                        <LuStickyNote class="text-primary h-5 w-5 mr-1" />
+                                        <span>{_`Notes (optional)`}</span>
                                     </Label>
                                     <Textarea
                                         {...props}
@@ -168,11 +166,9 @@ export default component$<TicketFormProps>(
                         <Field name="status">
                             {(field, props) => (
                                 <>
-                                    <Label class="field-label">
-                                        <div class="flex items-center">
-                                            <LuTicket class="h-5 w-5 mr-2" />
-                                            {_`Ticket Status`}
-                                        </div>
+                                    <Label class="flex items-center">
+                                        <LuTicket class="text-primary h-5 w-5 mr-1" />
+                                        <span>{_`Ticket Status`}</span>
                                     </Label>
                                     <div class="status-options">
                                         <div

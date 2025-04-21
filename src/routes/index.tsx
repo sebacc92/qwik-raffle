@@ -3,7 +3,7 @@ import { type DocumentHead, Link } from '@builder.io/qwik-city';
 import { Modal } from '@qwik-ui/headless';
 import { LuFacebook, LuTwitter, LuInstagram, LuCheck, LuPlay, LuGift, LuShare, LuClock, LuSettings, LuStar, LuTrophy, LuShield, LuX, LuHelpCircle } from '@qwikest/icons/lucide';
 import SocialLoginButtons from '~/components/SocialLoginButtons';
-import { Accordion } from '~/components/ui';
+import { Accordion, Button } from '~/components/ui';
 import { _ } from 'compiled-i18n';
 
 export default component$(() => {
@@ -204,9 +204,10 @@ export default component$(() => {
                     <div class="mt-8">
                       <Link
                         href="/raffle/create"
-                        class="inline-flex h-12 w-full items-center justify-center rounded-xl border-2 border-primary bg-white px-8 text-base font-medium text-primary shadow-md transition-all hover:bg-primary/10 hover:shadow-lg press"
                       >
-                        {_`Get Started`}
+                        <Button look="outline" class="w-full border-2 border-primary text-base font-medium text-primary shadow-md hover:bg-primary/10 hover:shadow-lg active:press">
+                          {_`Get Started`}
+                        </Button>
                       </Link>
                     </div>
                   </div>
@@ -255,9 +256,10 @@ export default component$(() => {
                     <div class="mt-8">
                       <Link
                         href="/signup"
-                        class="inline-flex h-12 w-full items-center justify-center rounded-xl border-2 border-primary bg-white px-8 text-base font-medium text-primary shadow-md transition-all hover:bg-primary/10 hover:shadow-lg press"
                       >
-                        {_`Register for Free`}
+                        <Button look="outline" class="w-full border-2 border-primary text-base font-medium text-primary shadow-md hover:bg-primary/10 hover:shadow-lg active:press">
+                          {_`Register for Free`}
+                        </Button>
                       </Link>
                     </div>
                   </div>
