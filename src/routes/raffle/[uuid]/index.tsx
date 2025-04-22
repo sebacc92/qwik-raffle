@@ -489,13 +489,24 @@ export default component$(() => {
                                     <td>{ticket.buyerPhone || '-'}</td>
                                     <td class="notes-cell">{ticket.notes || '-'}</td>
                                     <td>
-                                        <Button 
-                                            look="link" 
-                                            size="sm"
-                                            onClick$={() => openEditModalFromList(ticket)}
-                                        >
-                                            {_`Edit`}
-                                        </Button>
+                                        {/* *** BOTÓN CONDICIONAL: Vender o Editar *** */}
+                                        {ticket.status === 'unsold' ? (
+                                            <Button 
+                                                look="primary" // Cambiar a look primario para destacar "Vender"
+                                                size="sm"
+                                                onClick$={() => openEditModalFromList(ticket)}
+                                            >
+                                                {_`Sell`}
+                                            </Button>
+                                        ) : (
+                                            <Button 
+                                                look="link" 
+                                                size="sm"
+                                                onClick$={() => openEditModalFromList(ticket)}
+                                            >
+                                                {_`Edit`}
+                                            </Button>
+                                        )}
                                     </td>
                                 </tr>
                             ))}
