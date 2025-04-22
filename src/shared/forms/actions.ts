@@ -3,7 +3,7 @@ import { type RaffleForm, type RaffleResponseData, RaffleSchema } from "~/schema
 import Drizzler from "../../../drizzle";
 import { schema } from "../../../drizzle/schema";
 import { v4 } from "uuid";
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { type TicketForm, type TicketResponseData, TicketSchema } from "~/schemas/ticketSchema";
 import type { Session } from "~/types/session";
 import { getUser } from "~/server";
@@ -14,10 +14,10 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
         const session = e.sharedMap.get("session") as Session | null;
         const userData = await getUser(session);
         const userId = userData?.[0]?.id;
-        
+
         // Destructure prizes and expiresAt from values to handle them separately
         const { prizes, expiresAt: formExpiresAt, ...otherRaffleData } = values;
-        
+
         // Create payload with DB-compatible types
         const payload: {
             name: string;
@@ -34,7 +34,7 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
             uuid: v4(),
             creatorId: userId || null
         };
-        
+
         // Process expiresAt string to Date if it exists and is valid
         if (formExpiresAt && formExpiresAt.trim() !== '') {
             try {
@@ -48,18 +48,18 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
                 // Keep expiresAt as null if invalid
             }
         }
-        
+
         const db = Drizzler();
         try {
             console.log("Creating raffle with payload:", payload);
             // Create the raffle
-            const raffles = await db.insert(schema.raffles).values(payload).returning({ 
+            const raffles = await db.insert(schema.raffles).values(payload).returning({
                 raffleId: schema.raffles.id,
                 uuid: schema.raffles.uuid,
                 numberCount: schema.raffles.numberCount
-            });            
+            });
             const { raffleId, uuid, numberCount } = raffles[0];
-            
+
             // Initialize all raffle numbers
             const raffleNumbersData = Array.from({ length: numberCount }, (_, i) => ({
                 raffleId,
@@ -67,7 +67,7 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
                 status: "unsold",
                 paymentStatus: false
             }));
-            
+
             await db.insert(schema.raffleNumbers).values(raffleNumbersData);
 
             // Insert prizes if they exist
@@ -79,12 +79,12 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
                     createdAt: new Date(),
                     updatedAt: new Date()
                 }));
-                
+
                 await db.insert(schema.prizes).values(prizesData);
             }
-            
+
             const fullShareLink = `/raffle/${uuid}`;
-            
+
             return {
                 status: 'success',
                 message: _`Raffle created successfully`,
@@ -110,9 +110,24 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
 
 export const useFormTicketAction = formAction$<TicketForm, TicketResponseData>(
     async (values) => {
-        
+        console.log('useFormTicketAction')
+        console.log('values', values)
+        console.log("Received form values in action:", JSON.stringify(values, null, 2));
+
         const db = Drizzler();
         try {
+            // Determine the where condition based on whether 'numbers' or 'number' is provided
+            const whereCondition = values.numbers && values.numbers.length > 0
+                ? and(
+                    eq(schema.raffleNumbers.raffleId, values.raffleId),
+                    inArray(schema.raffleNumbers.number, values.numbers) // Use inArray for multiple numbers
+                )
+                : and(
+                    eq(schema.raffleNumbers.raffleId, values.raffleId),
+                    // Add non-null assertion as schema ensures one is present
+                    eq(schema.raffleNumbers.number, values.number!)
+                );
+
             await db
                 .update(schema.raffleNumbers)
                 .set({
@@ -123,21 +138,22 @@ export const useFormTicketAction = formAction$<TicketForm, TicketResponseData>(
                     paymentStatus: values.status === "sold-paid",
                     updatedAt: new Date()
                 })
-                .where(
-                    and(
-                        eq(schema.raffleNumbers.raffleId, values.raffleId),
-                        eq(schema.raffleNumbers.number, values.number)
-                    )
-                );
-            
+                .where(whereCondition);
+
+            // Adjust response message based on single or multiple update
+            const message = values.numbers && values.numbers.length > 0
+                ? _`Tickets updated successfully`
+                : _`Ticket updated successfully`;
+            const updatedCount = values.numbers ? values.numbers.length : 1;
+
             return {
                 status: 'success',
-                message: _`Ticket updated successfully`,
+                message: message,
                 data: {
                     success: true,
-                    message: _`Ticket updated successfully`,
+                    message: message,
                     data: {
-                        ticket_id: values.number
+                        updated_count: updatedCount // Return updated count
                     }
                 }
             } as FormActionResult<TicketForm, TicketResponseData>;

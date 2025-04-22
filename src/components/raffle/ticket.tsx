@@ -1,4 +1,4 @@
-import { component$, useSignal, $, useStylesScoped$ } from '@builder.io/qwik';
+import { component$, useSignal, $, useStylesScoped$, type PropFunction } from '@builder.io/qwik';
 import type { Ticket } from '~/routes/raffle/[uuid]';
 import { Modal } from '~/components/ui';
 import { LuX } from '@qwikest/icons/lucide';
@@ -8,15 +8,26 @@ import styles from '~/routes/raffle/[uuid]/raffle.css?inline';
 interface TicketProps {
     ticket: Ticket;
     raffleId: number;
+    isMultiSelectMode?: boolean;
+    isSelected?: boolean;
+    onSelect$?: PropFunction<(payload: { ticketNumber: number; ctrlOrCmd: boolean }) => void>;
 }
 
-export default component$<TicketProps>(({ ticket, raffleId }) => {
+export default component$<TicketProps>(({ ticket, raffleId, isMultiSelectMode = false, isSelected = false, onSelect$ }) => {
     useStylesScoped$(styles);
     
     const showModal = useSignal(false);
 
-    const handleTicketClick = $(() => {
-        showModal.value = true;
+    const handleTicketClick = $((event: MouseEvent) => {
+        const ctrlOrCmdPressed = event.ctrlKey || event.metaKey;
+
+        if (onSelect$) {
+            onSelect$({ ticketNumber: ticket.number, ctrlOrCmd: ctrlOrCmdPressed });
+        }
+
+        if (!isMultiSelectMode && !ctrlOrCmdPressed) {
+            showModal.value = true;
+        }
     });
 
     const handleSuccess = $(() => {
@@ -35,13 +46,13 @@ export default component$<TicketProps>(({ ticket, raffleId }) => {
         <>
             <div
                 key={ticket.number}
-                onClick$={handleTicketClick}
+                onClick$={(event) => handleTicketClick(event)}
                 class={`p-4 ticket ${ticket.status === 'unsold'
                     ? 'unsold'
                     : ticket.status === 'sold-unpaid'
                         ? 'pending'
                         : 'paid'
-                    }`}
+                    } ${isSelected ? 'selected' : ''}`}
                 title={ticket.buyerName || ''}
             >
                 <div class="ticket-number">{ticket.number}</div>

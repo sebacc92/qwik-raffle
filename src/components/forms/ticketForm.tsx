@@ -1,5 +1,5 @@
 import { type QRL, $, component$, useSignal, useStylesScoped$ } from "@builder.io/qwik"
-import { useForm, valiForm$ } from "@modular-forms/qwik"
+import { useForm, valiForm$, FieldArray } from "@modular-forms/qwik"
 import { Button, Input, Label, Textarea } from "~/components/ui"
 import { type TicketForm, type TicketResponseData, TicketSchema } from "~/schemas/ticketSchema"
 import { useFormTicketAction } from "~/shared/forms/actions"
@@ -9,40 +9,52 @@ import { toast } from "qwik-sonner"
 import { _ } from "compiled-i18n"
 
 export interface TicketFormProps {
-    raffleId: number
-    ticketNumber: number
-    initialBuyerName: string | null
-    initialBuyerPhone?: string | null
-    initialNotes?: string | null
-    initialStatus: "unsold" | "sold-unpaid" | "sold-paid"
-    onSuccess$?: QRL<() => void>
-    onCancel$?: QRL<() => void>
+    raffleId: number;
+    ticketNumber?: number; // Make optional
+    selectedTickets?: number[]; // Add optional array
+    initialBuyerName: string | null;
+    initialBuyerPhone?: string | null;
+    initialNotes?: string | null;
+    initialStatus: "unsold" | "sold-unpaid" | "sold-paid";
+    onSuccess$?: QRL<() => void>;
+    onCancel$?: QRL<() => void>;
 }
 
+
 export default component$<TicketFormProps>(
-    ({ raffleId, ticketNumber, initialBuyerName, initialBuyerPhone, initialNotes, initialStatus, onSuccess$, onCancel$ }) => {
+    ({ raffleId, ticketNumber, selectedTickets, initialBuyerName, initialBuyerPhone, initialNotes, initialStatus, onSuccess$, onCancel$ }) => {
         useStylesScoped$(styles);
 
-        const [ticketForm, { Form, Field }] = useForm<TicketForm, TicketResponseData>({
+        const isMultiEdit = selectedTickets && selectedTickets.length > 0;
+
+        const [ticketForm, { Form, Field, FieldArray }] = useForm<TicketForm, TicketResponseData>({
             loader: {
                 value: {
                     raffleId,
-                    number: ticketNumber,
+                    // Set number or numbers based on props
+                    number: !isMultiEdit ? ticketNumber : undefined,
+                    numbers: isMultiEdit ? selectedTickets : [],
                     buyerName: initialBuyerName || "",
                     buyerPhone: initialBuyerPhone || "",
                     notes: initialNotes || "",
-                    status: initialStatus === "unsold" ? "sold-paid" : initialStatus,
+                    // For multi-edit, default to a specific status, e.g., sold-paid, or keep existing logic
+                    status: isMultiEdit ? "sold-paid" : (initialStatus === "unsold" ? "sold-paid" : initialStatus),
                 },
             },
             action: useFormTicketAction(),
             validate: valiForm$(TicketSchema),
+            fieldArrays: isMultiEdit ? ['numbers'] : undefined,
         })
+        console.log('ticketForm', ticketForm)
 
         const isUpdating = useSignal(false)
 
         // Handle successful response
-        if (ticketForm.response.status === "success" && !isUpdating.value) {
-            toast.success("Ticket updated successfully!");
+        // Check for the response structure we defined earlier
+        if (ticketForm.response.status === "success" && ticketForm.response.data?.success && !isUpdating.value) {
+            const count = ticketForm.response.data.data?.updated_count || 1;
+            const message = count > 1 ? _`Tickets updated successfully!` : _`Ticket updated successfully!` ;
+            toast.success(message);
             isUpdating.value = true
             if (onSuccess$) {
                 onSuccess$()
@@ -56,8 +68,19 @@ export default component$<TicketFormProps>(
 
         return (
             <div class="form-container">
-                <h2 class="text-3xl text-center font-medium">{_`Edit Ticket #`}<span class="font-bold">{ticketNumber}</span></h2>
-                <p class="text-lg text-gray-500 text-center">{_`Update ticket information`}</p>
+                {/* Conditional Title */}
+                <h2 class="text-3xl text-center font-medium">
+                    {isMultiEdit
+                        ? _`Editar ${selectedTickets?.length ?? 0} Tickets Seleccionados`
+                        : <>{_`Edit Ticket #`}{ticketNumber && <span class="font-bold">{ticketNumber}</span>}</>
+                    }
+                </h2>
+                <p class="text-lg text-gray-500 text-center">
+                    {isMultiEdit
+                        ? _`Asignar información a los tickets seleccionados`
+                        : _`Update ticket information`
+                    }
+                </p>
                 
                 <Form onSubmit$={handleSubmit} class="space-y-5">
                     {/* Hidden fields */}
@@ -65,9 +88,29 @@ export default component$<TicketFormProps>(
                         {(field, props) => <input {...props} type="hidden" value={field.value} />}
                     </Field>
 
-                    <Field name="number" type="number">
-                        {(field, props) => <input {...props} type="hidden" value={field.value} />}
-                    </Field>
+                    {/* Conditionally render hidden field for number or numbers */}
+                    {/* Modular forms handles array fields directly, just need the Field component */}
+                    {!isMultiEdit && (
+                        <Field name="number" type="number">
+                            {(field, props) => <input {...props} type="hidden" value={field.value} />}
+                        </Field>
+                    )}
+                    {/* For multi-edit, render hidden inputs directly without Field wrapper */}
+                    {isMultiEdit && (
+                        <FieldArray name="numbers">
+                            {(fieldArray) => (
+                                <>
+                                    {fieldArray.items.map((item, index) => (
+                                        <Field key={item} name={`numbers.${index}`} type="number">
+                                            {(field, props) => (
+                                                <input {...props} type="hidden" value={field.value} />
+                                            )}
+                                        </Field>
+                                    ))}
+                                </>
+                            )}
+                        </FieldArray>
+                    )}
 
                     {/* Buyer Name Field */}
                     <div class="form-field">
@@ -226,6 +269,7 @@ export default component$<TicketFormProps>(
                     <div class="form-footer">
                         <Button
                             look="cancel"
+                            // Use onCancel$ prop for cancellation
                             onClick$={onCancel$}
                             disabled={ticketForm.submitting}
                         >

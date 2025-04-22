@@ -939,3 +939,42 @@
     gap: 0.75rem;
     margin-top: 1.5rem;
 }
+
+/* Estilos para tickets seleccionados */
+.ticket.selected {
+    /* Un borde más grueso y de color más vibrante */
+    border-width: 3px;
+    border-color: #a855f7; /* Morado vibrante */
+    
+    /* Un ligero aumento de escala para que sobresalga */
+    transform: scale(1.08);
+    
+    /* Una sombra sutil para darle profundidad */
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.6); 
+    
+    /* Asegurar que esté por encima de otros tickets no seleccionados */
+    z-index: 5; 
+}
+
+/* Ajuste para el hover de los tickets seleccionados */
+.ticket.selected:hover {
+    transform: scale(1.25); 
+    box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4), 0 0 12px rgba(168, 85, 247, 0.6);
+}
+
+/* Ajustes para modo oscuro */
+:global(.dark) .ticket.selected {
+    border-color: #c084fc; /* Morado más claro para dark mode */
+    box-shadow: 0 0 12px rgba(192, 132, 252, 0.7);
+}
+
+:global(.dark) .ticket.selected:hover {
+     box-shadow: 0 8px 20px rgba(167, 139, 250, 0.5), 0 0 12px rgba(192, 132, 252, 0.7);
+}
+
+/* Asegurarse que la transición y transform base estén definidos en el .ticket original si no existen */
+/* Si ya existen, ajustar la transición y añadir will-change */
+.ticket {
+    transition: all 0.2s ease-out; 
+    will-change: transform, box-shadow, border-color; 
+}

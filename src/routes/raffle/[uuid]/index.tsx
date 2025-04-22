@@ -1,13 +1,14 @@
-import { component$, useSignal, $, useStylesScoped$ } from "@builder.io/qwik";
+import { component$, useSignal, $, useStylesScoped$, useVisibleTask$, type PropFunction } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { toast } from 'qwik-sonner';
 import { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 import styles from './raffle.css?inline';
 import Ticket from "~/components/raffle/ticket";
-import { LuUsers, LuCreditCard, LuDollarSign, LuGift, LuSearch, LuLink, LuDownload, LuTrash2, LuTrophy, LuX } from '@qwikest/icons/lucide';
+import { LuUsers, LuCreditCard, LuDollarSign, LuGift, LuSearch, LuLink, LuDownload, LuTrash2, LuTrophy, LuX, LuClipboardList } from '@qwikest/icons/lucide';
 import { useNavigate } from "@builder.io/qwik-city";
 import { _ } from "compiled-i18n";
 import { Button } from "~/components/ui";
+import TicketForm from "~/components/forms/ticketForm";
 
 export { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 
@@ -31,6 +32,17 @@ export default component$(() => {
     
     const search = useSignal("");
     const showOnlyPending = useSignal(false);
+    
+    // Señales para la selección múltiple
+    const isMultiSelectMode = useSignal(false);
+    const selectedTickets = useSignal<number[]>([]);
+    const showMultiSelectForm = useSignal(false);
+    const isMac = useSignal(false);
+
+    // Detectar si es Mac o Windows para mostrar la tecla correcta
+    useVisibleTask$(() => {
+        isMac.value = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+    });
 
     // Function to format a date
     const formatDate = $((dateInput: Date | string | number | null | undefined) => {
@@ -151,6 +163,55 @@ export default component$(() => {
         showResetConfirmation.value = false;
     });
 
+    // Funciones para la selección múltiple
+    const toggleMultiSelectMode = $(() => {
+        isMultiSelectMode.value = !isMultiSelectMode.value;
+        if (!isMultiSelectMode.value) {
+            selectedTickets.value = [];
+        }
+    });
+
+    const handleTicketSelection: PropFunction<(payload: { ticketNumber: number; ctrlOrCmd: boolean }) => void> = $(
+        ({ ticketNumber, ctrlOrCmd }) => {
+            // Modificar selección si Ctrl/Cmd está presionado O si el modo multi-select está activado
+            if (ctrlOrCmd || isMultiSelectMode.value) {
+                const currentSelection = selectedTickets.value;
+                const index = currentSelection.indexOf(ticketNumber);
+                if (index === -1) {
+                    // Añadir a la selección
+                    selectedTickets.value = [...currentSelection, ticketNumber].sort((a, b) => a - b); // Mantener ordenado
+                } else {
+                    // Quitar de la selección
+                    selectedTickets.value = currentSelection.filter(n => n !== ticketNumber);
+                }
+            } 
+            // Si no se presionó Ctrl/Cmd y el modo no está activo, no hacemos nada aquí
+            // (el componente Ticket se encarga de abrir el modal de edición simple)
+        }
+    );
+
+    const openMultiSelectForm = $(() => {
+        if (selectedTickets.value.length > 0) {
+            showMultiSelectForm.value = true;
+        } else {
+            toast.error(_`Por favor, selecciona al menos un ticket primero`, {
+                duration: 3000,
+                position: 'top-center'
+            });
+        }
+    });
+
+    const handleMultiSelectSuccess = $(() => {
+        showMultiSelectForm.value = false;
+        selectedTickets.value = [];
+        isMultiSelectMode.value = false;
+        toast.success(_`Tickets actualizados correctamente!`);
+    });
+
+    const handleCancelMultiSelect = $(() => {
+        showMultiSelectForm.value = false;
+    });
+
     if(raffle.value?.failed){
         return (
             <div class="p-4 max-w-7xl mx-auto">
@@ -246,18 +307,64 @@ export default component$(() => {
                         onInput$={(e: any) => search.value = e.target.value}
                     />
                 </div>
-                <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <input
-                        type="checkbox"
-                        id="pending"
-                        checked={showOnlyPending.value}
-                        onChange$={() => showOnlyPending.value = !showOnlyPending.value}
-                    />
-                    <label for="pending" class="text-sm sm:text-base">
-                        {_`Show only pending`}
-                    </label>
+                <div class="flex items-center gap-4 w-full sm:w-auto">
+                    <div class="flex items-center gap-2">
+                        <input
+                            type="checkbox"
+                            id="pending"
+                            checked={showOnlyPending.value}
+                            onChange$={() => showOnlyPending.value = !showOnlyPending.value}
+                        />
+                        <label for="pending" class="text-sm sm:text-base">
+                            {_`Show only pending`}
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input
+                            type="checkbox"
+                            id="multiSelect"
+                            checked={isMultiSelectMode.value}
+                            onChange$={toggleMultiSelectMode}
+                        />
+                        <label for="multiSelect" class="text-sm sm:text-base">
+                            {_`Multi-select mode`}
+                        </label>
+                    </div>
                 </div>
             </div>
+
+            <p>
+                {isMac.value ? 
+                    _`Presiona ⌘ + clic para seleccionar o deseleccionar múltiples tickets` : 
+                    _`Presiona Ctrl + clic para seleccionar o deseleccionar múltiples tickets`}
+            </p>
+            {/* Multi-select instructions and actions */}
+            {selectedTickets.value.length > 0 && (
+                <div class="multi-select-bar">
+                    <div class="flex flex-col gap-2">
+                        
+                        <div class="flex flex-wrap gap-1">
+                            <span class="text-sm font-medium mr-1">{_`Seleccionados:`}</span>
+                            {selectedTickets.value.map(number => (
+                                <span key={number} class="inline-block bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded text-xs">
+                                    #{number}
+                                </span>
+                            ))}
+                        </div>
+
+                        <p class="text-sm text-purple-600"> 
+                            {_`${selectedTickets.value.length} tickets seleccionados`}
+                        </p>
+                    </div>
+                    <button 
+                        onClick$={openMultiSelectForm}
+                        class="action-button primary mt-2 sm:mt-0"
+                    >
+                        <LuClipboardList class="w-4 h-4" />
+                        {_`Asignar tickets seleccionados`}
+                    </button>
+                </div>
+            )}
 
             <div class="ticket-container">
                 <div class="ticket-grid">
@@ -266,13 +373,16 @@ export default component$(() => {
                             (!showOnlyPending.value || ticket.status === "sold-unpaid") &&
                             (!search.value ||
                                 ticket.number.toString().includes(search.value) ||
-                                ticket.buyerName?.toLowerCase().includes(search.value.toLowerCase()))
+                                (ticket.buyerName && ticket.buyerName.toLowerCase().includes(search.value.toLowerCase())))
                         )
                         .map(ticket => (
                             <Ticket
                                 key={ticket.number}
                                 ticket={ticket}
                                 raffleId={raffle.value.id || 0}
+                                isMultiSelectMode={isMultiSelectMode.value}
+                                isSelected={selectedTickets.value.includes(ticket.number)}
+                                onSelect$={handleTicketSelection}
                             />
                         ))
                     }
@@ -325,7 +435,7 @@ export default component$(() => {
                     onClick$={startDrawProcess}
                     class="finalize-button"
                 >
-                    <LuTrophy class="w-4 h-4 mr-1" />
+                    <LuTrophy class="w-4 h-4" />
                     <span>{_`Finalize and Draw`}</span>
                 </Button>
                 <Button
@@ -333,10 +443,47 @@ export default component$(() => {
                     onClick$={() => showResetConfirmation.value = true}
                     class="reset-button"
                 >
-                    <LuTrash2 class="w-4 h-4 mr-1" />
+                    <LuTrash2 class="w-4 h-4" />
                     <span>{_`Reset Raffle`}</span>
                 </Button>
             </div>
+
+            {/* Multi-select form modal */}
+            {showMultiSelectForm.value && (
+                <div class="confirmation-dialog">
+                    <div class="confirmation-content">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="confirmation-title">{_`Asignar ${selectedTickets.value.length} tickets`}</h2>
+                            <button
+                                onClick$={handleCancelMultiSelect}
+                                class="text-gray-500 hover:text-gray-700"
+                            >
+                                <LuX class="w-5 h-5" />
+                            </button>
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-purple-700 font-medium mb-2">{_`Tickets seleccionados:`}</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                {selectedTickets.value.map(number => (
+                                    <span key={number} class="inline-block bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">
+                                        #{number}
+                                    </span>
+                                ))}
+                            </div>
+                            <TicketForm 
+                                raffleId={raffle.value.id || 0}
+                                initialBuyerName=""
+                                initialBuyerPhone=""
+                                initialNotes=""
+                                initialStatus="sold-paid"
+                                selectedTickets={selectedTickets.value}
+                                onSuccess$={handleMultiSelectSuccess}
+                                onCancel$={handleCancelMultiSelect}
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Confirmation modal for draw */}
             {showDrawConfirmation.value && (
