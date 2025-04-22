@@ -73,6 +73,24 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Agregar transición suave para cambio de tema */
+*,
+*::before,
+*::after {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+}
+
+/* Excluyendo elementos que no deben tener transición */
+.ticket, .ticket::before, .ticket::after, 
+.action-button, .action-button::after,
+.hover-info, .ticket-number, .ticket-info {
+    transition: transform 0.3s ease, 
+                box-shadow 0.3s ease, 
+                opacity 0.3s ease, 
+                background-color 0.3s ease, 
+                border-color 0.3s ease;
+}
+
 @keyframes float {
     0%, 100% {
         transform: translateY(0);

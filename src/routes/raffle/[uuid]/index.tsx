@@ -181,14 +181,14 @@ export default component$(() => {
                 <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
                     <button
                         onClick$={generateClientLink}
-                        class="flex items-center gap-2 px-4 py-2 border rounded-md hover:bg-purple-50 transition-colors"
+                        class="link-button"
                     >
                         <LuLink class="w-4 h-4" />
                         {_`Copy Link`}
                     </button>
                     <button
                         onClick$={downloadRaffleInfo}
-                        class="flex items-center gap-2 px-4 py-2 border rounded-md hover:bg-purple-50 transition-colors"
+                        class="link-button"
                     >
                         <LuDownload class="w-4 h-4" />
                         {_`Download Information`}
@@ -198,8 +198,10 @@ export default component$(() => {
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="stats-card bg-white">
-                    <div class="flex items-center gap-4">
-                        <LuUsers class="w-6 h-6 text-purple-600" />
+                    <div class="flex items-center">
+                        <div class="stats-icon">
+                            <LuUsers class="w-6 h-6 text-purple-600" />
+                        </div>
                         <div>
                             <div class="text-sm text-purple-600">{_`Sold Tickets`}</div>
                             <div class="text-xl sm:text-2xl font-bold">{soldCount}/{raffle.value.numberCount}</div>
@@ -208,22 +210,26 @@ export default component$(() => {
                 </div>
 
                 <div class="stats-card bg-white">
-                    <div class="flex items-center gap-4">
-                        <LuCreditCard class="w-6 h-6 text-purple-600" />
+                    <div class="flex items-center">
+                        <div class="stats-icon">
+                            <LuCreditCard class="w-6 h-6 text-amber-500" />
+                        </div>
                         <div>
-                            <div class="text-sm text-purple-600">{_`Paid Tickets`}</div>
+                            <div class="text-sm text-amber-500">{_`Paid Tickets`}</div>
                             <div class="text-xl sm:text-2xl font-bold">{paidCount}/{raffle.value.numberCount}</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="stats-card bg-white">
-                    <div class="flex items-center gap-4">
-                        <LuDollarSign class="w-6 h-6 text-purple-600" />
+                    <div class="flex items-center">
+                        <div class="stats-icon">
+                            <LuDollarSign class="w-6 h-6 text-emerald-500" />
+                        </div>
                         <div>
-                            <div class="text-sm text-purple-600">{_`Total Collected`}</div>
+                            <div class="text-sm text-emerald-500">{_`Total Collected`}</div>
                             <div class="text-xl sm:text-2xl font-bold">${totalCollected.toFixed(2)}</div>
-                            <div class="text-xs text-purple-400">{_`Price per ticket: `}${raffle.value.pricePerNumber.toFixed(2)}</div>
+                            <div class="text-xs text-emerald-400">{_`Price per ticket: `}${raffle.value.pricePerNumber.toFixed(2)}</div>
                         </div>
                     </div>
                 </div>
@@ -231,11 +237,11 @@ export default component$(() => {
 
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div class="relative w-full sm:w-auto sm:flex-1">
-                    <LuSearch class="absolute left-2 top-2.5 text-purple-500 w-4 h-4" />
+                    <LuSearch class="search-icon w-4 h-4" />
                     <input
                         type="text"
                         placeholder={_`Search number or name`}
-                        class="pl-8 w-full border rounded-md p-2"
+                        class="search-input"
                         value={search.value}
                         onInput$={(e: any) => search.value = e.target.value}
                     />
@@ -248,7 +254,7 @@ export default component$(() => {
                         onChange$={() => showOnlyPending.value = !showOnlyPending.value}
                     />
                     <label for="pending" class="text-sm sm:text-base">
-                        {_`Show only pending `}({raffleNumbers.value.filter(t => t.status === "sold-unpaid").length})
+                        {_`Show only pending`}
                     </label>
                 </div>
             </div>
@@ -317,18 +323,18 @@ export default component$(() => {
             <div class="flex justify-center gap-4">
                 <Button
                     onClick$={startDrawProcess}
-                    class="action-button success px-4 py-2 rounded-md transition-colors flex items-center gap-2"
+                    class="finalize-button"
                 >
-                    <LuTrophy class="w-4 h-4" />
-                    {_`Finalize and Draw`}
+                    <LuTrophy class="w-4 h-4 mr-1" />
+                    <span>{_`Finalize and Draw`}</span>
                 </Button>
                 <Button
                     look="outline"
                     onClick$={() => showResetConfirmation.value = true}
-                    class="gap-2 text-danger border-base border-danger"
+                    class="reset-button"
                 >
-                    <LuTrash2 class="w-4 h-4" />
-                    {_`Reset Raffle`}
+                    <LuTrash2 class="w-4 h-4 mr-1" />
+                    <span>{_`Reset Raffle`}</span>
                 </Button>
             </div>
 
@@ -356,13 +362,13 @@ export default component$(() => {
                         <div class="confirmation-actions">
                             <button
                                 onClick$={() => showDrawConfirmation.value = false}
-                                class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                                class="action-button secondary"
                             >
                                 {_`Cancel`}
                             </button>
                             <button
                                 onClick$={confirmDraw}
-                                class="action-button success px-4 py-2 rounded-md transition-colors"
+                                class="action-button success"
                             >
                                 {_`Continue with the draw`}
                             </button>
@@ -376,7 +382,7 @@ export default component$(() => {
                 <div class="confirmation-dialog">
                     <div class="confirmation-content">
                         <div class="flex justify-between items-center mb-4">
-                            <h2 class="confirmation-title text-red-600">{_`Confirm Reset`}</h2>
+                            <h2 class="confirmation-title">{_`Confirm Reset`}</h2>
                             <button
                                 onClick$={() => showResetConfirmation.value = false}
                                 class="text-gray-500 hover:text-gray-700"
@@ -385,22 +391,21 @@ export default component$(() => {
                             </button>
                         </div>
                         <p class="mb-4">
-                            {_`Are you sure you want to reset the raffle? This will delete all data.`}
+                            {_`Are you sure you want to reset this raffle? All tickets will be marked as unsold.`}
                         </p>
                         <div class="confirmation-actions">
-                            <Button
+                            <button
                                 onClick$={() => showResetConfirmation.value = false}
-                                class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                                class="action-button secondary"
                             >
                                 {_`Cancel`}
-                            </Button>
-                            <Button
-                                look="danger"
+                            </button>
+                            <button
                                 onClick$={confirmReset}
-                                class="action-button danger px-4 py-2 rounded-md transition-colors"
+                                class="action-button warning"
                             >
                                 {_`Reset Raffle`}
-                            </Button>
+                            </button>
                         </div>
                     </div>
                 </div>
