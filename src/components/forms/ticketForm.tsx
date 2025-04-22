@@ -45,7 +45,6 @@ export default component$<TicketFormProps>(
             validate: valiForm$(TicketSchema),
             fieldArrays: isMultiEdit ? ['numbers'] : undefined,
         })
-        console.log('ticketForm', ticketForm)
 
         const isUpdating = useSignal(false)
 

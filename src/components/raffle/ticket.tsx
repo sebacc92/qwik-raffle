@@ -10,10 +10,11 @@ interface TicketProps {
     raffleId: number;
     isMultiSelectMode?: boolean;
     isSelected?: boolean;
+    showBuyerName?: boolean;
     onSelect$?: PropFunction<(payload: { ticketNumber: number; ctrlOrCmd: boolean }) => void>;
 }
 
-export default component$<TicketProps>(({ ticket, raffleId, isMultiSelectMode = false, isSelected = false, onSelect$ }) => {
+export default component$<TicketProps>(({ ticket, raffleId, isMultiSelectMode = false, isSelected = false, showBuyerName = false, onSelect$ }) => {
     useStylesScoped$(styles);
     
     const showModal = useSignal(false);
@@ -55,14 +56,14 @@ export default component$<TicketProps>(({ ticket, raffleId, isMultiSelectMode = 
                     } ${isSelected ? 'selected' : ''}`}
                 title={ticket.buyerName || ''}
             >
-                <div class="ticket-number">{ticket.number}</div>
-                {ticket.buyerName && (
-                    <div class="ticket-info">
-                        <span class="buyer-name" title={ticket.buyerName}>
+                <div class="ticket-content">
+                    <div class="ticket-number">{ticket.number}</div>
+                    {showBuyerName && ticket.buyerName && (
+                        <div class="ticket-buyer-name" title={ticket.buyerName}>
                             {ticket.buyerName}
-                        </span>
-                    </div>
-                )}
+                        </div>
+                    )}
+                </div>
                 {ticket.buyerName && (
                     <div class="hover-info">
                         {`${ticket.buyerName} ${ticket.buyerPhone ? '(' + ticket.buyerPhone + ')': ''}`}

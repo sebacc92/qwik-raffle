@@ -4,10 +4,10 @@ import { toast } from 'qwik-sonner';
 import { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
 import styles from './raffle.css?inline';
 import Ticket from "~/components/raffle/ticket";
-import { LuUsers, LuCreditCard, LuDollarSign, LuGift, LuSearch, LuLink, LuDownload, LuTrash2, LuTrophy, LuX, LuClipboardList } from '@qwikest/icons/lucide';
+import { LuUsers, LuCreditCard, LuDollarSign, LuGift, LuSearch, LuLink, LuDownload, LuTrash2, LuTrophy, LuX, LuClipboardList, LuInfo, LuLayoutGrid, LuList } from '@qwikest/icons/lucide';
 import { useNavigate } from "@builder.io/qwik-city";
 import { _ } from "compiled-i18n";
-import { Button } from "~/components/ui";
+import { Alert, Button, Modal } from "~/components/ui";
 import TicketForm from "~/components/forms/ticketForm";
 
 export { useGetRaffle, useGetRaffleNumbers } from "~/shared/loaders";
@@ -38,6 +38,12 @@ export default component$(() => {
     const selectedTickets = useSignal<number[]>([]);
     const showMultiSelectForm = useSignal(false);
     const isMac = useSignal(false);
+
+    // *** NUEVAS SEÑALES PARA VISUALIZACIÓN ***
+    const showBuyerNameOnTicket = useSignal(false); // Para mostrar nombre en la casilla
+    const viewMode = useSignal<'grid' | 'list'>('grid'); // Para cambiar entre grid y lista
+    const editingTicket = useSignal<Ticket | null>(null); // Para editar desde la tabla
+    const isEditModalOpen = useSignal(false); // *** NUEVA SEÑAL BOOLEANA PARA EL MODAL ***
 
     // Detectar si es Mac o Windows para mostrar la tecla correcta
     useVisibleTask$(() => {
@@ -212,6 +218,29 @@ export default component$(() => {
         showMultiSelectForm.value = false;
     });
 
+    // *** CORREGIDO: Función para abrir modal desde tabla (con $) ***
+    const openEditModalFromList = $((ticket: Ticket) => {
+        editingTicket.value = ticket;
+        isEditModalOpen.value = true; // <-- Abrir modal
+    });
+
+    // *** CORREGIDO: Función para cerrar modal de edición (con $) ***
+    const closeEditModal = $(() => {
+        editingTicket.value = null; // Cierra modal de tabla
+        isEditModalOpen.value = false; // <-- Cerrar modal
+        showMultiSelectForm.value = false; // Cierra modal multiselect (si estaba abierto)
+        // No necesitamos cerrar el modal individual del componente Ticket aquí,
+        // ya que ese tiene su propia lógica interna de cierre.
+    });
+    
+    // *** CORREGIDO: Función al éxito de edición (con $) ***
+    const handleEditSuccess = $(() => {
+        closeEditModal(); 
+        selectedTickets.value = []; // Limpia selección múltiple si aplica
+        isMultiSelectMode.value = false; // Desactiva modo multiselect si aplica
+        toast.success(_`Ticket actualizado correctamente!`);
+    });
+
     if(raffle.value?.failed){
         return (
             <div class="p-4 max-w-7xl mx-auto">
@@ -224,6 +253,15 @@ export default component$(() => {
     const soldCount = raffleNumbers.value.filter(t => t.status !== "unsold").length;
     const paidCount = raffleNumbers.value.filter(t => t.status === "sold-paid").length;
     const totalCollected = paidCount * raffle.value.pricePerNumber;
+
+    // *** MOVER FILTRADO FUERA PARA REUTILIZAR ***
+    const filteredTickets = raffleNumbers.value
+        .filter(ticket =>
+            (!showOnlyPending.value || ticket.status === "sold-unpaid") &&
+            (!search.value ||
+                ticket.number.toString().includes(search.value) ||
+                (ticket.buyerName && ticket.buyerName.toLowerCase().includes(search.value.toLowerCase())))
+        );
 
     return (
         <div class="p-4 max-w-7xl mx-auto space-y-6">
@@ -330,14 +368,51 @@ export default component$(() => {
                             {_`Multi-select mode`}
                         </label>
                     </div>
+                     {/* *** NUEVO CHECKBOX PARA MOSTRAR NOMBRE *** */}
+                     <div class="flex items-center gap-2">
+                        <input
+                            type="checkbox"
+                            id="showName"
+                            checked={showBuyerNameOnTicket.value}
+                            onChange$={() => showBuyerNameOnTicket.value = !showBuyerNameOnTicket.value}
+                        />
+                        <label for="showName" class="text-sm sm:text-base">
+                            {_`Show name`}
+                        </label>
+                    </div>
+                     {/* *** NUEVOS BOTONES PARA MODO DE VISTA *** */}
+                     <div class="flex items-center gap-1 border border-purple-200 dark:border-purple-700 rounded-md p-0.5">
+                        <button
+                            onClick$={() => viewMode.value = 'grid'}
+                            class={`p-1 rounded ${viewMode.value === 'grid' ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200' : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+                            aria-label={_`Grid view`}
+                            title={_`Grid view`}
+                        >
+                            <LuLayoutGrid class="w-4 h-4" />
+                        </button>
+                        <button
+                            onClick$={() => viewMode.value = 'list'}
+                            class={`p-1 rounded ${viewMode.value === 'list' ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200' : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+                            aria-label={_`List view`}
+                            title={_`List view`}
+                        >
+                            <LuList class="w-4 h-4" />
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <p>
-                {isMac.value ? 
-                    _`Presiona ⌘ + clic para seleccionar o deseleccionar múltiples tickets` : 
-                    _`Presiona Ctrl + clic para seleccionar o deseleccionar múltiples tickets`}
-            </p>
+            <Alert.Root look="primary">
+                <LuInfo class="w-5 h-5 text-purple-600" />
+                <Alert.Title>{_`Multiselect mode`}</Alert.Title>
+                <Alert.Description>
+                    {isMac.value ? 
+                        _`Presiona ⌘ + clic para seleccionar o deseleccionar múltiples tickets` : 
+                        _`Presiona Ctrl + clic para seleccionar o deseleccionar múltiples tickets`
+                    }
+                </Alert.Description>
+            </Alert.Root>
+
             {/* Multi-select instructions and actions */}
             {selectedTickets.value.length > 0 && (
                 <div class="multi-select-bar">
@@ -366,28 +441,73 @@ export default component$(() => {
                 </div>
             )}
 
-            <div class="ticket-container">
-                <div class="ticket-grid">
-                    {raffleNumbers.value
-                        .filter(ticket =>
-                            (!showOnlyPending.value || ticket.status === "sold-unpaid") &&
-                            (!search.value ||
-                                ticket.number.toString().includes(search.value) ||
-                                (ticket.buyerName && ticket.buyerName.toLowerCase().includes(search.value.toLowerCase())))
-                        )
-                        .map(ticket => (
+            {/* *** RENDERIZADO CONDICIONAL DE VISTA *** */}
+            {viewMode.value === 'grid' ? (
+                // *** VISTA DE CUADRÍCULA (GRID) ***
+                <div class="ticket-container">
+                    <div class="ticket-grid">
+                        {/* Usar filteredTickets */}
+                        {filteredTickets.map(ticket => (
                             <Ticket
                                 key={ticket.number}
                                 ticket={ticket}
                                 raffleId={raffle.value.id || 0}
                                 isMultiSelectMode={isMultiSelectMode.value}
                                 isSelected={selectedTickets.value.includes(ticket.number)}
+                                showBuyerName={showBuyerNameOnTicket.value} // <-- Pasar nueva prop
                                 onSelect$={handleTicketSelection}
                             />
-                        ))
-                    }
+                        ))}
+                    </div>
                 </div>
-            </div>
+            ) : (
+                // *** VISTA DE LISTA/TABLA ***
+                <div class="overflow-x-auto ticket-table-container">
+                    <table class="w-full ticket-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>{_`Status`}</th>
+                                <th>{_`Buyer Name`}</th>
+                                <th>{_`Phone`}</th>
+                                <th>{_`Notes`}</th>
+                                <th>{_`Actions`}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/* Usar filteredTickets */}
+                            {filteredTickets.map(ticket => (
+                                <tr key={ticket.number} class={`status-${ticket.status}`}>
+                                    <td class="font-medium">{ticket.number}</td>
+                                    <td>
+                                        <span class={`status-badge status-${ticket.status}`}>
+                                            {ticket.status === 'unsold' ? _`Unsold` : 
+                                             ticket.status === 'sold-unpaid' ? _`Pending` : _`Paid`}
+                                        </span>
+                                    </td>
+                                    <td>{ticket.buyerName || '-'}</td>
+                                    <td>{ticket.buyerPhone || '-'}</td>
+                                    <td class="notes-cell">{ticket.notes || '-'}</td>
+                                    <td>
+                                        <Button 
+                                            look="link" 
+                                            size="sm"
+                                            onClick$={() => openEditModalFromList(ticket)}
+                                        >
+                                            {_`Edit`}
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))}
+                            {filteredTickets.length === 0 && (
+                                <tr>
+                                    <td colSpan={6} class="text-center py-4 text-gray-500">{_`No tickets match the current filters.`}</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            )}
 
             <div class="border rounded-lg p-4 space-y-2">
                 <h3 class="font-semibold text-purple-800">{_`Color Reference`}</h3>
@@ -432,18 +552,19 @@ export default component$(() => {
 
             <div class="flex justify-center gap-4">
                 <Button
+                    look="success"
                     onClick$={startDrawProcess}
                     class="finalize-button"
                 >
-                    <LuTrophy class="w-4 h-4" />
+                    <LuTrophy class="w-4 h-4 mr-1" />
                     <span>{_`Finalize and Draw`}</span>
                 </Button>
                 <Button
-                    look="outline"
+                    look="cancel"
                     onClick$={() => showResetConfirmation.value = true}
                     class="reset-button"
                 >
-                    <LuTrash2 class="w-4 h-4" />
+                    <LuTrash2 class="w-4 h-4 mr-1" />
                     <span>{_`Reset Raffle`}</span>
                 </Button>
             </div>
@@ -484,6 +605,30 @@ export default component$(() => {
                     </div>
                 </div>
             )}
+
+            {/* *** MODAL DE EDICIÓN (PARA TABLA Y POTENCIALMENTE INDIVIDUAL SI REFACTORIZAMOS) *** */}
+             <Modal.Root bind:show={isEditModalOpen}>
+                <Modal.Panel class="modal-edit-ticket">
+                    <Modal.Close
+                        class="absolute right-4 top-4 text-purple-700 hover:text-purple-900 transition-colors"
+                        onClick$={closeEditModal}
+                    >
+                        <LuX class="h-5 w-5" />
+                    </Modal.Close>
+                    {editingTicket.value && ( // Asegurar que ticket no sea null
+                        <TicketForm 
+                            raffleId={raffle.value.id || 0}
+                            ticketNumber={editingTicket.value.number}
+                            initialBuyerName={editingTicket.value.buyerName}
+                            initialBuyerPhone={editingTicket.value.buyerPhone}
+                            initialNotes={editingTicket.value.notes}
+                            initialStatus={editingTicket.value.status}
+                            onSuccess$={handleEditSuccess}
+                            onCancel$={closeEditModal}
+                        />
+                    )}
+                </Modal.Panel>
+            </Modal.Root>
 
             {/* Confirmation modal for draw */}
             {showDrawConfirmation.value && (

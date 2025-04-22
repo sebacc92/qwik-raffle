@@ -46,7 +46,6 @@ export default component$(() => {
 
     const handleSubmit = $((values: RaffleForm) => {
         isSubmitting.value = true;
-        console.log('values', values)
     })
 
     return (

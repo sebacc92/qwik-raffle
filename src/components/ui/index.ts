@@ -10,3 +10,4 @@ export * from "./separator/separator";
 export * from "./textarea/textarea";
 export * from "./select/select";
 export * from "./accordion/accordion";
+export * from "./alert/alert";

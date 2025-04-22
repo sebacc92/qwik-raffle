@@ -51,7 +51,6 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
 
         const db = Drizzler();
         try {
-            console.log("Creating raffle with payload:", payload);
             // Create the raffle
             const raffles = await db.insert(schema.raffles).values(payload).returning({
                 raffleId: schema.raffles.id,
@@ -110,10 +109,6 @@ export const useFormRaffleAction = formAction$<RaffleForm, RaffleResponseData>(
 
 export const useFormTicketAction = formAction$<TicketForm, TicketResponseData>(
     async (values) => {
-        console.log('useFormTicketAction')
-        console.log('values', values)
-        console.log("Received form values in action:", JSON.stringify(values, null, 2));
-
         const db = Drizzler();
         try {
             // Determine the where condition based on whether 'numbers' or 'number' is provided
