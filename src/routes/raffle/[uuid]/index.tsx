@@ -241,6 +241,24 @@ export default component$(() => {
         toast.success(_`Ticket actualizado correctamente!`);
     });
 
+    // *** NUEVA FUNCIÓN PARA MANEJAR SELECCIÓN EN TABLA ***
+    const handleTableRowSelection = $((ticketNumber: number, isChecked: boolean) => {
+        const currentSelection = selectedTickets.value;
+        if (isChecked) {
+            // Añadir si no está presente
+            if (!currentSelection.includes(ticketNumber)) {
+                selectedTickets.value = [...currentSelection, ticketNumber].sort((a, b) => a - b);
+            }
+        } else {
+            // Quitar si está presente
+            selectedTickets.value = currentSelection.filter(n => n !== ticketNumber);
+        }
+        // Opcional: activar modo multi-select automáticamente si se selecciona algo en la tabla
+        if (selectedTickets.value.length > 0 && !isMultiSelectMode.value) {
+           // isMultiSelectMode.value = true; // Descomentar si se desea este comportamiento
+        }
+    });
+
     if(raffle.value?.failed){
         return (
             <div class="p-4 max-w-7xl mx-auto">
@@ -467,6 +485,7 @@ export default component$(() => {
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th class="checkbox-column"></th>
                                 <th>{_`Status`}</th>
                                 <th>{_`Buyer Name`}</th>
                                 <th>{_`Phone`}</th>
@@ -477,8 +496,20 @@ export default component$(() => {
                         <tbody>
                             {/* Usar filteredTickets */}
                             {filteredTickets.map(ticket => (
-                                <tr key={ticket.number} class={`status-${ticket.status}`}>
+                                <tr 
+                                    key={ticket.number} 
+                                    class={`status-${ticket.status} ${selectedTickets.value.includes(ticket.number) ? 'row-selected' : ''}`}
+                                >
                                     <td class="font-medium">{ticket.number}</td>
+                                    <td class="checkbox-column">
+                                        <input 
+                                            type="checkbox" 
+                                            class="table-row-checkbox" 
+                                            aria-label={`Select ticket ${ticket.number}`}
+                                            checked={selectedTickets.value.includes(ticket.number)}
+                                            onChange$={(e) => handleTableRowSelection(ticket.number, (e.target as HTMLInputElement).checked)}
+                                        />
+                                    </td>
                                     <td>
                                         <span class={`status-badge status-${ticket.status}`}>
                                             {ticket.status === 'unsold' ? _`Unsold` : 
@@ -512,7 +543,7 @@ export default component$(() => {
                             ))}
                             {filteredTickets.length === 0 && (
                                 <tr>
-                                    <td colSpan={6} class="text-center py-4 text-gray-500">{_`No tickets match the current filters.`}</td>
+                                    <td colSpan={7} class="text-center py-4 text-gray-500">{_`No tickets match the current filters.`}</td>
                                 </tr>
                             )}
                         </tbody>
